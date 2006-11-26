@@ -75,14 +75,10 @@ http_root_post( connexion_t *cnx, char const *tag,
 int
 main( int argc, char *argv[] )
 {
-
-    printf( "Test MIHL: MImimal Httpd Library\n" );
-    fflush( stdout );
-
     mihl_init( 8080 );
 
     mihl_handle_get( "/", http_root, NULL );
-    mihl_handle_file( "/image.jpg", "image.jpg", "image/jpeg" );
+    mihl_handle_file( "/image.jpg", "image.jpg", "image/jpeg", 0 );
     mihl_handle_post( "/toto1", http_root_post, NULL );
 
     for (;;) {

@@ -20,7 +20,7 @@ LDFLAGS	=
 
 ifdef DEBUG
 CFLAGS += -g -O0 -D DEBUG -D PRINT_TRACE
-LDFLAGS += -g
+LDFLAGS += -g2
 else
 CFLAGS += -g0 -O3
 LDFLAGS +=

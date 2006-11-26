@@ -7,16 +7,17 @@
 #include <time.h>
 #include <assert.h>
 #include <string.h>
+#include <fcntl.h>
 
 #ifdef __WINDAUBE__
 #   define _WIN32_WINNT 0x0500
 #   include <winsock2.h>
 #   include <Mswsock.h>
 #   include <windows.h>
+#   include <io.h>
 #else
 #   include <unistd.h>
 #   include <sys/select.h>
-#   include <fcntl.h>
 #   include <sys/types.h>
 #   include <sys/socket.h>
 #   include <netinet/in.h>
@@ -61,7 +62,7 @@ add_new_connexion( SOCKET sockfd, struct sockaddr_in *client_addr )
     cnx->html_buffer = (char*)malloc(cnx->html_buffer_sz);  // HTML output buffer (mihl_add, mihl_send)
     strcpy( cnx->html_buffer, "" );
 
-    printf( "Accepted a connexion from %s, socket=%d\n",
+    printf( "\nAccepted a connexion from %s, socket=%d\n",
 		  inet_ntoa( cnx->client_addr.sin_addr ), sockfd );
     fflush( stdout );
 
@@ -197,15 +198,19 @@ mihl_init( int port )
 
 
 static int
-send_file( connexion_t *cnx, char *tag, char *filename, char *content_type )
+send_file( connexion_t *cnx, char *tag, char *filename, 
+    char *content_type, int close_connection )
 {
 
     char *file;
     int length;
+printf( " 1) ....\n" );
     if ( read_file( filename, &file, &length ) == -1 ) {
         return -1;
     }
 
+printf( "Sending file %d\n", length );
+fflush( stdout );
     //  Header to send
     time_t now = time( NULL );
     struct tm *tm = gmtime( &now );
@@ -218,8 +223,10 @@ send_file( connexion_t *cnx, char *tag, char *filename, char *content_type )
 		"Content-Length: %d\r\n"
         "Date: %s\r\n"
         "Content-Type: %s\r\n"
+        "Connection: %s\r\n"
 		"\r\n",
-			length, date, content_type );
+			length, date, content_type,
+            (close_connection) ? "close" : "keep-alive" );
 	int dcount = tcp_write( cnx->sockfd, msg1, len );
     if ( dcount == -1 ) {
         printf( "\n*** %s %d: OOPS - %m!!!!!\n", __FILE__, __LINE__ );
@@ -251,9 +258,9 @@ static int
 search_for_handle( connexion_t *cnx, uint32_t type, char *tag,
     int nb_variables, char **vars_names, char **vars_values )
 {
-    handle_t *handle_nfound = NULL;
+    mihl_handle_t *handle_nfound = NULL;
     for ( int n = 0; n < nb_handles; n++ ) {
-        handle_t *handle = &handles[n];
+        mihl_handle_t *handle = &handles[n];
         if ( !handle->tag )
             handle_nfound = handle;
         if ( handle->tag && !strcmp( tag, handle->tag ) ) {
@@ -261,7 +268,7 @@ search_for_handle( connexion_t *cnx, uint32_t type, char *tag,
                 return handle->pf_get( cnx, tag, handle->param );
             if ( (type == 'POST') && handle->pf_post )
                 return handle->pf_post( cnx, tag, nb_variables, vars_names, vars_values, handle->param );
-            return send_file( cnx, tag, handle->filename, handle->content_type );
+            return send_file( cnx, tag, handle->filename, handle->content_type, handle->close_connection );
         }
     }
     if ( handle_nfound )
@@ -291,6 +298,7 @@ manage_new_connexions( )
 		    if ( closesocket( sockfd ) == -1 ) {
 			    printf( "Error %d while closing socket %d\n", errno, sockfd );
             }
+            fflush( stdout );
 		    exit( -1 );
         }                       // if
 
@@ -308,6 +316,10 @@ got_data_for_active_connexion( connexion_t *cnx )
     printf( "\n%d:[%s]\n", cnx->sockfd, read_buffer );
     fflush( stdout );
 
+    if ( len == 0 ) {
+        cnx->time_last_data = 0;    // Force closing the connection on manage_timedout_connexions()
+        return -1;
+    }
     cnx->time_last_data = time( NULL );
 
     /*
@@ -384,7 +396,6 @@ manage_existent_connexions( )
             continue;
 	    if ( FD_ISSET( cnx->sockfd, &ready ) ) {
             got_data_for_active_connexion( cnx );
-            Sleep( 1000 );
 	    }
     }                           // for (connexions)
     
@@ -414,12 +425,12 @@ int
 mihl_handle_get( char const *tag, pf_handle_get_t *pf, void *param )
 {
     if ( handles == NULL ) {
-        handles = (handle_t *)malloc( sizeof(handle_t) );
+        handles = (mihl_handle_t *)malloc( sizeof(mihl_handle_t) );
     }
     else {
-        handles = (handle_t *)realloc( handles, sizeof(handle_t) * (nb_handles+1) );
+        handles = (mihl_handle_t *)realloc( handles, sizeof(mihl_handle_t) * (nb_handles+1) );
     }
-    handle_t *handle = &handles[nb_handles++];
+    mihl_handle_t *handle = &handles[nb_handles++];
     if ( tag )
         handle->tag = strdup( tag );
     else
@@ -428,6 +439,7 @@ mihl_handle_get( char const *tag, pf_handle_get_t *pf, void *param )
     handle->pf_post = NULL;
     handle->filename = NULL;
     handle->content_type = NULL;
+    handle->close_connection = 0;
     return nb_handles;
 }                               // mihl_handle_get
 
@@ -438,36 +450,39 @@ mihl_handle_post( char const *tag, pf_handle_post_t *pf, void *param )
     if ( tag == NULL )
         return -1;
     if ( handles == NULL ) {
-        handles = (handle_t *)malloc( sizeof(handle_t) );
+        handles = (mihl_handle_t *)malloc( sizeof(mihl_handle_t) );
     }
     else {
-        handles = (handle_t *)realloc( handles, sizeof(handle_t) * (nb_handles+1) );
+        handles = (mihl_handle_t *)realloc( handles, sizeof(mihl_handle_t) * (nb_handles+1) );
     }
-    handle_t *handle = &handles[nb_handles++];
+    mihl_handle_t *handle = &handles[nb_handles++];
     handle->tag = strdup( tag );
     handle->pf_get = NULL;
     handle->pf_post = pf;
     handle->filename = NULL;
     handle->content_type = NULL;
+    handle->close_connection = 0;
     return nb_handles;
 }                               // mihl_handle_post
 
 
 int
-mihl_handle_file( char const *tag, char const *filename, char const *content_type )
+mihl_handle_file( char const *tag, char const *filename, 
+    char const *content_type, int close_connection )
 {
     if ( handles == NULL ) {
-        handles = (handle_t *)malloc( sizeof(handle_t) );
+        handles = (mihl_handle_t *)malloc( sizeof(mihl_handle_t) );
     }
     else {
-        handles = (handle_t *)realloc( handles, sizeof(handle_t) * (nb_handles+1) );
+        handles = (mihl_handle_t *)realloc( handles, sizeof(mihl_handle_t) * (nb_handles+1) );
     }
-    handle_t *handle = &handles[nb_handles++];
+    mihl_handle_t *handle = &handles[nb_handles++];
     handle->tag = strdup( tag );
     handle->pf_get = NULL;
     handle->pf_post = NULL;
     handle->filename = strdup( filename );
     handle->content_type = strdup( content_type );
+    handle->close_connection = close_connection;
     return nb_handles;
 }                               // mihl_handle_file
 

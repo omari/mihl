@@ -1,11 +1,7 @@
 
 project.name = "mihl"
--- project.libdir = "./lib"
--- project.bindir = "./bin"
-project.config["Debug"].bindir  = "bin"
-project.config["Release"].bindir = "bin"
-project.config["Debug"].libdir  = "lib"
-project.config["Release"].libdir = "lib"
+project.libdir = "./lib"
+project.bindir = ""
 
 dopackage("src")
 dopackage("examples/1")

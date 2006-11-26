@@ -33,4 +33,7 @@ PUBLIC int mihl_handle_get( char const *tag, pf_handle_get_t *pf, void *param );
 
 PUBLIC int mihl_handle_post( char const *tag, pf_handle_post_t *pf, void *param );
 
-PUBLIC int mihl_handle_file( char const *tag, char const *filename, char const *content_type );
+PUBLIC int mihl_handle_file( char const *tag, char const *filename, 
+    char const *content_type, int close_connection );
+
+#undef PUBLIC

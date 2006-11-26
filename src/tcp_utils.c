@@ -8,16 +8,17 @@
 #include <assert.h>
 #include <string.h>
 #include <stdarg.h>
+#include <fcntl.h>
 
 #ifdef __WINDAUBE__
 #   define _WIN32_WINNT 0x0500
 #   include <winsock2.h>
 #   include <Mswsock.h>
 #   include <windows.h>
+#   include <io.h>
 #else
 #   include <unistd.h>
 #   include <sys/select.h>
-#   include <fcntl.h>
 #   include <sys/types.h>
 #   include <sys/socket.h>
 #   include <netinet/in.h>
@@ -29,6 +30,7 @@
 
 #include "glovars.h"
 
+#define BUILD_DLL_TCPUTILS
 #include "tcp_utils.h"
 
 
@@ -49,8 +51,8 @@ tcp_read( SOCKET sockfd, char *buffer, int maxlen )
 			continue;
         }
         if ( dcount == 0 ) {
-            printf( "%s %d : !!! %d: maxlen=%d index=%d errno=%d !!!\n", 
-                __FILE__, __LINE__, errcnt, maxlen, index,ERRNO );
+//          printf( "%s %d : !!! %d: maxlen=%d index=%d errno=%d !!!\n", 
+//              __FILE__, __LINE__, errcnt, maxlen, index, ERRNO );
             buffer[dcount+index] = 0;
             return dcount+index;
         }
@@ -62,7 +64,7 @@ tcp_read( SOCKET sockfd, char *buffer, int maxlen )
 	    FD_ZERO( &ready );
 	    FD_SET( sockfd, &ready );
 	    tv.tv_sec  = 0;
-	    tv.tv_usec = 1;
+	    tv.tv_usec = 0;
 	    int status = select( 0, &ready, NULL, NULL, &tv );
 	    if ( (status <= 0) || !FD_ISSET( sockfd, &ready ) )
             break;
@@ -85,7 +87,7 @@ tcp_write( SOCKET sockfd, const char *buff, int buff_len )
     int len = buff_len;
 	for (;;) {
 
-#if 0
+#ifdef __WINDAUBE__
 	    fd_set ready;
 	    struct timeval tv;
 	    FD_ZERO( &ready );
@@ -136,7 +138,7 @@ decode_keys_values( connexion_t *cnx, char *_request,
     int *nb_options, char *options_names[], char *options_values[], int maxnb_options,
     int *nb_variables, char *vars_names[], char *vars_values[], int maxnb_values )
 {
-    int l = strlen(_request);
+    int l = (int)strlen(_request);
     if ( l == 0 )
         return;
     char *request = (char *)malloc(l*2);
@@ -170,7 +172,7 @@ decode_keys_values( connexion_t *cnx, char *_request,
     for ( int n = 0; n < *nb_options; n++ ) {
         char *key = options_names[n];
         char *value = options_values[n];
-        printf( "    %d: '%s' : '%s'\n", n, key, value );
+//      printf( "    %d: '%s' : '%s'\n", n, key, value );
         if ( !strcmp( key, "Host" ) )
             cnx->host = strdup( value );
         else if ( !strcmp( key, "User-Agent" ) )
@@ -186,7 +188,7 @@ decode_keys_values( connexion_t *cnx, char *_request,
     for ( int n = 0; n < *nb_variables; n++ ) {
         char *key = vars_names[n];
         char *value = vars_values[n];
-        printf( "    %d: '%s' = '%s'\n", n, key, value );
+//      printf( "    %d: '%s' = '%s'\n", n, key, value );
     }
 
 }                               // decode_keys_values
@@ -256,18 +258,22 @@ filelength( int fd )
 int 
 read_file( char *fname, char **file, int *length )
 {
+printf( " 2) ....\n" ); fflush( stdout );
     int fd = open( fname, O_RDONLY | O_BINARY );
     if ( fd == -1 )
         return -1;
+printf( " 3) ....\n" ); fflush( stdout );
 
     int len = filelength( fd );
     *file = (char *)malloc( len );
     assert( *file != NULL );
+printf( " 4) ....\n" ); fflush( stdout );
 
     int count = read( fd, *file, len ); 
     assert( count == len );
 
     close( fd );
     *length = len;
+printf( " 5) ....\n" ); fflush( stdout );
     return len;
 }                               // read_file

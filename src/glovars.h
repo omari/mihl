@@ -16,6 +16,11 @@
 #   define SHUT_RDWR SD_BOTH
     typedef int socklen_t;
 
+#   define vsnprintf _vsnprintf
+#   define open _open
+
+    typedef unsigned int uint32_t;
+
 #else
 
 #   define ERRNO errno
@@ -62,9 +67,10 @@ typedef struct {
     pf_handle_post_t *pf_post;      // If not NULL, function to execute
     char *filename;                 // If not NULL, filename to send
     char *content_type;             // Content-type, such as "image/jpeg" or "text/javascript"
+    int close_connection;           // Should we close the connection after the operation ?
     void *param;                    // TBD
-} handle_t;
+} mihl_handle_t;
 GLOBAL int nb_handles;              ///< TBD
-GLOBAL handle_t *handles;           ///< TBD
+GLOBAL mihl_handle_t *handles;      ///< TBD
 
 #define MIN(A,B) (((A)<(B))?(A):(B))

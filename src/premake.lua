@@ -12,3 +12,6 @@ package.files = {
     "mihl.h", "glovars.h", "mihl.cpp",
     "tcp_utils.h", "tcp_utils.cpp"
 }
+
+package.config["Debug"].target = "lib/mihl"
+package.config["Release"].target = "lib/mihl"
