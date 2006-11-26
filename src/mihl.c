@@ -260,7 +260,7 @@ search_for_handle( connexion_t *cnx, uint32_t type, char *tag,
             if ( (type == 'GET') && handle->pf_get )
                 return handle->pf_get( cnx, tag, handle->param );
             if ( (type == 'POST') && handle->pf_post )
-                return handle->pf_post( cnx, tag, handle->param );
+                return handle->pf_post( cnx, tag, nb_variables, vars_names, vars_values, handle->param );
             return send_file( cnx, tag, handle->filename, handle->content_type );
         }
     }
