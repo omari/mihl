@@ -58,6 +58,7 @@ add_new_connexion( SOCKET sockfd, struct sockaddr_in *client_addr )
     cnx->time_last_data = cnx->time_started;
     cnx->host = NULL;                     // 'Host:'
     cnx->user_agent = NULL;               // 'User-Agent:'
+    cnx->keep_alive = 300;                // Default timeout
     cnx->html_buffer_len = 0;                               // Current length
     cnx->html_buffer_sz = 8192;                             // Length allocated (8K increment)
     cnx->html_buffer = (char*)malloc(cnx->html_buffer_sz);  // HTML output buffer (mihl_add, mihl_send)

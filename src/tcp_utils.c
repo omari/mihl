@@ -65,7 +65,7 @@ tcp_read( SOCKET sockfd, char *buffer, int maxlen )
 	    FD_SET( sockfd, &ready );
 	    tv.tv_sec  = 0;
 	    tv.tv_usec = 0;
-	    int status = select( 0, &ready, NULL, NULL, &tv );
+	    int status = select( (int)sockfd+1, &ready, NULL, NULL, &tv );
 	    if ( (status <= 0) || !FD_ISSET( sockfd, &ready ) )
             break;
         index += dcount;
