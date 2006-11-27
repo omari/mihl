@@ -258,22 +258,18 @@ filelength( int fd )
 int 
 read_file( char *fname, char **file, int *length )
 {
-printf( " 2) ....\n" ); fflush( stdout );
     int fd = open( fname, O_RDONLY | O_BINARY );
     if ( fd == -1 )
         return -1;
-printf( " 3) ....\n" ); fflush( stdout );
 
     int len = filelength( fd );
     *file = (char *)malloc( len );
     assert( *file != NULL );
-printf( " 4) ....\n" ); fflush( stdout );
 
     int count = read( fd, *file, len ); 
     assert( count == len );
 
     close( fd );
     *length = len;
-printf( " 5) ....\n" ); fflush( stdout );
     return len;
 }                               // read_file

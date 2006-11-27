@@ -55,6 +55,7 @@ add_new_connexion( SOCKET sockfd, struct sockaddr_in *client_addr )
     cnx->sockfd = sockfd;
     memmove( &cnx->client_addr, client_addr, sizeof(struct sockaddr_in) );
     cnx->time_started = time( NULL );
+    cnx->time_last_data = cnx->time_started;
     cnx->host = NULL;                     // 'Host:'
     cnx->user_agent = NULL;               // 'User-Agent:'
     cnx->html_buffer_len = 0;                               // Current length
@@ -204,13 +205,10 @@ send_file( connexion_t *cnx, char *tag, char *filename,
 
     char *file;
     int length;
-printf( " 1) ....\n" );
     if ( read_file( filename, &file, &length ) == -1 ) {
         return -1;
     }
 
-printf( "Sending file %d\n", length );
-fflush( stdout );
     //  Header to send
     time_t now = time( NULL );
     struct tm *tm = gmtime( &now );
