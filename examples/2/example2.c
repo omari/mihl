@@ -60,15 +60,17 @@ http_root( connexion_t *cnx, char const *tag, void *param )
 
     mihl_add( cnx, "var cpt = 0;" );
     mihl_add( cnx, "function onLoadHandler( ) {" );
-    char *host = "192.168.0.2:8080";
-//  mihl_add( cnx, "  var xx = toto;" );
-//  mihl_add( cnx, "  var url = 'http://%s/metadata';", host );
-//  mihl_add( cnx, "  var myAjax = new Ajax.Request( url, { method: 'get', onComplete: showMetadata });" );
     mihl_add( cnx, "  setInterval( 'timerFunction()', 1000 );" );
     mihl_add( cnx, "};" );
 
+    mihl_add( cnx, "function showMetadata( originalRequest ) {" );
+    mihl_add( cnx, "  defaultStatus = 'AJAX: [' + originalRequest.responseText + ']';" );
+    mihl_add( cnx, "};" );
+
     mihl_add( cnx, "function timerFunction( ) {" );
-    mihl_add( cnx, "  defaultStatus = toto++;" );
+    char *host = "192.168.0.2:8080";
+    mihl_add( cnx, "  var url = 'http://%s/metadata';", host );
+    mihl_add( cnx, "  var myAjax = new Ajax.Request( url, { method: 'get', onComplete: showMetadata });" );
     mihl_add( cnx, "  field1.innerText = cpt;" );
     mihl_add( cnx, "  field2.innerText = cpt;" );
     mihl_add( cnx, "  field3.innerText = cpt;" );
@@ -89,11 +91,25 @@ http_root( connexion_t *cnx, char const *tag, void *param )
 
 
 int
+http_metadata( connexion_t *cnx, char const *tag, void *param )
+{
+
+    static int cpt = 0;
+    mihl_add( cnx, "cpt=%d", cpt++ );
+    mihl_send( cnx,
+		"HTTP/1.1 200 OK\r\n"
+		"Content-type: text/xml\r\n" );
+    return 0;
+}                               // http_metadata
+
+
+int
 main( int argc, char *argv[] )
 {
     mihl_init( 8080 );
 
     mihl_handle_get( "/", http_root, NULL );
+    mihl_handle_get( "/metadata", http_metadata, NULL );
     mihl_handle_file( "/image.jpg", "image.jpg", "image/jpeg", 0 );
     mihl_handle_file( "/prototype.js", "prototype.js", "text/javascript", 0 );
 
