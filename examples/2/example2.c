@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <unistd.h>
+// #include <unistd.h>
 
 #include "mihl.h"
 
@@ -53,6 +53,8 @@ http_root( connexion_t *cnx, char const *tag, void *param )
     mihl_add( cnx, "<br>" );
     mihl_add( cnx, "</body>" );
 
+    mihl_add( cnx, "<SCRIPT type='text/javascript' src='/prototype.js'> </SCRIPT>" );
+
     mihl_add( cnx, "<SCRIPT type='text/javascript'>" );
     mihl_add( cnx, "<!--" );
 
@@ -66,7 +68,7 @@ http_root( connexion_t *cnx, char const *tag, void *param )
     mihl_add( cnx, "};" );
 
     mihl_add( cnx, "function timerFunction( ) {" );
-    mihl_add( cnx, "  defaultStatus = cpt++;" );
+    mihl_add( cnx, "  defaultStatus = toto++;" );
     mihl_add( cnx, "  field1.innerText = cpt;" );
     mihl_add( cnx, "  field2.innerText = cpt;" );
     mihl_add( cnx, "  field3.innerText = cpt;" );
@@ -93,12 +95,14 @@ main( int argc, char *argv[] )
 
     mihl_handle_get( "/", http_root, NULL );
     mihl_handle_file( "/image.jpg", "image.jpg", "image/jpeg", 0 );
+    mihl_handle_file( "/prototype.js", "prototype.js", "text/javascript", 0 );
 
     for (;;) {
         int status = mihl_server( );
         if ( status == -2 )
             break;
-        usleep( 1000 );
+//        usleep( 1000 );
+//        Sleep( 0 );
     }
     
     return 0;

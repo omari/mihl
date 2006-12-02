@@ -5,3 +5,4 @@ project.bindir = ""
 
 dopackage("src")
 dopackage("examples/1")
+dopackage("examples/2")
