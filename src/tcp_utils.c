@@ -263,7 +263,7 @@ read_file( char *fname, char **file, int *length )
         return -1;
 
     int len = filelength( fd );
-    *file = (char *)malloc( len );
+    *file = (char *)malloc( len+1 );
     assert( *file != NULL );
 
     int count = read( fd, *file, len ); 
@@ -271,5 +271,6 @@ read_file( char *fname, char **file, int *length )
 
     close( fd );
     *length = len;
+    (*file)[len] = 0;
     return len;
 }                               // read_file

@@ -249,7 +249,8 @@ send_file( connexion_t *cnx, char *tag, char *filename,
         p += count;
     }
 
-   return 0;
+    free( file );
+    return 0;
 }                               // send_file
 
 
