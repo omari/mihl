@@ -7,7 +7,7 @@
 #include "mihl.h"
 
 int
-http_root( connexion_t *cnx, char const *tag, void *param )
+http_root( connexion_t *cnx, char const *tag, char const *host, void *param )
 {
     mihl_add( cnx, "<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>" );
     mihl_add( cnx, "<html>" );
@@ -65,8 +65,6 @@ http_root( connexion_t *cnx, char const *tag, void *param )
     mihl_add( cnx, "  setInterval( 'timerFunction30()', 30000 );" );
     mihl_add( cnx, "};" );
 
-    char *host = "192.168.0.2:8080";
-
     mihl_add( cnx, "function timerFunction1( ) {" );
     mihl_add( cnx, "  var url = 'http://%s/data1';", host );
     mihl_add( cnx, "  var myAjax = new Ajax.Request( url, { method: 'get', onComplete: showData1 });" );
@@ -109,7 +107,7 @@ http_root( connexion_t *cnx, char const *tag, void *param )
 
 
 int
-http_data( connexion_t *cnx, char const *tag, void *param )
+http_data( connexion_t *cnx, char const *tag, char const *host, void *param )
 {
     int index = (int)param;
     static int cpts[3] = { 0, 0, 0 };

@@ -6,7 +6,7 @@
 #include "mihl.h"
 
 int
-http_root( connexion_t *cnx, char const *tag, void *param )
+http_root( connexion_t *cnx, char const *tag, char const *host, void *param )
 {
     mihl_add( cnx, "<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>" );
     mihl_add( cnx, "<html>" );
@@ -64,7 +64,7 @@ http_root( connexion_t *cnx, char const *tag, void *param )
 // myname1=AAA&myname2=BBB&myname3=CCC]
 // myname1=A+++B+C&myname2=HELLO&myname3=BONJOUR%2BMONDE]
 int
-http_root_post( connexion_t *cnx, char const *tag, 
+http_root_post( connexion_t *cnx, char const *tag, char const *host,
     int nb_variables, char **vars_names, char **vars_values,
     void *param )
 {

@@ -156,7 +156,7 @@ bind_and_listen( )
 
 
 static int
-page_not_found( connexion_t *cnx, char const *tag, void *param )
+page_not_found( connexion_t *cnx, char const *tag, char const *host, void *param )
 {
     mihl_add(  cnx, "<html>" );
     mihl_add(  cnx, "<head>" );
@@ -255,7 +255,7 @@ send_file( connexion_t *cnx, char *tag, char *filename,
 
 
 static int
-search_for_handle( connexion_t *cnx, uint32_t type, char *tag,
+search_for_handle( connexion_t *cnx, uint32_t type, char *tag, char *host,
     int nb_variables, char **vars_names, char **vars_values )
 {
     mihl_handle_t *handle_nfound = NULL;
@@ -265,14 +265,14 @@ search_for_handle( connexion_t *cnx, uint32_t type, char *tag,
             handle_nfound = handle;
         if ( handle->tag && !strcmp( tag, handle->tag ) ) {
             if ( (type == 'GET') && handle->pf_get )
-                return handle->pf_get( cnx, tag, handle->param );
+                return handle->pf_get( cnx, tag, host, handle->param );
             if ( (type == 'POST') && handle->pf_post )
-                return handle->pf_post( cnx, tag, nb_variables, vars_names, vars_values, handle->param );
+                return handle->pf_post( cnx, tag, host, nb_variables, vars_names, vars_values, handle->param );
             return send_file( cnx, tag, handle->filename, handle->content_type, handle->close_connection );
         }
     }
     if ( handle_nfound )
-        return handle_nfound->pf_get( cnx, tag, handle_nfound->param );
+        return handle_nfound->pf_get( cnx, tag, host, handle_nfound->param );
     return 0;
 }                               // search_for_handle
 
@@ -346,7 +346,7 @@ got_data_for_active_connexion( connexion_t *cnx )
         &nb_options, options_names, options_values, 50,
         &nb_variables, vars_names, vars_values, 50 );
 
-    search_for_handle( cnx, 'GET', tag, 0, NULL, NULL );
+    search_for_handle( cnx, 'GET', tag, cnx->host, 0, NULL, NULL );
 
     // Clean-up keys/values pairs
     for ( int n = 0; n < nb_options; n++ ) {
