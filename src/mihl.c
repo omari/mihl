@@ -437,6 +437,7 @@ mihl_handle_get( char const *tag, pf_handle_get_t *pf, void *param )
         handle->tag = NULL;
     handle->pf_get = pf;
     handle->pf_post = NULL;
+    handle->param = param;
     handle->filename = NULL;
     handle->content_type = NULL;
     handle->close_connection = 0;
@@ -459,6 +460,7 @@ mihl_handle_post( char const *tag, pf_handle_post_t *pf, void *param )
     handle->tag = strdup( tag );
     handle->pf_get = NULL;
     handle->pf_post = pf;
+    handle->param = param;
     handle->filename = NULL;
     handle->content_type = NULL;
     handle->close_connection = 0;

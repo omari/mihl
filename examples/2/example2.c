@@ -60,20 +60,38 @@ http_root( connexion_t *cnx, char const *tag, void *param )
 
     mihl_add( cnx, "var cpt = 0;" );
     mihl_add( cnx, "function onLoadHandler( ) {" );
-    mihl_add( cnx, "  setInterval( 'timerFunction()', 1000 );" );
+    mihl_add( cnx, "  setInterval( 'timerFunction1()', 1000 );" );
+    mihl_add( cnx, "  setInterval( 'timerFunction5()', 5000 );" );
+    mihl_add( cnx, "  setInterval( 'timerFunction30()', 30000 );" );
     mihl_add( cnx, "};" );
 
-    mihl_add( cnx, "function showMetadata( originalRequest ) {" );
-    mihl_add( cnx, "  defaultStatus = 'AJAX: [' + originalRequest.responseText + ']';" );
-    mihl_add( cnx, "};" );
-
-    mihl_add( cnx, "function timerFunction( ) {" );
     char *host = "192.168.0.2:8080";
-    mihl_add( cnx, "  var url = 'http://%s/metadata';", host );
-    mihl_add( cnx, "  var myAjax = new Ajax.Request( url, { method: 'get', onComplete: showMetadata });" );
-    mihl_add( cnx, "  field1.innerText = cpt;" );
-    mihl_add( cnx, "  field2.innerText = cpt;" );
-    mihl_add( cnx, "  field3.innerText = cpt;" );
+
+    mihl_add( cnx, "function timerFunction1( ) {" );
+    mihl_add( cnx, "  var url = 'http://%s/data1';", host );
+    mihl_add( cnx, "  var myAjax = new Ajax.Request( url, { method: 'get', onComplete: showData1 });" );
+    mihl_add( cnx, "};" );
+
+    mihl_add( cnx, "function timerFunction5( ) {" );
+    mihl_add( cnx, "  var url = 'http://%s/data2';", host );
+    mihl_add( cnx, "  var myAjax = new Ajax.Request( url, { method: 'get', onComplete: showData2 });" );
+    mihl_add( cnx, "};" );
+
+    mihl_add( cnx, "function timerFunction30( ) {" );
+    mihl_add( cnx, "  var url = 'http://%s/data3';", host );
+    mihl_add( cnx, "  var myAjax = new Ajax.Request( url, { method: 'get', onComplete: showData3 });" );
+    mihl_add( cnx, "};" );
+
+    mihl_add( cnx, "function showData1( originalRequest ) {" );
+    mihl_add( cnx, "  field1.innerText = originalRequest.responseText;" );
+    mihl_add( cnx, "};" );
+
+    mihl_add( cnx, "function showData2( originalRequest ) {" );
+    mihl_add( cnx, "  field2.innerText = originalRequest.responseText;" );
+    mihl_add( cnx, "};" );
+
+    mihl_add( cnx, "function showData3( originalRequest ) {" );
+    mihl_add( cnx, "  field3.innerText = originalRequest.responseText;" );
     mihl_add( cnx, "};" );
 
     mihl_add( cnx, "-->" );
@@ -91,16 +109,16 @@ http_root( connexion_t *cnx, char const *tag, void *param )
 
 
 int
-http_metadata( connexion_t *cnx, char const *tag, void *param )
+http_data( connexion_t *cnx, char const *tag, void *param )
 {
-
-    static int cpt = 0;
-    mihl_add( cnx, "cpt=%d", cpt++ );
+    int index = (int)param;
+    static int cpts[3] = { 0, 0, 0 };
+    mihl_add( cnx, "cpt=%d", cpts[index]++ );
     mihl_send( cnx,
 		"HTTP/1.1 200 OK\r\n"
 		"Content-type: text/xml\r\n" );
     return 0;
-}                               // http_metadata
+}                               // http_data
 
 
 int
@@ -109,7 +127,9 @@ main( int argc, char *argv[] )
     mihl_init( 8080 );
 
     mihl_handle_get( "/", http_root, NULL );
-    mihl_handle_get( "/metadata", http_metadata, NULL );
+    mihl_handle_get( "/data1", http_data, (void *)0 );
+    mihl_handle_get( "/data2", http_data, (void *)1 );
+    mihl_handle_get( "/data3", http_data, (void *)2 );
     mihl_handle_file( "/image.jpg", "image.jpg", "image/jpeg", 0 );
     mihl_handle_file( "/prototype.js", "prototype.js", "text/javascript", 0 );
 
@@ -117,7 +137,7 @@ main( int argc, char *argv[] )
         int status = mihl_server( );
         if ( status == -2 )
             break;
-//        usleep( 1000 );
+        usleep( 1000 );
 //        Sleep( 0 );
     }
     
