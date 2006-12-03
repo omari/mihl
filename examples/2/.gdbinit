@@ -1,5 +1,5 @@
 set confirm off
-file ./example1
+file ./example2
 handle SIGINT  stop pass
 handle SIGUSR1 nostop pass
 handle SIGUSR2 nostop pass

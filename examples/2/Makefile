@@ -1,5 +1,5 @@
 .PHONY: all
-all: example1
+all: example2
 
 CROSS=
 CC = gcc
@@ -37,10 +37,10 @@ CFLAGS += -I. -I../../src $(DEBUG_FLAGS)
 # 
 # ----------------
 
-OBJS1 =	example1
+OBJS1 =	example2
 LIST_OBJS1 = $(foreach w,$(OBJS1),$(w).o)
 
-example1: $(foreach w,$(OBJS1),$(w).o) 
+example2: $(foreach w,$(OBJS1),$(w).o) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST_OBJS1)
 
 -include $(LIST_OBJS1:.o=.d)
@@ -52,4 +52,4 @@ example1: $(foreach w,$(OBJS1),$(w).o)
 
 .PHONY: clean
 clean: 
-	@$(RM) *.o *.d *.err *.core core *~ cscope.out cscope.in.out cscope.po.out example1
+	@$(RM) *.o *.d *.err *.core core *~ cscope.out cscope.in.out cscope.po.out example2
