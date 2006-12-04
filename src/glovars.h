@@ -37,6 +37,8 @@
 
 GLOBAL int mihl_port;               ///< HTTP TCP port (80, 8080, etc.)
 
+GLOBAL int mihl_maxnb_connexions;   ///< Max umer of allowed connexions
+
 GLOBAL SOCKET sockfd;               ///< TBD
 
 struct connexion {
@@ -54,9 +56,7 @@ struct connexion {
     int html_buffer_sz;                 // Length allocated (8K increment)
 };
 GLOBAL int nb_connexions;           ///< Number of current connexions
-#define MAXNB_CONNEXIONS 8
-GLOBAL connexion_t 
-    connexions[MAXNB_CONNEXIONS];   ///< Description of the active connexions
+GLOBAL connexion_t *connexions;     ///< Description of the active connexions
 
 GLOBAL int read_buffer_maxlen;      ///< TBD
 GLOBAL char *read_buffer;           ///< TBD

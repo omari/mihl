@@ -2,7 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-// #include <unistd.h>
+#ifdef __WINDAUBE__
+#   include <windows.h>
+#else
+#   include <unistd.h>
+#endif
 
 #include "mihl.h"
 
@@ -122,7 +126,7 @@ http_data( connexion_t *cnx, char const *tag, char const *host, void *param )
 int
 main( int argc, char *argv[] )
 {
-    mihl_init( 8080 );
+    mihl_init( 8080, 8 );
 
     mihl_handle_get( "/", http_root, NULL );
     mihl_handle_get( "/data1", http_data, (void *)0 );
@@ -135,8 +139,11 @@ main( int argc, char *argv[] )
         int status = mihl_server( );
         if ( status == -2 )
             break;
+#ifdef __WINDAUBE__
+        Sleep( 0 );
+#else
         usleep( 1000 );
-//        Sleep( 0 );
+#endif
     }
     
     return 0;

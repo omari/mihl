@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <string.h>
 #include <fcntl.h>
+#include <stdarg.h>
 
 #ifdef __WINDAUBE__
 #   define _WIN32_WINNT 0x0500
@@ -32,18 +33,32 @@
 #include "glovars.h"
 
 #include "tcp_utils.h"
+#include "getopt.h"
 
 
-static void
+static int
+verbose_printf( const char *fmt, ... )
+{
+	va_list ap;
+	va_start( ap, fmt );
+	int len = vprintf( fmt, ap );
+	va_end( ap );
+    fflush( stdout );
+    return len;
+}                               // verbose_printf
+
+
+static int
 add_new_connexion( SOCKET sockfd, struct sockaddr_in *client_addr )
 {
 
     // Find a new slot to store the new active connexion
-    if ( nb_connexions == MAXNB_CONNEXIONS ) {
-        assert( 0 );
+    if ( nb_connexions == mihl_maxnb_connexions ) {
+        verbose_printf( "Too many connexions (%d): connexion refused\n", nb_connexions );
+        return -1;
     }
     connexion_t *cnx = NULL;
-    for ( int ncnx = 0; ncnx < MAXNB_CONNEXIONS; ncnx++ ) {
+    for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
         cnx = &connexions[ncnx];
         if ( !cnx->active )
             break;
@@ -67,6 +82,8 @@ add_new_connexion( SOCKET sockfd, struct sockaddr_in *client_addr )
     printf( "\nAccepted a connexion from %s, socket=%d\n",
 		  inet_ntoa( cnx->client_addr.sin_addr ), sockfd );
     fflush( stdout );
+    
+    return nb_connexions-1;
 
 }                               // add_new_connexion
 
@@ -174,13 +191,15 @@ page_not_found( connexion_t *cnx, char const *tag, char const *host, void *param
 
 
 int
-mihl_init( int port )
+mihl_init( int port, int maxnb_connexions )
 {
 
     mihl_port = port;
+    mihl_maxnb_connexions = maxnb_connexions;
 
     nb_connexions = 0;          // Number of current connexions
-    for ( int ncnx = 0; ncnx < MAXNB_CONNEXIONS; ncnx++ ) {
+    connexions = (connexion_t *) malloc( sizeof(connexion_t) * mihl_maxnb_connexions );
+    for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
         connexion_t *cnx = &connexions[ncnx];
         cnx->active = 0;
     }                           // for (connexions)
@@ -302,8 +321,7 @@ manage_new_connexions( )
 		    exit( -1 );
         }                       // if
 
-        add_new_connexion( sockfd_accept, &client_addr );
-        return 1;
+        return add_new_connexion( sockfd_accept, &client_addr );
 	}                           // for (;;)
 }                               // manage_new_connexions
 
@@ -368,7 +386,7 @@ manage_existent_connexions( )
     SOCKET last_sockfd = -1;
 	fd_set ready;
 	FD_ZERO( &ready );
-    for ( int ncnx = 0; ncnx < MAXNB_CONNEXIONS; ncnx++ ) {
+    for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
         connexion_t *cnx = &connexions[ncnx];
         if ( !cnx->active )
             continue;
@@ -390,7 +408,7 @@ manage_existent_connexions( )
 #endif
 	assert( status != -1 );
 
-    for ( int ncnx = 0; ncnx < MAXNB_CONNEXIONS; ncnx++ ) {
+    for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
         connexion_t *cnx = &connexions[ncnx];
         if ( !cnx->active )
             continue;
@@ -408,7 +426,7 @@ static int
 manage_timedout_connexions( )
 {
     time_t now = time( NULL );
-    for ( int ncnx = 0; ncnx < MAXNB_CONNEXIONS; ncnx++ ) {
+    for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
         connexion_t *cnx = &connexions[ncnx];
         if ( !cnx->active )
             continue;

@@ -21,7 +21,7 @@ typedef int (pf_handle_get_t)(connexion_t *, char const *, char const *, void *)
 
 typedef int (pf_handle_post_t)(connexion_t *, char const *, char const *, int, char **, char **, void *);
 
-PUBLIC int mihl_init( int port );
+PUBLIC int mihl_init( int port, int maxnb_connexions );
 
 PUBLIC int mihl_server( );
 

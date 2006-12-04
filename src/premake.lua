@@ -10,7 +10,8 @@ package.links = { "ws2_32" }
 package.defines = { "__WINDAUBE__" }
 package.files = {
     "mihl.h", "glovars.h", "mihl.cpp",
-    "tcp_utils.h", "tcp_utils.cpp"
+    "tcp_utils.h", "tcp_utils.cpp",
+    "getopt.h", "getopt.cpp"
 }
 
 package.config["Debug"].target = "lib/mihl"

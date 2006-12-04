@@ -75,7 +75,7 @@ http_root_post( connexion_t *cnx, char const *tag, char const *host,
 int
 main( int argc, char *argv[] )
 {
-    mihl_init( 8080 );
+    mihl_init( 8080, 8 );
 
     mihl_handle_get( "/", http_root, NULL );
     mihl_handle_file( "/image.jpg", "image.jpg", "image/jpeg", 0 );
