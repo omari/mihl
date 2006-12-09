@@ -522,6 +522,24 @@ mihl_dump_info( )
     mihl_log_level = MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO |
         MIHL_LOG_INFO_VERBOSE | MIHL_LOG_DEBUG;
     mihl_log( MIHL_LOG_DEBUG, "%d active connexions\015\012", nb_connexions );
+    if ( nb_connexions == 0 )
+        return 0;
+    printf( "Sockfd Client                  Start Inact\015\012" );
+    time_t now = time( NULL );
+    for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
+        connexion_t *cnx = &connexions[ncnx];
+        if ( cnx->active ) {
+            char client[20+1];
+            strncpy( client, inet_ntoa( cnx->client_addr.sin_addr ), 20 );
+            client[20] = 0; 
+            printf( "%6d %-20s %4d\" %4d\" \015\012",
+                cnx->sockfd, 
+                client, 
+                (int)(now - cnx->time_started),
+                (int)(now - cnx->time_last_data) );
+        }
+    }                           // for (connexions)
+    fflush( stdout );
     mihl_log_level = level;
     return nb_connexions;
 }                               // mihl_dump_info

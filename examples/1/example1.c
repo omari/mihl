@@ -53,6 +53,7 @@ main( int argc, char *argv[] )
         int status = mihl_server( );
         if ( status == -2 )
             break;
+        delay ( 1 );
         int key = peekch( );
         if ( key == -1 )
             continue;

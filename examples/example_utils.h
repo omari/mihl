@@ -10,10 +10,17 @@ peekch( void )
     return -1;
 }
 
+static inline void
+delay( int msec )
+{
+    Sleep( msec );
+}
+
 #else
 
-#include <termios.h>
+#define __USE_XOPEN_EXTENDED
 #include <unistd.h>
+#include <termios.h>
 #include <fcntl.h>
 
 static int initialized = 0;
@@ -76,6 +83,12 @@ peekch( void )
     if (size == 0)
         return -1;
     return ch;
+}
+
+static inline void
+delay( int msec )
+{
+    usleep( msec*1000 );
 }
 
 #endif
