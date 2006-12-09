@@ -33,7 +33,6 @@
 #include "glovars.h"
 
 #include "tcp_utils.h"
-#include "getopt.h"
 
 
 static int
