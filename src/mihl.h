@@ -21,6 +21,8 @@ typedef int (pf_handle_get_t)(connexion_t *, char const *, char const *, void *)
 
 typedef int (pf_handle_post_t)(connexion_t *, char const *, char const *, int, char **, char **, void *);
 
+PUBLIC int mihl_log( unsigned level, const char *fmt, ... );
+
 PUBLIC int mihl_init( int port, int maxnb_connexions );
 
 PUBLIC int mihl_server( );
@@ -35,5 +37,14 @@ PUBLIC int mihl_handle_post( char const *tag, pf_handle_post_t *pf, void *param 
 
 PUBLIC int mihl_handle_file( char const *tag, char const *filename, 
     char const *content_type, int close_connection );
+
+#define MIHL_LOG_ERROR          0x01
+#define MIHL_LOG_WARNING        0x02
+#define MIHL_LOG_INFO           0x04
+#define MIHL_LOG_INFO_VERBOSE   0x08
+#define MIHL_LOG_DEBUG          0x10
+PUBLIC void mihl_set_log_level( unsigned level );
+
+PUBLIC int mihl_dump_info( );
 
 #undef PUBLIC

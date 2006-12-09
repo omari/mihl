@@ -1,8 +1,10 @@
 
 #ifdef __MAIN__
 #   define GLOBAL
+#   define INIT(X) =X
 #else
 #   define GLOBAL extern
+#   define INIT(X)
 #endif
 
 #ifdef __WINDAUBE__
@@ -38,6 +40,9 @@
 GLOBAL int mihl_port;               ///< HTTP TCP port (80, 8080, etc.)
 
 GLOBAL int mihl_maxnb_connexions;   ///< Max umer of allowed connexions
+
+GLOBAL unsigned mihl_log_level
+    INIT(MIHL_LOG_ERROR);           ///< MIHL_LOG_ERROR, etc.
 
 GLOBAL SOCKET sockfd;               ///< TBD
 
