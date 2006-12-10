@@ -42,7 +42,8 @@ add_new_connexion( SOCKET sockfd, struct sockaddr_in *client_addr )
 
     // Find a new slot to store the new active connexion
     if ( nb_connexions == mihl_maxnb_connexions ) {
-        mihl_log( MIHL_LOG_INFO, "Too many connexions (%d): connexion refused\n", nb_connexions );
+        mihl_log( MIHL_LOG_INFO, "Too many connexions (%d): connexion refused\015\012", 
+            nb_connexions );
         return -1;
     }
     connexion_t *cnx = NULL;
@@ -68,18 +69,17 @@ add_new_connexion( SOCKET sockfd, struct sockaddr_in *client_addr )
     cnx->html_buffer = (char*)malloc(cnx->html_buffer_sz);  // HTML output buffer (mihl_add, mihl_send)
     strcpy( cnx->html_buffer, "" );
 
-    mihl_log( MIHL_LOG_INFO_VERBOSE, "\nAccepted a connexion from %s, socket=%d\n",
+    mihl_log( MIHL_LOG_INFO_VERBOSE, "\015\012Accepted a connexion from %s, socket=%d\015\012",
 		  inet_ntoa( cnx->client_addr.sin_addr ), sockfd );
     
     return nb_connexions-1;
-
 }                               // add_new_connexion
 
 
 static void
 delete_connexion( connexion_t *cnx )
 {
-    mihl_log( MIHL_LOG_INFO_VERBOSE, "Delete connexion for socket %d\n", cnx->sockfd );
+    mihl_log( MIHL_LOG_INFO_VERBOSE, "Delete connexion for socket %d\015\012", cnx->sockfd );
 	shutdown( cnx->sockfd, SHUT_RDWR );	    // Close the connection
     closesocket( cnx->sockfd );
     cnx->active = 0;
@@ -96,7 +96,7 @@ bind_and_listen( )
     WSADATA wsaData;
     int iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
     if ( iResult != NO_ERROR ) {
-        mihl_log( MIHL_LOG_ERROR, "Error at WSAStartup()\n" );
+        mihl_log( MIHL_LOG_ERROR, "Error at WSAStartup()\015\012" );
         exit( -1 );
     }
 #endif
@@ -104,14 +104,14 @@ bind_and_listen( )
     // Create sockets for the telnet and http connections
 	sockfd = socket( AF_INET, SOCK_STREAM, 0 );
 	if ( sockfd < 0 ) {
-		mihl_log( MIHL_LOG_ERROR, "Unable to open a socket!\n" );
+		mihl_log( MIHL_LOG_ERROR, "Unable to open a socket!\015\012" );
         exit( -1 );
     }
 
     // Set the option SO_REUSEADDR
     const int flag = 1;
     if ( setsockopt( sockfd, SOL_SOCKET, SO_REUSEADDR, (const char *)&flag, sizeof( flag ) ) < 0 ) {
-		mihl_log( MIHL_LOG_ERROR, "Unable to setsockopt a socket!\n" );
+		mihl_log( MIHL_LOG_ERROR, "Unable to setsockopt a socket!\015\012" );
         exit( -1 );
     }
 
@@ -119,7 +119,7 @@ bind_and_listen( )
 #ifdef __WINDAUBE__
     unsigned long cmd = 1;
     if ( ioctlsocket( sockfd, FIONBIO, &cmd ) != 0 ) {
-		mihl_log( MIHL_LOG_ERROR, "Unable to fcntl a socket:FIONBIO !\n" );
+		mihl_log( MIHL_LOG_ERROR, "Unable to fcntl a socket:FIONBIO !\015\012" );
         exit( -1 );
     }
 #else
@@ -134,21 +134,21 @@ bind_and_listen( )
 	server_addr.sin_port = htons( mihl_port );
 	int status = bind( sockfd, ( struct sockaddr * ) &server_addr, sizeof( struct sockaddr_in ) );
     if ( (status == SOCKET_ERROR) && (ERRNO == EADDRINUSE) ) {
-		mihl_log( MIHL_LOG_ERROR, "%s %d\n\tUnable to bind, port %d is already in use\n",
+		mihl_log( MIHL_LOG_ERROR, "%s %d\015\012\tUnable to bind, port %d is already in use\015\012",
 		   __FILE__, __LINE__, 
 		   mihl_port );
 		if ( closesocket( sockfd ) == -1 )
-			mihl_log( MIHL_LOG_ERROR, "Error %d while closing socket %d\n", 
+			mihl_log( MIHL_LOG_ERROR, "Error %d while closing socket %d\015\012", 
 				errno, sockfd );
 		return -1;
 	}
 	if ( status < 0 ) {
-		mihl_log( MIHL_LOG_ERROR, "%s %d\nUnable to bind - port %d - status=%d errno=%s\n",
+		mihl_log( MIHL_LOG_ERROR, "%s %d\015\012Unable to bind - port %d - status=%d errno=%s\015\012",
 			__FILE__, __LINE__,
 			mihl_port,
 			status, strerror( errno ) );
 		if ( closesocket( sockfd ) == -1 )
-			mihl_log( MIHL_LOG_ERROR, "Error %d while closing socket %d\n", 
+			mihl_log( MIHL_LOG_ERROR, "Error %d while closing socket %d\015\012", 
 				errno, sockfd );
 		return -1;
 	}
@@ -170,7 +170,6 @@ page_not_found( connexion_t *cnx, char const *tag, char const *host, void *param
     mihl_add(  cnx, "</body>" );
     mihl_add(  cnx, "</html>" );
     return mihl_send( cnx,
-		"HTTP/1.1 200 OK\r\n"
 		"Content-type: text/html\r\n" );
 }                               // page_not_found
 
@@ -229,7 +228,7 @@ send_file( connexion_t *cnx, char *tag, char *filename,
             (close_connection) ? "close" : "keep-alive" );
 	int dcount = tcp_write( cnx->sockfd, msg1, len );
     if ( dcount == -1 ) {
-        mihl_log( MIHL_LOG_ERROR, "\n*** %s %d: OOPS - %m!!!!!\n", __FILE__, __LINE__ );
+        mihl_log( MIHL_LOG_ERROR, "\015\012*** %s %d: OOPS - %m!!!!!\015\012", __FILE__, __LINE__ );
         return -1;
     }
 
@@ -239,7 +238,7 @@ send_file( connexion_t *cnx, char *tag, char *filename,
         int count = MIN( rem, 16384 ); 
 	    dcount = tcp_write( cnx->sockfd, (const char *)p, count );
         if ( dcount == -1 ) {
-            mihl_log( MIHL_LOG_ERROR, "\n*** %s %d: - %m!!!!!\n", __FILE__, __LINE__ );
+            mihl_log( MIHL_LOG_ERROR, "\015\012*** %s %d: - %m!!!!!\015\012", __FILE__, __LINE__ );
             return -1;
         }
         rem -= count;
@@ -289,13 +288,13 @@ manage_new_connexions( )
             if ( (ERRNO == EAGAIN) || (ERRNO == EWOULDBLOCK) )
                 return 0;
 		    if ( errno == EINTR ) {	// A signal has been applied
-                mihl_log( MIHL_LOG_ERROR, "!!! %d !!!\n", __LINE__ );
+                mihl_log( MIHL_LOG_ERROR, "!!! %d !!!\015\012", __LINE__ );
 //              Sleep( 500 );
 			    continue;
             }
-		    mihl_log( MIHL_LOG_ERROR, "Socket non accepted - errno=%d\n", ERRNO );
+		    mihl_log( MIHL_LOG_ERROR, "Socket non accepted - errno=%d\015\012", ERRNO );
 		    if ( closesocket( sockfd ) == -1 ) {
-			    mihl_log( MIHL_LOG_ERROR, "Error %d while closing socket %d\n", errno, sockfd );
+			    mihl_log( MIHL_LOG_ERROR, "Error %d while closing socket %d\015\012", errno, sockfd );
             }
 		    exit( -1 );
         }                       // if
@@ -310,8 +309,7 @@ got_data_for_active_connexion( connexion_t *cnx )
 {
 
     int len = tcp_read( cnx->sockfd, read_buffer, read_buffer_maxlen );
-static int cpt = 0;
-    mihl_log( MIHL_LOG_DEBUG, "\n%d,%d:[%s]\n", ++cpt, cnx->sockfd, read_buffer );
+    mihl_log( MIHL_LOG_DEBUG, "\015\012%d:[%s]\015\012", cnx->sockfd, read_buffer );
 
     if ( len == 0 ) {
         cnx->time_last_data = 0;    // Force closing the connection on manage_timedout_connexions()

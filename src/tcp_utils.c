@@ -37,7 +37,6 @@
 int
 tcp_read( SOCKET sockfd, char *buffer, int maxlen )
 {
-
     maxlen--;
 	int dcount;
     int index = 0;
@@ -45,16 +44,32 @@ tcp_read( SOCKET sockfd, char *buffer, int maxlen )
 	for ( ;; ) {
         errno = 0;
 		dcount = recv( sockfd, &buffer[index], maxlen-index, 0 );
-		if ( ( dcount == -1 ) && ( errno == EINTR ) ) {
+		if ( (dcount == -1) && (errno == EINTR) ) {
             printf( "%s %d : >>> %d <<<<\n", __FILE__, __LINE__, ERRNO );
             Sleep( 1000 );
 			continue;
         }
+#ifndef __WINDAUBE__
+		if ( (dcount == -1) && (errno == ECONNRESET) ) {
+            dcount = 0;
+			break;
+        }
+#else
+		if ( (dcount == -1) && ((ERRNO == WSAECONNABORTED) || (ERRNO == WSAECONNRESET)) ) {
+            dcount = 0;
+			break;
+        }
+#endif
         if ( dcount == 0 ) {
 //          printf( "%s %d : !!! %d: maxlen=%d index=%d errno=%d !!!\n", 
 //              __FILE__, __LINE__, errcnt, maxlen, index, ERRNO );
             buffer[dcount+index] = 0;
             return dcount+index;
+        }
+        if ( dcount == -1 ) {
+            printf( "\n%d\n", ERRNO );
+            fflush( stdout );
+            assert( 0 );
         }
         if ( dcount+index == maxlen )
             break;
@@ -64,7 +79,7 @@ tcp_read( SOCKET sockfd, char *buffer, int maxlen )
 	    FD_ZERO( &ready );
 	    FD_SET( sockfd, &ready );
 	    tv.tv_sec  = 0;
-	    tv.tv_usec = 0;
+	    tv.tv_usec = 1;
 	    int status = select( (int)sockfd+1, &ready, NULL, NULL, &tv );
 	    if ( (status <= 0) || !FD_ISSET( sockfd, &ready ) )
             break;
@@ -73,7 +88,6 @@ tcp_read( SOCKET sockfd, char *buffer, int maxlen )
 
     buffer[dcount+index] = 0;
 	return dcount+index;
-
 }                               // tcp_read
 
 
@@ -224,13 +238,15 @@ int
 mihl_send( connexion_t *cnx, char const *fmt_header, ... )
 {
     char header[2048];
+    char ok200[] = "HTTP/1.1 200 OK\r\n";
+    strcpy( header, ok200 );
 	va_list ap;
 	va_start( ap, fmt_header );
-	int len1 = vsnprintf( header, 1768, fmt_header, ap );
+	int len1 = vsnprintf( &header[sizeof(ok200)-1], 1768, fmt_header, ap );
 	va_end( ap );
-    int len2 = sprintf( &header[len1], "Content-Length: %d\r\n\r\n",
+    int len2 = sprintf( &header[sizeof(ok200)-1+len1], "Content-Length: %d\r\n\r\n",
         cnx->html_buffer_len );
-	int count = tcp_write( cnx->sockfd, header, len1+len2 );
+	int count = tcp_write( cnx->sockfd, header, sizeof(ok200)-1+len1+len2 );
     if ( count == -1 ) {
         printf( "\n>>> %s %d: OOPS %d!!!!!\n", __FILE__, __LINE__, ERRNO );
         fflush( stdout );

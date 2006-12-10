@@ -18,7 +18,6 @@ http_root( connexion_t *cnx, char const *tag, char const *host, void *param )
     mihl_add( cnx, "</body>" );
     mihl_add( cnx, "</html>" );
     mihl_send( cnx,
-		"HTTP/1.1 200 OK\r\n"
 		"Content-type: text/html\r\n" );
     return 0;
 }
@@ -33,7 +32,6 @@ http_nextpage( connexion_t *cnx, char const *tag, char const *host, void *param 
     mihl_add( cnx, "</body>" );
     mihl_add( cnx, "</html>" );
     mihl_send( cnx,
-		"HTTP/1.1 200 OK\r\n"
 		"Content-type: text/html\r\n" );
     return 0;
 }

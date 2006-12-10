@@ -104,7 +104,6 @@ http_root( connexion_t *cnx, char const *tag, char const *host, void *param )
 
     mihl_add( cnx, "</html>" );
     mihl_send( cnx,
-		"HTTP/1.1 200 OK\r\n"
 		"Content-type: text/html\r\n" );
     return 0;
 }                               // http_root
@@ -117,7 +116,6 @@ http_data( connexion_t *cnx, char const *tag, char const *host, void *param )
     static int cpts[3] = { 0, 0, 0 };
     mihl_add( cnx, "cpt=%d", cpts[index]++ );
     mihl_send( cnx,
-		"HTTP/1.1 200 OK\r\n"
 		"Content-type: text/xml\r\n" );
     return 0;
 }                               // http_data

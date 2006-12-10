@@ -23,6 +23,8 @@
 
     typedef unsigned int uint32_t;
 
+#   define MSG_NOSIGNAL 0
+
 #else
 
 #   define ERRNO errno
