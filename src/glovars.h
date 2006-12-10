@@ -52,6 +52,7 @@ struct connexion {
 	struct sockaddr_in client_addr;     // TBD
     time_t time_started;                // When the connexion started
     time_t time_last_data;              // When was last time we go incoming data ? (used for timedout enx closing)
+    char last_request[64];              // Last HTTP request
     char *host;                         // 'Host:'
     char *user_agent;                   // 'User-Agent:'
     int keep_alive;                     // 'Keep-Alive:'

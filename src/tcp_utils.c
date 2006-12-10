@@ -110,7 +110,13 @@ tcp_write( SOCKET sockfd, const char *buff, int buff_len )
 	    }
 #endif
 
-		int dcount = send( sockfd, (const char *)pbuff, len, 0 );
+		int dcount = send( sockfd, (const char *)pbuff, len, MSG_NOSIGNAL );
+
+        if ( (dcount == -1) && (errno == EPIPE) ) {
+            printf( "%s %d : >>> %d <<<<\n", __FILE__, __LINE__, ERRNO );
+            fflush( stdout );
+			return -1;
+        }
 
         if ( (dcount == -1) && (ERRNO == ECONNRESET) ) {
             printf( "%s %d : >>> %d <<<<\n", __FILE__, __LINE__, ERRNO );
@@ -138,6 +144,8 @@ decode_keys_values( connexion_t *cnx, char *_request,
     int *nb_options, char *options_names[], char *options_values[], int maxnb_options,
     int *nb_variables, char *vars_names[], char *vars_values[], int maxnb_values )
 {
+    *nb_options = 0;
+    *nb_variables = 0;
     int l = (int)strlen(_request);
     if ( l == 0 )
         return;
@@ -145,8 +153,6 @@ decode_keys_values( connexion_t *cnx, char *_request,
     strcpy( request, _request );
     char *eol = strstr(  request, "\r\n" );
     char *line = request;
-    *nb_options = 0;
-    *nb_variables = 0;
     while ( eol && (*nb_options < maxnb_options) ) {
         *eol = 0;
         eol += 2;

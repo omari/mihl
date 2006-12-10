@@ -1,5 +1,6 @@
 #ifdef __WINDAUBE__
 
+#include <windows.h>
 #include <conio.h>
 
 static int

@@ -59,6 +59,7 @@ add_new_connexion( SOCKET sockfd, struct sockaddr_in *client_addr )
     memmove( &cnx->client_addr, client_addr, sizeof(struct sockaddr_in) );
     cnx->time_started = time( NULL );
     cnx->time_last_data = cnx->time_started;
+    strcpy( cnx->last_request, "" );
     cnx->host = NULL;                     // 'Host:'
     cnx->user_agent = NULL;               // 'User-Agent:'
     cnx->keep_alive = 300;                // Default timeout
@@ -168,10 +169,9 @@ page_not_found( connexion_t *cnx, char const *tag, char const *host, void *param
     mihl_add(  cnx, "<br>" );
     mihl_add(  cnx, "</body>" );
     mihl_add(  cnx, "</html>" );
-    mihl_send( cnx,
+    return mihl_send( cnx,
 		"HTTP/1.1 200 OK\r\n"
 		"Content-type: text/html\r\n" );
-    return 0;
 }                               // page_not_found
 
 
@@ -310,7 +310,8 @@ got_data_for_active_connexion( connexion_t *cnx )
 {
 
     int len = tcp_read( cnx->sockfd, read_buffer, read_buffer_maxlen );
-    mihl_log( MIHL_LOG_DEBUG, "\n%d:[%s]\n", cnx->sockfd, read_buffer );
+static int cpt = 0;
+    mihl_log( MIHL_LOG_DEBUG, "\n%d,%d:[%s]\n", ++cpt, cnx->sockfd, read_buffer );
 
     if ( len == 0 ) {
         cnx->time_last_data = 0;    // Force closing the connection on manage_timedout_connexions()
@@ -327,8 +328,10 @@ got_data_for_active_connexion( connexion_t *cnx )
         char _tag[1024];
 		int status = sscanf( read_buffer, "GET %s HTTP/%d.%d",
 			_tag, &version, &subversion );
-        if ( status == 3 )
+        if ( status == 3 ) {
             strncpy( tag, _tag, sizeof(tag)-1 );
+            strncpy( cnx->last_request, tag, sizeof(cnx->last_request)-1 );
+        }
     }
        
     /*
@@ -524,7 +527,7 @@ mihl_dump_info( )
     mihl_log( MIHL_LOG_DEBUG, "%d active connexions\015\012", nb_connexions );
     if ( nb_connexions == 0 )
         return 0;
-    printf( "Sockfd Client                  Start Inact\015\012" );
+    printf( "Sockfd Client               Start Inact Last Request\015\012" );
     time_t now = time( NULL );
     for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
         connexion_t *cnx = &connexions[ncnx];
@@ -532,11 +535,12 @@ mihl_dump_info( )
             char client[20+1];
             strncpy( client, inet_ntoa( cnx->client_addr.sin_addr ), 20 );
             client[20] = 0; 
-            printf( "%6d %-20s %4d\" %4d\" \015\012",
+            printf( "%6d %-20s %4d\" %4d\" %s\015\012",
                 cnx->sockfd, 
                 client, 
                 (int)(now - cnx->time_started),
-                (int)(now - cnx->time_last_data) );
+                (int)(now - cnx->time_last_data),
+                cnx->last_request );
         }
     }                           // for (connexions)
     fflush( stdout );
