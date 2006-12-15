@@ -124,7 +124,7 @@ http_data( connexion_t *cnx, char const *tag, char const *host, void *param )
 int
 main( int argc, char *argv[] )
 {
-    mihl_init( 8080, 8 );
+    mihl_init( NULL, 8080, 8 );
 
     mihl_handle_get( "/", http_root, NULL );
     mihl_handle_get( "/data1", http_data, (void *)0 );

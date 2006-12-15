@@ -23,7 +23,9 @@ typedef int (pf_handle_post_t)(connexion_t *, char const *, char const *, int, c
 
 PUBLIC int mihl_log( unsigned level, const char *fmt, ... );
 
-PUBLIC int mihl_init( int port, int maxnb_connexions );
+PUBLIC int mihl_init( char const *bind_addr, int port, int maxnb_connexions );
+
+PUBLIC int mihl_end( void );
 
 PUBLIC int mihl_server( );
 

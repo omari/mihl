@@ -130,7 +130,10 @@ bind_and_listen( )
 	struct sockaddr_in server_addr;
 	memset( &server_addr, 0, sizeof( server_addr ) );
 	server_addr.sin_family = AF_INET;
-	server_addr.sin_addr.s_addr = htonl( INADDR_ANY );
+    if ( !strcmp( mihl_bind_addr, "" ) )
+    	server_addr.sin_addr.s_addr = htonl( INADDR_ANY );
+    else
+    	server_addr.sin_addr.s_addr = inet_addr(mihl_bind_addr);
 	server_addr.sin_port = htons( mihl_port );
 	int status = bind( sockfd, ( struct sockaddr * ) &server_addr, sizeof( struct sockaddr_in ) );
     if ( (status == SOCKET_ERROR) && (ERRNO == EADDRINUSE) ) {
@@ -175,8 +178,12 @@ page_not_found( connexion_t *cnx, char const *tag, char const *host, void *param
 
 
 int
-mihl_init( int port, int maxnb_connexions )
+mihl_init( char const *bind_addr, int port, int maxnb_connexions )
 {
+    if ( !bind_addr )
+        strcpy( mihl_bind_addr, "" );
+    else
+        strncpy( mihl_bind_addr, bind_addr, sizeof(mihl_bind_addr) );
     mihl_port = port;
     mihl_maxnb_connexions = maxnb_connexions;
 
@@ -198,6 +205,13 @@ mihl_init( int port, int maxnb_connexions )
 
     return 0;
 }                               // mihl_init
+
+
+int
+mihl_end( void )
+{
+    return 0;
+}                               // mihl_end
 
 
 static int

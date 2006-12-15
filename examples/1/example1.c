@@ -41,7 +41,7 @@ main( int argc, char *argv[] )
 {
     mihl_set_log_level( MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO |
         MIHL_LOG_INFO_VERBOSE | MIHL_LOG_DEBUG );
-    mihl_init( 8080, 8 );
+    mihl_init( NULL, 8080, 8 );
 
     mihl_handle_get( "/", http_root, NULL );
     mihl_handle_file( "/image.jpg", "image.jpg", "image/jpeg", 0 );

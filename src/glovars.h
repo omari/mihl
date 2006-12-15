@@ -39,6 +39,8 @@
 #endif
 
 
+GLOBAL char mihl_bind_addr[32];     ///< HTTP bind address
+
 GLOBAL int mihl_port;               ///< HTTP TCP port (80, 8080, etc.)
 
 GLOBAL int mihl_maxnb_connexions;   ///< Max umer of allowed connexions
