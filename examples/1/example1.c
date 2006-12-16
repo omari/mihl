@@ -43,8 +43,7 @@ main( int argc, char *argv[] )
 {
     help( );
 
-    int vlog = MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO |
-        MIHL_LOG_INFO_VERBOSE | MIHL_LOG_DEBUG;
+    int vlog = MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO | MIHL_LOG_INFO_VERBOSE;
     mihl_set_log_level( vlog );
     mihl_init( NULL, 8080, 8 );
 

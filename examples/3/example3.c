@@ -1,14 +1,11 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#ifdef __WINDAUBE__
-#   include <windows.h>
-#else
-#   include <unistd.h>
-#endif
+#include <string.h>
 
 #include "mihl.h"
+
+#include "../example_utils.h"
 
 int
 http_root( connexion_t *cnx, char const *tag, char const *host, void *param )
@@ -124,6 +121,10 @@ http_data( connexion_t *cnx, char const *tag, char const *host, void *param )
 int
 main( int argc, char *argv[] )
 {
+    help( );
+
+    int vlog = MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO | MIHL_LOG_INFO_VERBOSE;
+    mihl_set_log_level( vlog );
     mihl_init( NULL, 8080, 8 );
 
     mihl_handle_get( "/", http_root, NULL );
@@ -137,11 +138,8 @@ main( int argc, char *argv[] )
         int status = mihl_server( );
         if ( status == -2 )
             break;
-#ifdef __WINDAUBE__
-        Sleep( 0 );
-#else
-        usleep( 1000 );
-#endif
+        if ( peek_key( &vlog ) )
+            break;
     }
     
     return 0;

@@ -1,9 +1,11 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #include "mihl.h"
+
+#include "../example_utils.h"
 
 int
 http_root( connexion_t *cnx, char const *tag, char const *host, void *param )
@@ -74,6 +76,10 @@ http_root_post( connexion_t *cnx, char const *tag, char const *host,
 int
 main( int argc, char *argv[] )
 {
+    help( );
+
+    int vlog = MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO | MIHL_LOG_INFO_VERBOSE;
+    mihl_set_log_level( vlog );
     mihl_init( NULL, 8080, 8 );
 
     mihl_handle_get( "/", http_root, NULL );
@@ -83,6 +89,8 @@ main( int argc, char *argv[] )
     for (;;) {
         int status = mihl_server( );
         if ( status == -2 )
+            break;
+        if ( peek_key( &vlog ) )
             break;
     }
     

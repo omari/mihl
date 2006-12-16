@@ -306,7 +306,17 @@ got_data_for_active_connexion( connexion_t *cnx )
 {
 
     int len = tcp_read( cnx->sockfd, read_buffer, read_buffer_maxlen );
-    mihl_log( MIHL_LOG_DEBUG, "\015\012%d:[%s]\015\012", cnx->sockfd, read_buffer );
+    if ( mihl_log_level & MIHL_LOG_DEBUG ) {
+        mihl_log( MIHL_LOG_DEBUG, "\015\012%d:[%s]\015\012", cnx->sockfd, read_buffer );
+    }
+    else {
+        char *p = strchr( read_buffer, '\015' );
+        if ( p )
+            *p = 0;
+        mihl_log( MIHL_LOG_INFO_VERBOSE, "[%s]\015\012", read_buffer );
+        if ( p )
+            *p = '\015';
+    }
 
     if ( len == 0 ) {
         cnx->info.time_last_data = 0;    // Force closing the connection on manage_timedout_connexions()
