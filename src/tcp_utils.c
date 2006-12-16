@@ -194,9 +194,9 @@ decode_keys_values( connexion_t *cnx, char *_request,
         char *value = options_values[n];
 //      printf( "    %d: '%s' : '%s'\n", n, key, value );
         if ( !strcmp( key, "Host" ) )
-            cnx->host = strdup( value );
+            cnx->info.host = strdup( value );
         else if ( !strcmp( key, "User-Agent" ) )
-            cnx->user_agent = strdup( value );
+            cnx->info.user_agent = strdup( value );
         else if ( !strcmp( key, "Keep-Alive" ) )
             cnx->keep_alive = atoi( value );
         else if ( !strcmp( key, "Connection" ) ) {

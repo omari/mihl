@@ -10,23 +10,6 @@
 #include <fcntl.h>
 #include <stdarg.h>
 
-#ifdef __WINDAUBE__
-#   define _WIN32_WINNT 0x0500
-#   include <winsock2.h>
-#   include <Mswsock.h>
-#   include <windows.h>
-#   include <io.h>
-#else
-#   include <unistd.h>
-#   include <sys/select.h>
-#   include <sys/types.h>
-#   include <sys/socket.h>
-#   include <netinet/in.h>
-#   include <arpa/inet.h>
-#   include <netdb.h>
-#   include <stdint.h>
-#endif
-
 #define BUILD_DLL_MIHL
 #include "mihl.h"
 
@@ -57,20 +40,20 @@ add_new_connexion( SOCKET sockfd, struct sockaddr_in *client_addr )
 
     cnx->active = 1;    
     cnx->sockfd = sockfd;
-    memmove( &cnx->client_addr, client_addr, sizeof(struct sockaddr_in) );
-    cnx->time_started = time( NULL );
-    cnx->time_last_data = cnx->time_started;
-    strcpy( cnx->last_request, "" );
-    cnx->host = NULL;                     // 'Host:'
-    cnx->user_agent = NULL;               // 'User-Agent:'
-    cnx->keep_alive = 300;                // Default timeout
+    memmove( &cnx->info.client_addr, client_addr, sizeof(struct sockaddr_in) );
+    cnx->info.time_started = time( NULL );
+    cnx->info.time_last_data = cnx->info.time_started;
+    cnx->info.last_request = NULL;
+    cnx->info.host = NULL;              // 'Host:'
+    cnx->info.user_agent = NULL;        // 'User-Agent:'
+    cnx->keep_alive = 300;              // Default timeout
     cnx->html_buffer_len = 0;                               // Current length
     cnx->html_buffer_sz = 8192;                             // Length allocated (8K increment)
     cnx->html_buffer = (char*)malloc(cnx->html_buffer_sz);  // HTML output buffer (mihl_add, mihl_send)
     strcpy( cnx->html_buffer, "" );
 
     mihl_log( MIHL_LOG_INFO_VERBOSE, "\015\012Accepted a connexion from %s, socket=%d\015\012",
-		  inet_ntoa( cnx->client_addr.sin_addr ), sockfd );
+		  inet_ntoa( cnx->info.client_addr.sin_addr ), sockfd );
     
     return nb_connexions-1;
 }                               // add_new_connexion
@@ -88,7 +71,7 @@ delete_connexion( connexion_t *cnx )
 
 
 static int
-bind_and_listen( )
+bind_and_listen( void )
 {
 
 #ifdef __WINDAUBE__
@@ -290,7 +273,7 @@ search_for_handle( connexion_t *cnx, uint32_t type, char *tag, char *host,
 
 
 static int
-manage_new_connexions( )
+manage_new_connexions( void )
 {
     for (;;) {
 	    socklen_t client_addr_len = sizeof( struct sockaddr_in );
@@ -326,10 +309,10 @@ got_data_for_active_connexion( connexion_t *cnx )
     mihl_log( MIHL_LOG_DEBUG, "\015\012%d:[%s]\015\012", cnx->sockfd, read_buffer );
 
     if ( len == 0 ) {
-        cnx->time_last_data = 0;    // Force closing the connection on manage_timedout_connexions()
+        cnx->info.time_last_data = 0;    // Force closing the connection on manage_timedout_connexions()
         return -1;
     }
-    cnx->time_last_data = time( NULL );
+    cnx->info.time_last_data = time( NULL );
 
     /*
      */
@@ -342,7 +325,7 @@ got_data_for_active_connexion( connexion_t *cnx )
 			_tag, &version, &subversion );
         if ( status == 3 ) {
             strncpy( tag, _tag, sizeof(tag)-1 );
-            strncpy( cnx->last_request, tag, sizeof(cnx->last_request)-1 );
+            cnx->info.last_request = strdup(tag);
         }
     }
        
@@ -357,7 +340,7 @@ got_data_for_active_connexion( connexion_t *cnx )
         &nb_options, options_names, options_values, 50,
         &nb_variables, vars_names, vars_values, 50 );
 
-    search_for_handle( cnx, 'GET', tag, cnx->host, 0, NULL, NULL );
+    search_for_handle( cnx, 'GET', tag, cnx->info.host, 0, NULL, NULL );
 
     // Clean-up keys/values pairs
     for ( int n = 0; n < nb_options; n++ ) {
@@ -370,7 +353,7 @@ got_data_for_active_connexion( connexion_t *cnx )
 
 
 static int
-manage_existent_connexions( )
+manage_existent_connexions( void )
 {
 
     if ( nb_connexions == 0 )
@@ -416,14 +399,14 @@ manage_existent_connexions( )
 
 
 static int
-manage_timedout_connexions( )
+manage_timedout_connexions( void )
 {
     time_t now = time( NULL );
     for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
         connexion_t *cnx = &connexions[ncnx];
         if ( !cnx->active )
             continue;
-        int t = (int)difftime( now, cnx->time_last_data );
+        int t = (int)difftime( now, cnx->info.time_last_data );
         if ( t >= cnx->keep_alive ) 
             delete_connexion( cnx );
     }                           // for (connexions)
@@ -501,7 +484,7 @@ mihl_handle_file( char const *tag, char const *filename,
 
 
 int
-mihl_server( )
+mihl_server( void )
 {
     manage_new_connexions( );
     manage_existent_connexions( );
@@ -545,17 +528,35 @@ mihl_dump_info( )
         connexion_t *cnx = &connexions[ncnx];
         if ( cnx->active ) {
             char client[20+1];
-            strncpy( client, inet_ntoa( cnx->client_addr.sin_addr ), 20 );
+            strncpy( client, inet_ntoa( cnx->info.client_addr.sin_addr ), 20 );
             client[20] = 0; 
             printf( "%6d %-20s %4d\" %4d\" %s\015\012",
                 cnx->sockfd, 
                 client, 
-                (int)(now - cnx->time_started),
-                (int)(now - cnx->time_last_data),
-                cnx->last_request );
+                (int)(now - cnx->info.time_started),
+                (int)(now - cnx->info.time_last_data),
+                cnx->info.last_request );
         }
     }                           // for (connexions)
     fflush( stdout );
     mihl_log_level = level;
     return nb_connexions;
 }                               // mihl_dump_info
+
+
+int 
+mihl_info( int maxnb_cnxinfos, mihl_cnxinfo_t *infos )
+{
+    if ( maxnb_cnxinfos <= 0 )
+        return 0;
+    int nb_cnxinfos = 0;
+    for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
+        connexion_t *cnx = &connexions[ncnx];
+        if ( !cnx->active ) 
+            continue;
+        memmove( &infos[nb_cnxinfos++], &cnx->info, sizeof(mihl_cnxinfo_t) );
+        if ( nb_cnxinfos == maxnb_cnxinfos )
+            break;
+    }                           // for (connexions)
+    return nb_cnxinfos;
+}                               // mihl_info

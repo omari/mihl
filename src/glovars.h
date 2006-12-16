@@ -38,6 +38,9 @@
 
 #endif
 
+#define STRNCPY( DST, SRC, LEN ) \
+    strncpy( DST, SRC, LEN-1 ); \
+    DST[LEN-1] = 0;
 
 GLOBAL char mihl_bind_addr[32];     ///< HTTP bind address
 
@@ -53,12 +56,7 @@ GLOBAL SOCKET sockfd;               ///< TBD
 struct connexion {
     int active;                         // Is this connexion active ?
     SOCKET sockfd;                      // Socked (as returned by accept)
-	struct sockaddr_in client_addr;     // TBD
-    time_t time_started;                // When the connexion started
-    time_t time_last_data;              // When was last time we go incoming data ? (used for timedout enx closing)
-    char last_request[64];              // Last HTTP request
-    char *host;                         // 'Host:'
-    char *user_agent;                   // 'User-Agent:'
+    mihl_cnxinfo_t info;                // Exporteable information
     int keep_alive;                     // 'Keep-Alive:'
     int is_keep_alive;                  // 'Connection:'
     char *html_buffer;                  // HTML output buffer (mihl_add, mihl_send)

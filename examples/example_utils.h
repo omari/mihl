@@ -19,7 +19,6 @@ delay( int msec )
 
 #else
 
-#define __USE_XOPEN_EXTENDED
 #include <unistd.h>
 #include <termios.h>
 #include <fcntl.h>
