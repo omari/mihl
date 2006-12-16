@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "../example_utils.h"
-
 #include "mihl.h"
+
+#include "../example_utils.h"
 
 int
 http_root( connexion_t *cnx, char const *tag, char const *host, void *param )
@@ -34,37 +34,29 @@ http_nextpage( connexion_t *cnx, char const *tag, char const *host, void *param 
     mihl_send( cnx,
 		"Content-type: text/html\r\n" );
     return 0;
-}
+}                               // http_nextpage
+
 
 int
 main( int argc, char *argv[] )
 {
-    mihl_set_log_level( MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO |
-        MIHL_LOG_INFO_VERBOSE | MIHL_LOG_DEBUG );
+    help( );
+
+    int vlog = MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO |
+        MIHL_LOG_INFO_VERBOSE | MIHL_LOG_DEBUG;
+    mihl_set_log_level( vlog );
     mihl_init( NULL, 8080, 8 );
 
     mihl_handle_get( "/", http_root, NULL );
     mihl_handle_file( "/image.jpg", "image.jpg", "image/jpeg", 0 );
     mihl_handle_get( "/nextpage.html", http_nextpage, NULL );
 
-    for ( int bye = 0; !bye; ) {
+    for (;;) {
         int status = mihl_server( );
         if ( status == -2 )
             break;
-        delay ( 1 );
-        int key = peekch( );
-        if ( key == -1 )
-            continue;
-        switch ( key ) {
-            case 'q' : 
-            case 'Q' : 
-                bye = 1; 
-                break;
-            case 'i' :
-            case 'I' :
-                mihl_dump_info( );
-                break;
-        }
+        if ( peek_key( &vlog ) )
+            break;
     }
     
     return 0;

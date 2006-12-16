@@ -93,3 +93,44 @@ delay( int msec )
 }
 
 #endif
+
+
+static void
+help( void ) 
+{
+    printf( "x : eXit aplication\n" );
+    printf( "i : dump Information\n" );
+    printf( "v : toggle VERBOSE mode\n" );
+    printf( "d : toggle DEBUG mode\n" );
+}                               // help
+
+
+static int
+peek_key( int *vlog )
+{
+    delay ( 1 );
+    int key = peekch( );
+    switch ( key ) {
+        case 'x' : 
+        case 'X' : 
+            return 1; 
+            break;
+        case 'i' :
+        case 'I' :
+            mihl_dump_info( );
+            break;
+        case 'v' :
+        case 'V' :
+            *vlog ^= MIHL_LOG_INFO_VERBOSE;
+            printf( "verbose:%s\015\012", (*vlog & MIHL_LOG_INFO_VERBOSE) ? "ON" : "OFF" );
+            mihl_set_log_level( *vlog );
+            break;
+        case 'd' :
+        case 'D' :
+            *vlog ^= MIHL_LOG_DEBUG;
+            printf( "debug:%s\015\012", (*vlog & MIHL_LOG_DEBUG) ? "ON" : "OFF" );
+            mihl_set_log_level( *vlog );
+            break;
+    }
+    return 0;
+}                               // peek_key
