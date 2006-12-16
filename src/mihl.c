@@ -29,7 +29,7 @@ add_new_connexion( SOCKET sockfd, struct sockaddr_in *client_addr )
             nb_connexions );
         return -1;
     }
-    connexion_t *cnx = NULL;
+    mihl_connection_t *cnx = NULL;
     for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
         cnx = &connexions[ncnx];
         if ( !cnx->active )
@@ -60,7 +60,7 @@ add_new_connexion( SOCKET sockfd, struct sockaddr_in *client_addr )
 
 
 static void
-delete_connexion( connexion_t *cnx )
+delete_connexion( mihl_connection_t *cnx )
 {
     mihl_log( MIHL_LOG_INFO_VERBOSE, "Delete connexion for socket %d\015\012", cnx->sockfd );
 	shutdown( cnx->sockfd, SHUT_RDWR );	    // Close the connection
@@ -145,7 +145,7 @@ bind_and_listen( void )
 
 
 static int
-page_not_found( connexion_t *cnx, char const *tag, char const *host, void *param )
+page_not_found( mihl_connection_t *cnx, char const *tag, char const *host, void *param )
 {
     mihl_add(  cnx, "<html>" );
     mihl_add(  cnx, "<head>" );
@@ -171,9 +171,9 @@ mihl_init( char const *bind_addr, int port, int maxnb_connexions )
     mihl_maxnb_connexions = maxnb_connexions;
 
     nb_connexions = 0;          // Number of current connexions
-    connexions = (connexion_t *) malloc( sizeof(connexion_t) * mihl_maxnb_connexions );
+    connexions = (mihl_connection_t *) malloc( sizeof(mihl_connection_t) * mihl_maxnb_connexions );
     for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
-        connexion_t *cnx = &connexions[ncnx];
+        mihl_connection_t *cnx = &connexions[ncnx];
         cnx->active = 0;
     }                           // for (connexions)
 
@@ -198,7 +198,7 @@ mihl_end( void )
 
 
 static int
-send_file( connexion_t *cnx, char *tag, char *filename, 
+send_file( mihl_connection_t *cnx, char *tag, char *filename, 
     char *content_type, int close_connection )
 {
     char *file;
@@ -250,7 +250,7 @@ send_file( connexion_t *cnx, char *tag, char *filename,
 
 
 static int
-search_for_handle( connexion_t *cnx, uint32_t type, char *tag, char *host,
+search_for_handle( mihl_connection_t *cnx, uint32_t type, char *tag, char *host,
     int nb_variables, char **vars_names, char **vars_values )
 {
     mihl_handle_t *handle_nfound = NULL;
@@ -302,7 +302,7 @@ manage_new_connexions( void )
 
 
 static int
-got_data_for_active_connexion( connexion_t *cnx )
+got_data_for_active_connexion( mihl_connection_t *cnx )
 {
 
     int len = tcp_read( cnx->sockfd, read_buffer, read_buffer_maxlen );
@@ -373,7 +373,7 @@ manage_existent_connexions( void )
 	fd_set ready;
 	FD_ZERO( &ready );
     for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
-        connexion_t *cnx = &connexions[ncnx];
+        mihl_connection_t *cnx = &connexions[ncnx];
         if ( !cnx->active )
             continue;
 		FD_SET( cnx->sockfd, &ready );
@@ -395,7 +395,7 @@ manage_existent_connexions( void )
 	assert( status != -1 );
 
     for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
-        connexion_t *cnx = &connexions[ncnx];
+        mihl_connection_t *cnx = &connexions[ncnx];
         if ( !cnx->active )
             continue;
 	    if ( FD_ISSET( cnx->sockfd, &ready ) ) {
@@ -413,7 +413,7 @@ manage_timedout_connexions( void )
 {
     time_t now = time( NULL );
     for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
-        connexion_t *cnx = &connexions[ncnx];
+        mihl_connection_t *cnx = &connexions[ncnx];
         if ( !cnx->active )
             continue;
         int t = (int)difftime( now, cnx->info.time_last_data );
@@ -535,7 +535,7 @@ mihl_dump_info( )
     printf( "Sockfd Client               Start Inact Last Request\015\012" );
     time_t now = time( NULL );
     for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
-        connexion_t *cnx = &connexions[ncnx];
+        mihl_connection_t *cnx = &connexions[ncnx];
         if ( cnx->active ) {
             char client[20+1];
             strncpy( client, inet_ntoa( cnx->info.client_addr.sin_addr ), 20 );
@@ -561,7 +561,7 @@ mihl_info( int maxnb_cnxinfos, mihl_cnxinfo_t *infos )
         return 0;
     int nb_cnxinfos = 0;
     for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
-        connexion_t *cnx = &connexions[ncnx];
+        mihl_connection_t *cnx = &connexions[ncnx];
         if ( !cnx->active ) 
             continue;
         memmove( &infos[nb_cnxinfos++], &cnx->info, sizeof(mihl_cnxinfo_t) );

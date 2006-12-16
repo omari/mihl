@@ -34,11 +34,11 @@
     typedef int SOCKET;
 #endif
 
-typedef struct connexion connexion_t;
+typedef struct connexion mihl_connection_t;
 
-typedef int (pf_handle_get_t)(connexion_t *, char const *, char const *, void *);
+typedef int (pf_handle_get_t)(mihl_connection_t *, char const *, char const *, void *);
 
-typedef int (pf_handle_post_t)(connexion_t *, char const *, char const *, int, char **, char **, void *);
+typedef int (pf_handle_post_t)(mihl_connection_t *, char const *, char const *, int, char **, char **, void *);
 
 PUBLIC int mihl_log( unsigned level, const char *fmt, ... );
 
@@ -48,9 +48,9 @@ PUBLIC int mihl_end( void );
 
 PUBLIC int mihl_server( void );
 
-PUBLIC int mihl_add( connexion_t *cnx, char const *fmt, ... );
+PUBLIC int mihl_add( mihl_connection_t *cnx, char const *fmt, ... );
 
-PUBLIC int mihl_send( connexion_t *cnx, char const *fmt_header, ... );
+PUBLIC int mihl_send( mihl_connection_t *cnx, char const *fmt_header, ... );
 
 PUBLIC int mihl_handle_get( char const *tag, pf_handle_get_t *pf, void *param );
 

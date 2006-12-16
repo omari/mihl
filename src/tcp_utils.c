@@ -154,7 +154,7 @@ tcp_write( SOCKET sockfd, const char *buff, int buff_len )
 
 
 void
-decode_keys_values( connexion_t *cnx, char *_request, 
+decode_keys_values( mihl_connection_t *cnx, char *_request, 
     int *nb_options, char *options_names[], char *options_values[], int maxnb_options,
     int *nb_variables, char *vars_names[], char *vars_values[], int maxnb_values )
 {
@@ -215,7 +215,7 @@ decode_keys_values( connexion_t *cnx, char *_request,
 
 
 int 
-mihl_add( connexion_t *cnx, char const *fmt, ... )
+mihl_add( mihl_connection_t *cnx, char const *fmt, ... )
 {
     if ( cnx->html_buffer_len + 1024 >= cnx->html_buffer_sz ) {
         cnx->html_buffer_sz += 8192;
@@ -235,7 +235,7 @@ mihl_add( connexion_t *cnx, char const *fmt, ... )
 
 
 int
-mihl_send( connexion_t *cnx, char const *fmt_header, ... )
+mihl_send( mihl_connection_t *cnx, char const *fmt_header, ... )
 {
     char header[2048];
     char ok200[] = "HTTP/1.1 200 OK\r\n";

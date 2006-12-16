@@ -8,7 +8,7 @@
 #include "../example_utils.h"
 
 int
-http_root( connexion_t *cnx, char const *tag, char const *host, void *param )
+http_root( mihl_connection_t *cnx, char const *tag, char const *host, void *param )
 {
     mihl_add( cnx, "<html>" );
     mihl_add( cnx, "<body>" );
@@ -24,7 +24,7 @@ http_root( connexion_t *cnx, char const *tag, char const *host, void *param )
 }
 
 int
-http_nextpage( connexion_t *cnx, char const *tag, char const *host, void *param )
+http_nextpage( mihl_connection_t *cnx, char const *tag, char const *host, void *param )
 {
     mihl_add( cnx, "<html>" );
     mihl_add( cnx, "<body>" );

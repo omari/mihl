@@ -63,8 +63,8 @@ struct connexion {
     int html_buffer_len;                // Current length
     int html_buffer_sz;                 // Length allocated (8K increment)
 };
-GLOBAL int nb_connexions;           ///< Number of current connexions
-GLOBAL connexion_t *connexions;     ///< Description of the active connexions
+GLOBAL int nb_connexions;               ///< Number of current connexions
+GLOBAL mihl_connection_t *connexions;   ///< Description of the active connexions
 
 GLOBAL int read_buffer_maxlen;      ///< TBD
 GLOBAL char *read_buffer;           ///< TBD

@@ -8,7 +8,7 @@
 #include "../example_utils.h"
 
 int
-http_root( connexion_t *cnx, char const *tag, char const *host, void *param )
+http_root( mihl_connection_t *cnx, char const *tag, char const *host, void *param )
 {
     mihl_add( cnx, "<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>" );
     mihl_add( cnx, "<html>" );
@@ -107,7 +107,7 @@ http_root( connexion_t *cnx, char const *tag, char const *host, void *param )
 
 
 int
-http_data( connexion_t *cnx, char const *tag, char const *host, void *param )
+http_data( mihl_connection_t *cnx, char const *tag, char const *host, void *param )
 {
     int index = (int)param;
     static int cpts[3] = { 0, 0, 0 };
