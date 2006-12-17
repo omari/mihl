@@ -34,27 +34,27 @@
     typedef int SOCKET;
 #endif
 
-typedef struct connexion mihl_connection_t;
+typedef struct mihl_cnx mihl_cnx_t;
 
-typedef int (pf_handle_get_t)(mihl_connection_t *, char const *, char const *, void *);
+typedef int (mihl_pf_handle_get_t)(mihl_cnx_t *, char const *, char const *, void *);
 
-typedef int (pf_handle_post_t)(mihl_connection_t *, char const *, char const *, int, char **, char **, void *);
+typedef int (mihl_pf_handle_post_t)(mihl_cnx_t *, char const *, char const *, int, char **, char **, void *);
 
 PUBLIC int mihl_log( unsigned level, const char *fmt, ... );
 
-PUBLIC int mihl_init( char const *bind_addr, int port, int maxnb_connexions );
+PUBLIC int mihl_init( char const *bind_addr, int port, int maxnb_cnx );
 
 PUBLIC int mihl_end( void );
 
 PUBLIC int mihl_server( void );
 
-PUBLIC int mihl_add( mihl_connection_t *cnx, char const *fmt, ... );
+PUBLIC int mihl_add( mihl_cnx_t *cnx, char const *fmt, ... );
 
-PUBLIC int mihl_send( mihl_connection_t *cnx, char const *fmt_header, ... );
+PUBLIC int mihl_send( mihl_cnx_t *cnx, char const *fmt_header, ... );
 
-PUBLIC int mihl_handle_get( char const *tag, pf_handle_get_t *pf, void *param );
+PUBLIC int mihl_handle_get( char const *tag, mihl_pf_handle_get_t *pf, void *param );
 
-PUBLIC int mihl_handle_post( char const *tag, pf_handle_post_t *pf, void *param );
+PUBLIC int mihl_handle_post( char const *tag, mihl_pf_handle_post_t *pf, void *param );
 
 PUBLIC int mihl_handle_file( char const *tag, char const *filename, 
     char const *content_type, int close_connection );

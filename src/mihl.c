@@ -24,13 +24,13 @@ add_new_connexion( SOCKET sockfd, struct sockaddr_in *client_addr )
 {
 
     // Find a new slot to store the new active connexion
-    if ( nb_connexions == mihl_maxnb_connexions ) {
+    if ( nb_connexions == mihl_maxnb_cnx ) {
         mihl_log( MIHL_LOG_INFO, "Too many connexions (%d): connexion refused\015\012", 
             nb_connexions );
         return -1;
     }
-    mihl_connection_t *cnx = NULL;
-    for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
+    mihl_cnx_t *cnx = NULL;
+    for ( int ncnx = 0; ncnx < mihl_maxnb_cnx; ncnx++ ) {
         cnx = &connexions[ncnx];
         if ( !cnx->active )
             break;
@@ -60,7 +60,7 @@ add_new_connexion( SOCKET sockfd, struct sockaddr_in *client_addr )
 
 
 static void
-delete_connexion( mihl_connection_t *cnx )
+delete_connexion( mihl_cnx_t *cnx )
 {
     mihl_log( MIHL_LOG_INFO_VERBOSE, "Delete connexion for socket %d\015\012", cnx->sockfd );
 	shutdown( cnx->sockfd, SHUT_RDWR );	    // Close the connection
@@ -145,7 +145,7 @@ bind_and_listen( void )
 
 
 static int
-page_not_found( mihl_connection_t *cnx, char const *tag, char const *host, void *param )
+page_not_found( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
 {
     mihl_add(  cnx, "<html>" );
     mihl_add(  cnx, "<head>" );
@@ -161,19 +161,19 @@ page_not_found( mihl_connection_t *cnx, char const *tag, char const *host, void 
 
 
 int
-mihl_init( char const *bind_addr, int port, int maxnb_connexions )
+mihl_init( char const *bind_addr, int port, int maxnb_cnx )
 {
     if ( !bind_addr )
         strcpy( mihl_bind_addr, "" );
     else
         strncpy( mihl_bind_addr, bind_addr, sizeof(mihl_bind_addr) );
     mihl_port = port;
-    mihl_maxnb_connexions = maxnb_connexions;
+    mihl_maxnb_cnx = maxnb_cnx;
 
     nb_connexions = 0;          // Number of current connexions
-    connexions = (mihl_connection_t *) malloc( sizeof(mihl_connection_t) * mihl_maxnb_connexions );
-    for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
-        mihl_connection_t *cnx = &connexions[ncnx];
+    connexions = (mihl_cnx_t *) malloc( sizeof(mihl_cnx_t) * mihl_maxnb_cnx );
+    for ( int ncnx = 0; ncnx < mihl_maxnb_cnx; ncnx++ ) {
+        mihl_cnx_t *cnx = &connexions[ncnx];
         cnx->active = 0;
     }                           // for (connexions)
 
@@ -198,7 +198,7 @@ mihl_end( void )
 
 
 static int
-send_file( mihl_connection_t *cnx, char *tag, char *filename, 
+send_file( mihl_cnx_t *cnx, char *tag, char *filename, 
     char *content_type, int close_connection )
 {
     char *file;
@@ -250,7 +250,7 @@ send_file( mihl_connection_t *cnx, char *tag, char *filename,
 
 
 static int
-search_for_handle( mihl_connection_t *cnx, uint32_t type, char *tag, char *host,
+search_for_handle( mihl_cnx_t *cnx, char *tag, char *host,
     int nb_variables, char **vars_names, char **vars_values )
 {
     mihl_handle_t *handle_nfound = NULL;
@@ -259,9 +259,9 @@ search_for_handle( mihl_connection_t *cnx, uint32_t type, char *tag, char *host,
         if ( !handle->tag )
             handle_nfound = handle;
         if ( handle->tag && !strcmp( tag, handle->tag ) ) {
-            if ( (type == 'GET') && handle->pf_get )
+            if ( handle->pf_get )
                 return handle->pf_get( cnx, tag, host, handle->param );
-            if ( (type == 'POST') && handle->pf_post )
+            if ( handle->pf_post )
                 return handle->pf_post( cnx, tag, host, nb_variables, vars_names, vars_values, handle->param );
             return send_file( cnx, tag, handle->filename, handle->content_type, handle->close_connection );
         }
@@ -302,7 +302,7 @@ manage_new_connexions( void )
 
 
 static int
-got_data_for_active_connexion( mihl_connection_t *cnx )
+got_data_for_active_connexion( mihl_cnx_t *cnx )
 {
 
     int len = tcp_read( cnx->sockfd, read_buffer, read_buffer_maxlen );
@@ -338,6 +338,15 @@ got_data_for_active_connexion( mihl_connection_t *cnx )
             cnx->info.last_request = strdup(tag);
         }
     }
+    else if ( (len >= 14) && (!strncmp( read_buffer, "POST", 4 )) ) {
+        char _tag[1024];
+		int status = sscanf( read_buffer, "POST %s HTTP/%d.%d",
+			_tag, &version, &subversion );
+        if ( status == 3 ) {
+            strncpy( tag, _tag, sizeof(tag)-1 );
+            cnx->info.last_request = strdup(tag);
+        }
+    }
        
     /*
      *  Decode Key/Value pairs
@@ -350,8 +359,12 @@ got_data_for_active_connexion( mihl_connection_t *cnx )
         &nb_options, options_names, options_values, 50,
         &nb_variables, vars_names, vars_values, 50 );
 
-    search_for_handle( cnx, 'GET', tag, cnx->info.host, 0, NULL, NULL );
-
+    /*
+     *  Call the GET or POST handler
+     */
+    search_for_handle( cnx, tag, cnx->info.host, 
+        nb_variables, vars_names, vars_values );
+        
     // Clean-up keys/values pairs
     for ( int n = 0; n < nb_options; n++ ) {
         free( options_names[n] );
@@ -372,8 +385,8 @@ manage_existent_connexions( void )
     SOCKET last_sockfd = -1;
 	fd_set ready;
 	FD_ZERO( &ready );
-    for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
-        mihl_connection_t *cnx = &connexions[ncnx];
+    for ( int ncnx = 0; ncnx < mihl_maxnb_cnx; ncnx++ ) {
+        mihl_cnx_t *cnx = &connexions[ncnx];
         if ( !cnx->active )
             continue;
 		FD_SET( cnx->sockfd, &ready );
@@ -394,8 +407,8 @@ manage_existent_connexions( void )
 #endif
 	assert( status != -1 );
 
-    for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
-        mihl_connection_t *cnx = &connexions[ncnx];
+    for ( int ncnx = 0; ncnx < mihl_maxnb_cnx; ncnx++ ) {
+        mihl_cnx_t *cnx = &connexions[ncnx];
         if ( !cnx->active )
             continue;
 	    if ( FD_ISSET( cnx->sockfd, &ready ) ) {
@@ -412,8 +425,8 @@ static int
 manage_timedout_connexions( void )
 {
     time_t now = time( NULL );
-    for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
-        mihl_connection_t *cnx = &connexions[ncnx];
+    for ( int ncnx = 0; ncnx < mihl_maxnb_cnx; ncnx++ ) {
+        mihl_cnx_t *cnx = &connexions[ncnx];
         if ( !cnx->active )
             continue;
         int t = (int)difftime( now, cnx->info.time_last_data );
@@ -426,7 +439,7 @@ manage_timedout_connexions( void )
 
 
 int
-mihl_handle_get( char const *tag, pf_handle_get_t *pf, void *param )
+mihl_handle_get( char const *tag, mihl_pf_handle_get_t *pf, void *param )
 {
     if ( handles == NULL ) {
         handles = (mihl_handle_t *)malloc( sizeof(mihl_handle_t) );
@@ -450,7 +463,7 @@ mihl_handle_get( char const *tag, pf_handle_get_t *pf, void *param )
 
 
 int
-mihl_handle_post( char const *tag, pf_handle_post_t *pf, void *param )
+mihl_handle_post( char const *tag, mihl_pf_handle_post_t *pf, void *param )
 {
     if ( tag == NULL )
         return -1;
@@ -534,8 +547,8 @@ mihl_dump_info( )
         return 0;
     printf( "Sockfd Client               Start Inact Last Request\015\012" );
     time_t now = time( NULL );
-    for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
-        mihl_connection_t *cnx = &connexions[ncnx];
+    for ( int ncnx = 0; ncnx < mihl_maxnb_cnx; ncnx++ ) {
+        mihl_cnx_t *cnx = &connexions[ncnx];
         if ( cnx->active ) {
             char client[20+1];
             strncpy( client, inet_ntoa( cnx->info.client_addr.sin_addr ), 20 );
@@ -560,8 +573,8 @@ mihl_info( int maxnb_cnxinfos, mihl_cnxinfo_t *infos )
     if ( maxnb_cnxinfos <= 0 )
         return 0;
     int nb_cnxinfos = 0;
-    for ( int ncnx = 0; ncnx < mihl_maxnb_connexions; ncnx++ ) {
-        mihl_connection_t *cnx = &connexions[ncnx];
+    for ( int ncnx = 0; ncnx < mihl_maxnb_cnx; ncnx++ ) {
+        mihl_cnx_t *cnx = &connexions[ncnx];
         if ( !cnx->active ) 
             continue;
         memmove( &infos[nb_cnxinfos++], &cnx->info, sizeof(mihl_cnxinfo_t) );

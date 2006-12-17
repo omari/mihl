@@ -46,14 +46,14 @@ GLOBAL char mihl_bind_addr[32];     ///< HTTP bind address
 
 GLOBAL int mihl_port;               ///< HTTP TCP port (80, 8080, etc.)
 
-GLOBAL int mihl_maxnb_connexions;   ///< Max umer of allowed connexions
+GLOBAL int mihl_maxnb_cnx;          ///< Max umer of allowed connections
 
 GLOBAL unsigned mihl_log_level
     INIT(MIHL_LOG_ERROR);           ///< MIHL_LOG_ERROR, etc.
 
 GLOBAL SOCKET sockfd;               ///< TBD
 
-struct connexion {
+struct mihl_cnx {
     int active;                         // Is this connexion active ?
     SOCKET sockfd;                      // Socked (as returned by accept)
     mihl_cnxinfo_t info;                // Exporteable information
@@ -64,15 +64,15 @@ struct connexion {
     int html_buffer_sz;                 // Length allocated (8K increment)
 };
 GLOBAL int nb_connexions;               ///< Number of current connexions
-GLOBAL mihl_connection_t *connexions;   ///< Description of the active connexions
+GLOBAL mihl_cnx_t *connexions;          ///< Description of the active connexions
 
 GLOBAL int read_buffer_maxlen;      ///< TBD
 GLOBAL char *read_buffer;           ///< TBD
 
 typedef struct {
     char *tag;                      // Tag, such as "/" 
-    pf_handle_get_t *pf_get;        // If not NULL, function to execute
-    pf_handle_post_t *pf_post;      // If not NULL, function to execute
+    mihl_pf_handle_get_t *pf_get;   // If not NULL, function to execute
+    mihl_pf_handle_post_t *pf_post; // If not NULL, function to execute
     char *filename;                 // If not NULL, filename to send
     char *content_type;             // Content-type, such as "image/jpeg" or "text/javascript"
     int close_connection;           // Should we close the connection after the operation ?
