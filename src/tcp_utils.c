@@ -153,6 +153,7 @@ tcp_write( SOCKET sockfd, const char *buff, int buff_len )
 }								// tcp_write
 
 
+void toto() {}
 void
 decode_keys_values( mihl_cnx_t *cnx, char *_request, 
     int *nb_options, char *options_names[], char *options_values[], int maxnb_options,
@@ -186,6 +187,26 @@ decode_keys_values( mihl_cnx_t *cnx, char *_request,
         line = eol;
         eol = strstr( eol, "\r\n" );
     }                           // while (line)
+
+    // POST
+    strcpy( request, _request );
+    eol = strstr( request, "\r\n\r\n" );
+    if ( eol ) {
+        eol += 4;
+        char *equal = strchr( eol, '=' );
+        if ( equal ) {
+toto();
+            *equal = 0;
+            char *p = eol;
+            char *q = &equal[1];
+            if ( q ) {
+                vars_names[*nb_variables] = strdup(p);
+                vars_values[*nb_variables] = strdup(q);
+                (*nb_variables)++;
+            }
+        }
+    }
+
     free(request);
     request = NULL;
 
