@@ -15,7 +15,7 @@ LD = gcc
 	@$(CC) $(CFLAGS) -o $@ -c $< 2>&1 | tee $*.err
 
 # C Compiler and Linker flags
-CFLAGS	= -Wall 
+CFLAGS	= -Wall -std=c9x
 LDFLAGS	=  
 
 ifdef DEBUG

@@ -193,17 +193,23 @@ decode_keys_values( mihl_cnx_t *cnx, char *_request,
     eol = strstr( request, "\r\n\r\n" );
     if ( eol ) {
         eol += 4;
-        char *equal = strchr( eol, '=' );
-        if ( equal ) {
+        if ( strchr( eol, '=' ) != NULL ) {
 toto();
-            *equal = 0;
-            char *p = eol;
-            char *q = &equal[1];
-            if ( q ) {
-                vars_names[*nb_variables] = strdup(p);
-                vars_values[*nb_variables] = strdup(q);
+            strcat( eol, "&" );
+            for (;;) {
+                char *item = strchr( eol, '&' );
+                if ( item == NULL )
+                    break;
+                *item = 0;
+                char *equ = strchr( eol, '=' );
+                if ( equ == NULL )
+                    break;
+                *equ++ = 0;
+                vars_names[*nb_variables] = strdup(eol);
+                vars_values[*nb_variables] = strdup(equ);
                 (*nb_variables)++;
-            }
+                eol = &item[1];
+            }                   // for (;;)
         }
     }
 

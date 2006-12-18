@@ -71,7 +71,8 @@ http_root_post( mihl_cnx_t *cnx, char const *tag, char const *host,
 {
     mihl_add( cnx, "<html>" );
     mihl_add( cnx, "<head>" );
-    mihl_add( cnx, "  TBD!" );
+    for ( int n = 0; n < nb_variables; n++ ) 
+        mihl_add( cnx, "  %2d: %s = [%s]<BR>", n, vars_names[n], vars_values[n] );
     mihl_add( cnx, "</body>" );
     mihl_add( cnx, "</html>" );
     mihl_send( cnx,
