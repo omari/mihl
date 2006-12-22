@@ -82,3 +82,9 @@ GLOBAL int nb_handles;              ///< TBD
 GLOBAL mihl_handle_t *handles;      ///< TBD
 
 #define MIN(A,B) (((A)<(B))?(A):(B))
+
+#define FREE( pvar ) \
+    if ( pvar ) { \
+        free( pvar ); \
+        pvar = NULL; \
+    }

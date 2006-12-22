@@ -66,6 +66,15 @@ delete_connexion( mihl_cnx_t *cnx )
 	shutdown( cnx->sockfd, SHUT_RDWR );	    // Close the connection
     closesocket( cnx->sockfd );
     cnx->active = 0;
+    mihl_cnxinfo_t *info = &cnx->info;
+    if ( info->last_request )
+        FREE( info->last_request );
+    if ( info->host )
+        FREE( info->host );
+    if ( info->user_agent )
+        FREE( info->user_agent );
+    if ( cnx->html_buffer )
+        FREE( cnx->html_buffer );
     nb_connexions--;
 }                               // delete_connexion
 
@@ -166,7 +175,7 @@ mihl_init( char const *bind_addr, int port, int maxnb_cnx )
     if ( !bind_addr )
         strcpy( mihl_bind_addr, "" );
     else
-        strncpy( mihl_bind_addr, bind_addr, sizeof(mihl_bind_addr) );
+        strncpy( mihl_bind_addr, bind_addr, sizeof(mihl_bind_addr)-1 );
     mihl_port = port;
     mihl_maxnb_cnx = maxnb_cnx;
 
@@ -193,6 +202,7 @@ mihl_init( char const *bind_addr, int port, int maxnb_cnx )
 int
 mihl_end( void )
 {
+    FREE( read_buffer );
     return 0;
 }                               // mihl_end
 
@@ -273,7 +283,7 @@ search_for_handle( mihl_cnx_t *cnx, char *tag, char *host,
 
 
 static int
-manage_new_connexions( void )
+manage_new_connexions( time_t now )
 {
     for (;;) {
 	    socklen_t client_addr_len = sizeof( struct sockaddr_in );
@@ -376,7 +386,7 @@ got_data_for_active_connexion( mihl_cnx_t *cnx )
 
 
 static int
-manage_existent_connexions( void )
+manage_existent_connexions( time_t now )
 {
 
     if ( nb_connexions == 0 )
@@ -422,9 +432,8 @@ manage_existent_connexions( void )
 
 
 static int
-manage_timedout_connexions( void )
+manage_timedout_connexions( time_t now )
 {
-    time_t now = time( NULL );
     for ( int ncnx = 0; ncnx < mihl_maxnb_cnx; ncnx++ ) {
         mihl_cnx_t *cnx = &connexions[ncnx];
         if ( !cnx->active )
@@ -509,10 +518,11 @@ mihl_handle_file( char const *tag, char const *filename,
 int
 mihl_server( void )
 {
-    manage_new_connexions( );
-    manage_existent_connexions( );
-    manage_timedout_connexions( );
-    return 1;
+    time_t now = time( NULL );
+    manage_new_connexions( now );
+    manage_existent_connexions( now );
+    manage_timedout_connexions( now );
+    return nb_connexions;
 }                               // mihl_server
 
 void 
