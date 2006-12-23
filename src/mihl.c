@@ -24,19 +24,19 @@ add_new_connexion( mihl_ctx_t *ctx, SOCKET sockfd, struct sockaddr_in *client_ad
 {
 
     // Find a new slot to store the new active connexion
-    if ( nb_connexions == ctx->maxnb_cnx ) {
+    if ( ctx->nb_connexions == ctx->maxnb_cnx ) {
         mihl_log( ctx, MIHL_LOG_INFO, "Too many connexions (%d): connexion refused\015\012", 
-            nb_connexions );
+            ctx->nb_connexions );
         return -1;
     }
     mihl_cnx_t *cnx = NULL;
     for ( int ncnx = 0; ncnx < ctx->maxnb_cnx; ncnx++ ) {
-        cnx = &connexions[ncnx];
+        cnx = &ctx->connexions[ncnx];
         if ( !cnx->active )
             break;
     }                           // for (connexions)
     assert( cnx != NULL );
-    nb_connexions++;
+    ctx->nb_connexions++;
 
     cnx->active = 1;    
     cnx->sockfd = sockfd;
@@ -55,14 +55,15 @@ add_new_connexion( mihl_ctx_t *ctx, SOCKET sockfd, struct sockaddr_in *client_ad
     mihl_log( ctx, MIHL_LOG_INFO_VERBOSE, "\015\012Accepted a connexion from %s, socket=%d\015\012",
 		  inet_ntoa( cnx->info.client_addr.sin_addr ), sockfd );
     
-    return nb_connexions-1;
+    return ctx->nb_connexions-1;
 }                               // add_new_connexion
 
 
 static void
 delete_connexion( mihl_cnx_t *cnx )
 {
-    mihl_log( cnx->ctx, MIHL_LOG_INFO_VERBOSE, "Delete connexion for socket %d\015\012", cnx->sockfd );
+    mihl_ctx_t *ctx = cnx->ctx;
+    mihl_log( ctx, MIHL_LOG_INFO_VERBOSE, "Delete connexion for socket %d\015\012", cnx->sockfd );
 	shutdown( cnx->sockfd, SHUT_RDWR );	    // Close the connection
     closesocket( cnx->sockfd );
     cnx->active = 0;
@@ -75,7 +76,7 @@ delete_connexion( mihl_cnx_t *cnx )
         FREE( info->user_agent );
     if ( cnx->html_buffer )
         FREE( cnx->html_buffer );
-    nb_connexions--;
+    ctx->nb_connexions--;
 }                               // delete_connexion
 
 
@@ -94,15 +95,15 @@ bind_and_listen( mihl_ctx_t *ctx )
 #endif
 
     // Create sockets for the telnet and http connections
-	sockfd = socket( AF_INET, SOCK_STREAM, 0 );
-	if ( sockfd < 0 ) {
+	ctx->sockfd = socket( AF_INET, SOCK_STREAM, 0 );
+	if ( ctx->sockfd < 0 ) {
 		mihl_log( ctx, MIHL_LOG_ERROR, "Unable to open a socket!\015\012" );
         exit( -1 );
     }
 
     // Set the option SO_REUSEADDR
     const int flag = 1;
-    if ( setsockopt( sockfd, SOL_SOCKET, SO_REUSEADDR, (const char *)&flag, sizeof( flag ) ) < 0 ) {
+    if ( setsockopt( ctx->sockfd, SOL_SOCKET, SO_REUSEADDR, (const char *)&flag, sizeof( flag ) ) < 0 ) {
 		mihl_log( ctx, MIHL_LOG_ERROR, "Unable to setsockopt a socket!\015\012" );
         exit( -1 );
     }
@@ -110,12 +111,12 @@ bind_and_listen( mihl_ctx_t *ctx )
     // Non blocking Socket
 #ifdef __WINDAUBE__
     unsigned long cmd = 1;
-    if ( ioctlsocket( sockfd, FIONBIO, &cmd ) != 0 ) {
+    if ( ioctlsocket( ctx->sockfd, FIONBIO, &cmd ) != 0 ) {
 		mihl_log( ctx, MIHL_LOG_ERROR, "Unable to fcntl a socket:FIONBIO !\015\012" );
         exit( -1 );
     }
 #else
-    fcntl( sockfd, F_SETFL, fcntl( sockfd, F_GETFL, 0 ) | O_NONBLOCK );
+    fcntl( ctx->sockfd, F_SETFL, fcntl( ctx->sockfd, F_GETFL, 0 ) | O_NONBLOCK );
 #endif
 
     // Bind the socket 
@@ -127,14 +128,14 @@ bind_and_listen( mihl_ctx_t *ctx )
     else
     	server_addr.sin_addr.s_addr = inet_addr(ctx->bind_addr);
 	server_addr.sin_port = htons( ctx->port );
-	int status = bind( sockfd, ( struct sockaddr * ) &server_addr, sizeof( struct sockaddr_in ) );
+	int status = bind( ctx->sockfd, ( struct sockaddr * ) &server_addr, sizeof( struct sockaddr_in ) );
     if ( (status == SOCKET_ERROR) && (ERRNO == EADDRINUSE) ) {
 		mihl_log( ctx, MIHL_LOG_ERROR, "%s %d\015\012\tUnable to bind, port %d is already in use\015\012",
 		   __FILE__, __LINE__, 
 		   ctx->port );
-		if ( closesocket( sockfd ) == -1 )
+		if ( closesocket( ctx->sockfd ) == -1 )
 			mihl_log( ctx, MIHL_LOG_ERROR, "Error %d while closing socket %d\015\012", 
-				errno, sockfd );
+				errno, ctx->sockfd );
 		return -1;
 	}
 	if ( status < 0 ) {
@@ -142,13 +143,13 @@ bind_and_listen( mihl_ctx_t *ctx )
 			__FILE__, __LINE__,
 			ctx->port,
 			status, strerror( errno ) );
-		if ( closesocket( sockfd ) == -1 )
+		if ( closesocket( ctx->sockfd ) == -1 )
 			mihl_log( ctx, MIHL_LOG_ERROR, "Error %d while closing socket %d\015\012", 
-				errno, sockfd );
+				errno, ctx->sockfd );
 		return -1;
 	}
 
-	return listen( sockfd, 8 );
+	return listen( ctx->sockfd, 8 );
     
 }                               // bind_and_listen
 
@@ -183,23 +184,23 @@ mihl_init( char const *bind_addr, int port, int maxnb_cnx, unsigned log_level )
     ctx->maxnb_cnx = maxnb_cnx;
     ctx->log_level = log_level;
 
-    nb_connexions = 0;          // Number of current connexions
-    connexions = (mihl_cnx_t *) malloc( sizeof(mihl_cnx_t) * ctx->maxnb_cnx );
-    if ( connexions == NULL ) {
+    ctx->nb_connexions = 0;          // Number of current connexions
+    ctx->connexions = (mihl_cnx_t *) malloc( sizeof(mihl_cnx_t) * ctx->maxnb_cnx );
+    if ( ctx->connexions == NULL ) {
         free( ctx );
         return NULL;
     }
     for ( int ncnx = 0; ncnx < ctx->maxnb_cnx; ncnx++ ) {
-        mihl_cnx_t *cnx = &connexions[ncnx];
+        mihl_cnx_t *cnx = &ctx->connexions[ncnx];
         cnx->ctx = ctx;
         cnx->active = 0;
     }                           // for (connexions)
 
-    read_buffer_maxlen = 64*1024;
-    read_buffer = (char *)malloc( read_buffer_maxlen );
+    ctx->read_buffer_maxlen = 64*1024;
+    ctx->read_buffer = (char *)malloc( ctx->read_buffer_maxlen );
 
-    nb_handles = 0;                 // TBD
-    handles = NULL;                 // TBD
+    ctx->nb_handles = 0;                 // TBD
+    ctx->handles = NULL;                 // TBD
     mihl_handle_get( ctx, NULL, page_not_found, NULL );
 
     bind_and_listen( ctx );
@@ -211,7 +212,7 @@ mihl_init( char const *bind_addr, int port, int maxnb_cnx, unsigned log_level )
 int
 mihl_end( mihl_ctx_t *ctx )
 {
-    FREE( read_buffer );
+    FREE( ctx->read_buffer );
     return 0;
 }                               // mihl_end
 
@@ -272,9 +273,10 @@ static int
 search_for_handle( mihl_cnx_t *cnx, char *tag, char *host,
     int nb_variables, char **vars_names, char **vars_values )
 {
+    mihl_ctx_t *ctx = cnx->ctx;
     mihl_handle_t *handle_nfound = NULL;
-    for ( int n = 0; n < nb_handles; n++ ) {
-        mihl_handle_t *handle = &handles[n];
+    for ( int n = 0; n < ctx->nb_handles; n++ ) {
+        mihl_handle_t *handle = &ctx->handles[n];
         if ( !handle->tag )
             handle_nfound = handle;
         if ( handle->tag && !strcmp( tag, handle->tag ) ) {
@@ -297,7 +299,7 @@ manage_new_connexions( mihl_ctx_t *ctx, time_t now )
     for (;;) {
 	    socklen_t client_addr_len = sizeof( struct sockaddr_in );
 	    struct sockaddr_in client_addr;
-	    SOCKET sockfd_accept = accept( sockfd,
+	    SOCKET sockfd_accept = accept( ctx->sockfd,
 	       (struct sockaddr *)&client_addr, &client_addr_len );
 
 	    if ( sockfd_accept == -1 ) {
@@ -309,8 +311,8 @@ manage_new_connexions( mihl_ctx_t *ctx, time_t now )
 			    continue;
             }
 		    mihl_log( ctx, MIHL_LOG_ERROR, "Socket non accepted - errno=%d\015\012", ERRNO );
-		    if ( closesocket( sockfd ) == -1 ) {
-			    mihl_log( ctx, MIHL_LOG_ERROR, "Error %d while closing socket %d\015\012", errno, sockfd );
+		    if ( closesocket( ctx->sockfd ) == -1 ) {
+			    mihl_log( ctx, MIHL_LOG_ERROR, "Error %d while closing socket %d\015\012", errno, ctx->sockfd );
             }
 		    exit( -1 );
         }                       // if
@@ -325,15 +327,15 @@ got_data_for_active_connexion( mihl_cnx_t *cnx )
 {
 
     mihl_ctx_t *ctx = cnx->ctx;
-    int len = tcp_read( cnx->sockfd, read_buffer, read_buffer_maxlen );
+    int len = tcp_read( cnx->sockfd, ctx->read_buffer, ctx->read_buffer_maxlen );
     if ( ctx->log_level & MIHL_LOG_DEBUG ) {
-        mihl_log( cnx->ctx, MIHL_LOG_DEBUG, "\015\012%d:[%s]\015\012", cnx->sockfd, read_buffer );
+        mihl_log( cnx->ctx, MIHL_LOG_DEBUG, "\015\012%d:[%s]\015\012", cnx->sockfd, ctx->read_buffer );
     }
     else {
-        char *p = strchr( read_buffer, '\015' );
+        char *p = strchr( ctx->read_buffer, '\015' );
         if ( p )
             *p = 0;
-        mihl_log( cnx->ctx, MIHL_LOG_INFO_VERBOSE, "[%s]\015\012", read_buffer );
+        mihl_log( cnx->ctx, MIHL_LOG_INFO_VERBOSE, "[%s]\015\012", ctx->read_buffer );
         if ( p )
             *p = '\015';
     }
@@ -349,18 +351,18 @@ got_data_for_active_connexion( mihl_cnx_t *cnx )
     int version, subversion;
     char tag[1024];
     strcpy( tag, "" );
-    if ( (len >= 14) && (!strncmp( read_buffer, "GET", 3 )) ) {
+    if ( (len >= 14) && (!strncmp( ctx->read_buffer, "GET", 3 )) ) {
         char _tag[1024];
-		int status = sscanf( read_buffer, "GET %s HTTP/%d.%d",
+		int status = sscanf( ctx->read_buffer, "GET %s HTTP/%d.%d",
 			_tag, &version, &subversion );
         if ( status == 3 ) {
             strncpy( tag, _tag, sizeof(tag)-1 );
             cnx->info.last_request = strdup(tag);
         }
     }
-    else if ( (len >= 14) && (!strncmp( read_buffer, "POST", 4 )) ) {
+    else if ( (len >= 14) && (!strncmp( ctx->read_buffer, "POST", 4 )) ) {
         char _tag[1024];
-		int status = sscanf( read_buffer, "POST %s HTTP/%d.%d",
+		int status = sscanf( ctx->read_buffer, "POST %s HTTP/%d.%d",
 			_tag, &version, &subversion );
         if ( status == 3 ) {
             strncpy( tag, _tag, sizeof(tag)-1 );
@@ -375,7 +377,7 @@ got_data_for_active_connexion( mihl_cnx_t *cnx )
     char *options_names[50], *options_values[50];
     int nb_variables;
     char *vars_names[50], *vars_values[50];
-    decode_keys_values( cnx, read_buffer, 
+    decode_keys_values( cnx, ctx->read_buffer, 
         &nb_options, options_names, options_values, 50,
         &nb_variables, vars_names, vars_values, 50 );
 
@@ -399,14 +401,14 @@ static int
 manage_existent_connexions( mihl_ctx_t *ctx, time_t now )
 {
 
-    if ( nb_connexions == 0 )
+    if ( ctx->nb_connexions == 0 )
         return 0;
 
     SOCKET last_sockfd = -1;
 	fd_set ready;
 	FD_ZERO( &ready );
     for ( int ncnx = 0; ncnx < ctx->maxnb_cnx; ncnx++ ) {
-        mihl_cnx_t *cnx = &connexions[ncnx];
+        mihl_cnx_t *cnx = &ctx->connexions[ncnx];
         if ( !cnx->active )
             continue;
 		FD_SET( cnx->sockfd, &ready );
@@ -428,7 +430,7 @@ manage_existent_connexions( mihl_ctx_t *ctx, time_t now )
 	assert( status != -1 );
 
     for ( int ncnx = 0; ncnx < ctx->maxnb_cnx; ncnx++ ) {
-        mihl_cnx_t *cnx = &connexions[ncnx];
+        mihl_cnx_t *cnx = &ctx->connexions[ncnx];
         if ( !cnx->active )
             continue;
 	    if ( FD_ISSET( cnx->sockfd, &ready ) ) {
@@ -445,7 +447,7 @@ static int
 manage_timedout_connexions( mihl_ctx_t *ctx, time_t now )
 {
     for ( int ncnx = 0; ncnx < ctx->maxnb_cnx; ncnx++ ) {
-        mihl_cnx_t *cnx = &connexions[ncnx];
+        mihl_cnx_t *cnx = &ctx->connexions[ncnx];
         if ( !cnx->active )
             continue;
         int t = (int)difftime( now, cnx->info.time_last_data );
@@ -460,13 +462,13 @@ manage_timedout_connexions( mihl_ctx_t *ctx, time_t now )
 int
 mihl_handle_get( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf, void *param )
 {
-    if ( handles == NULL ) {
-        handles = (mihl_handle_t *)malloc( sizeof(mihl_handle_t) );
+    if ( ctx->handles == NULL ) {
+        ctx->handles = (mihl_handle_t *)malloc( sizeof(mihl_handle_t) );
     }
     else {
-        handles = (mihl_handle_t *)realloc( handles, sizeof(mihl_handle_t) * (nb_handles+1) );
+        ctx->handles = (mihl_handle_t *)realloc( ctx->handles, sizeof(mihl_handle_t) * (ctx->nb_handles+1) );
     }
-    mihl_handle_t *handle = &handles[nb_handles++];
+    mihl_handle_t *handle = &ctx->handles[ctx->nb_handles++];
     if ( tag )
         handle->tag = strdup( tag );
     else
@@ -477,7 +479,7 @@ mihl_handle_get( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf, voi
     handle->filename = NULL;
     handle->content_type = NULL;
     handle->close_connection = 0;
-    return nb_handles;
+    return ctx->nb_handles;
 }                               // mihl_handle_get
 
 
@@ -486,13 +488,13 @@ mihl_handle_post( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_post_t *pf, v
 {
     if ( tag == NULL )
         return -1;
-    if ( handles == NULL ) {
-        handles = (mihl_handle_t *)malloc( sizeof(mihl_handle_t) );
+    if ( ctx->handles == NULL ) {
+        ctx->handles = (mihl_handle_t *)malloc( sizeof(mihl_handle_t) );
     }
     else {
-        handles = (mihl_handle_t *)realloc( handles, sizeof(mihl_handle_t) * (nb_handles+1) );
+        ctx->handles = (mihl_handle_t *)realloc( ctx->handles, sizeof(mihl_handle_t) * (ctx->nb_handles+1) );
     }
-    mihl_handle_t *handle = &handles[nb_handles++];
+    mihl_handle_t *handle = &ctx->handles[ctx->nb_handles++];
     handle->tag = strdup( tag );
     handle->pf_get = NULL;
     handle->pf_post = pf;
@@ -500,7 +502,7 @@ mihl_handle_post( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_post_t *pf, v
     handle->filename = NULL;
     handle->content_type = NULL;
     handle->close_connection = 0;
-    return nb_handles;
+    return ctx->nb_handles;
 }                               // mihl_handle_post
 
 
@@ -508,20 +510,20 @@ int
 mihl_handle_file( mihl_ctx_t *ctx, char const *tag, char const *filename, 
     char const *content_type, int close_connection )
 {
-    if ( handles == NULL ) {
-        handles = (mihl_handle_t *)malloc( sizeof(mihl_handle_t) );
+    if ( ctx->handles == NULL ) {
+        ctx->handles = (mihl_handle_t *)malloc( sizeof(mihl_handle_t) );
     }
     else {
-        handles = (mihl_handle_t *)realloc( handles, sizeof(mihl_handle_t) * (nb_handles+1) );
+        ctx->handles = (mihl_handle_t *)realloc( ctx->handles, sizeof(mihl_handle_t) * (ctx->nb_handles+1) );
     }
-    mihl_handle_t *handle = &handles[nb_handles++];
+    mihl_handle_t *handle = &ctx->handles[ctx->nb_handles++];
     handle->tag = strdup( tag );
     handle->pf_get = NULL;
     handle->pf_post = NULL;
     handle->filename = strdup( filename );
     handle->content_type = strdup( content_type );
     handle->close_connection = close_connection;
-    return nb_handles;
+    return ctx->nb_handles;
 }                               // mihl_handle_file
 
 
@@ -532,7 +534,7 @@ mihl_server( mihl_ctx_t *ctx )
     manage_new_connexions( ctx, now );
     manage_existent_connexions( ctx, now );
     manage_timedout_connexions( ctx, now );
-    return nb_connexions;
+    return ctx->nb_connexions;
 }                               // mihl_server
 
 void 
@@ -569,13 +571,13 @@ mihl_dump_info( mihl_ctx_t *ctx )
     unsigned level = ctx->log_level;
     ctx->log_level = MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO |
         MIHL_LOG_INFO_VERBOSE | MIHL_LOG_DEBUG;
-    mihl_log( ctx, MIHL_LOG_DEBUG, "%d active connexions\015\012", nb_connexions );
-    if ( nb_connexions == 0 )
+    mihl_log( ctx, MIHL_LOG_DEBUG, "%d active connexions\015\012", ctx->nb_connexions );
+    if ( ctx->nb_connexions == 0 )
         return 0;
     printf( "Sockfd Client               Start Inact Last Request\015\012" );
     time_t now = time( NULL );
     for ( int ncnx = 0; ncnx < ctx->maxnb_cnx; ncnx++ ) {
-        mihl_cnx_t *cnx = &connexions[ncnx];
+        mihl_cnx_t *cnx = &ctx->connexions[ncnx];
         if ( cnx->active ) {
             char client[20+1];
             strncpy( client, inet_ntoa( cnx->info.client_addr.sin_addr ), 20 );
@@ -590,7 +592,7 @@ mihl_dump_info( mihl_ctx_t *ctx )
     }                           // for (connexions)
     fflush( stdout );
     ctx->log_level = level;
-    return nb_connexions;
+    return ctx->nb_connexions;
 }                               // mihl_dump_info
 
 
@@ -601,7 +603,7 @@ mihl_info( mihl_ctx_t *ctx, int maxnb_cnxinfos, mihl_cnxinfo_t *infos )
         return 0;
     int nb_cnxinfos = 0;
     for ( int ncnx = 0; ncnx < ctx->maxnb_cnx; ncnx++ ) {
-        mihl_cnx_t *cnx = &connexions[ncnx];
+        mihl_cnx_t *cnx = &ctx->connexions[ncnx];
         if ( !cnx->active ) 
             continue;
         memmove( &infos[nb_cnxinfos++], &cnx->info, sizeof(mihl_cnxinfo_t) );

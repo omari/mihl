@@ -42,7 +42,15 @@
     strncpy( DST, SRC, LEN-1 ); \
     DST[LEN-1] = 0;
 
-GLOBAL SOCKET sockfd;               ///< TBD
+typedef struct {
+    char *tag;                      // Tag, such as "/" 
+    mihl_pf_handle_get_t *pf_get;   // If not NULL, function to execute
+    mihl_pf_handle_post_t *pf_post; // If not NULL, function to execute
+    char *filename;                 // If not NULL, filename to send
+    char *content_type;             // Content-type, such as "image/jpeg" or "text/javascript"
+    int close_connection;           // Should we close the connection after the operation ?
+    void *param;                    // TBD
+} mihl_handle_t;
 
 struct mihl_ctx {
     char bind_addr[32];         ///< HTTP bind address
@@ -50,6 +58,12 @@ struct mihl_ctx {
     int maxnb_cnx;              ///< Max umer of allowed connections
     unsigned log_level;         ///< MIHL_LOG_ERROR, etc.
     SOCKET sockfd;              ///< TBD
+    int read_buffer_maxlen;     ///< TBD
+    char *read_buffer;          ///< TBD
+    int nb_connexions;          ///< Number of current connexions
+    mihl_cnx_t *connexions;     ///< Description of the active connexions
+    int nb_handles;             ///< TBD
+    mihl_handle_t *handles;     ///< TBD
 };
 
 struct mihl_cnx {
@@ -63,23 +77,6 @@ struct mihl_cnx {
     int html_buffer_len;            // Current length
     int html_buffer_sz;             // Length allocated (8K increment)
 };
-GLOBAL int nb_connexions;               ///< Number of current connexions
-GLOBAL mihl_cnx_t *connexions;          ///< Description of the active connexions
-
-GLOBAL int read_buffer_maxlen;      ///< TBD
-GLOBAL char *read_buffer;           ///< TBD
-
-typedef struct {
-    char *tag;                      // Tag, such as "/" 
-    mihl_pf_handle_get_t *pf_get;   // If not NULL, function to execute
-    mihl_pf_handle_post_t *pf_post; // If not NULL, function to execute
-    char *filename;                 // If not NULL, filename to send
-    char *content_type;             // Content-type, such as "image/jpeg" or "text/javascript"
-    int close_connection;           // Should we close the connection after the operation ?
-    void *param;                    // TBD
-} mihl_handle_t;
-GLOBAL int nb_handles;              ///< TBD
-GLOBAL mihl_handle_t *handles;      ///< TBD
 
 #define MIN(A,B) (((A)<(B))?(A):(B))
 
