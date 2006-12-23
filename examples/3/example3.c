@@ -123,22 +123,21 @@ main( int argc, char *argv[] )
 {
     help( );
 
-    int vlog = MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO | MIHL_LOG_INFO_VERBOSE;
-    mihl_set_log_level( vlog );
-    mihl_init( NULL, 8080, 8 );
+    mihl_ctx_t *ctx = mihl_init( NULL, 8080, 8, 
+        MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO | MIHL_LOG_INFO_VERBOSE );
 
-    mihl_handle_get( "/", http_root, NULL );
-    mihl_handle_get( "/data1", http_data, (void *)0 );
-    mihl_handle_get( "/data2", http_data, (void *)1 );
-    mihl_handle_get( "/data3", http_data, (void *)2 );
-    mihl_handle_file( "/image.jpg", "image.jpg", "image/jpeg", 0 );
-    mihl_handle_file( "/prototype.js", "prototype.js", "text/javascript", 0 );
+    mihl_handle_get( ctx, "/", http_root, NULL );
+    mihl_handle_get( ctx, "/data1", http_data, (void *)0 );
+    mihl_handle_get( ctx, "/data2", http_data, (void *)1 );
+    mihl_handle_get( ctx, "/data3", http_data, (void *)2 );
+    mihl_handle_file( ctx, "/image.jpg", "image.jpg", "image/jpeg", 0 );
+    mihl_handle_file( ctx, "/prototype.js", "prototype.js", "text/javascript", 0 );
 
     for (;;) {
-        int status = mihl_server( );
+        int status = mihl_server( ctx );
         if ( status == -2 )
             break;
-        if ( peek_key( &vlog ) )
+        if ( peek_key( ctx ) )
             break;
     }
     

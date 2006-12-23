@@ -105,8 +105,9 @@ help( void )
 
 
 static int
-peek_key( int *vlog )
+peek_key( mihl_ctx_t *ctx )
 {
+    unsigned vlog = mihl_get_log_level( ctx );
     delay ( 1 );
     int key = peekch( );
     switch ( key ) {
@@ -116,19 +117,19 @@ peek_key( int *vlog )
             break;
         case 'i' :
         case 'I' :
-            mihl_dump_info( );
+            mihl_dump_info( ctx );
             break;
         case 'v' :
         case 'V' :
-            *vlog ^= MIHL_LOG_INFO_VERBOSE;
-            printf( "verbose:%s\015\012", (*vlog & MIHL_LOG_INFO_VERBOSE) ? "ON" : "OFF" );
-            mihl_set_log_level( *vlog );
+            vlog ^= MIHL_LOG_INFO_VERBOSE;
+            printf( "verbose:%s\015\012", (vlog & MIHL_LOG_INFO_VERBOSE) ? "ON" : "OFF" );
+            mihl_set_log_level( ctx, vlog );
             break;
         case 'd' :
         case 'D' :
-            *vlog ^= MIHL_LOG_DEBUG;
-            printf( "debug:%s\015\012", (*vlog & MIHL_LOG_DEBUG) ? "ON" : "OFF" );
-            mihl_set_log_level( *vlog );
+            vlog ^= MIHL_LOG_DEBUG;
+            printf( "debug:%s\015\012", (vlog & MIHL_LOG_DEBUG) ? "ON" : "OFF" );
+            mihl_set_log_level( ctx, vlog );
             break;
     }
     return 0;

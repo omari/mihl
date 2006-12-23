@@ -42,26 +42,26 @@
     strncpy( DST, SRC, LEN-1 ); \
     DST[LEN-1] = 0;
 
-GLOBAL char mihl_bind_addr[32];     ///< HTTP bind address
-
-GLOBAL int mihl_port;               ///< HTTP TCP port (80, 8080, etc.)
-
-GLOBAL int mihl_maxnb_cnx;          ///< Max umer of allowed connections
-
-GLOBAL unsigned mihl_log_level
-    INIT(MIHL_LOG_ERROR);           ///< MIHL_LOG_ERROR, etc.
-
 GLOBAL SOCKET sockfd;               ///< TBD
 
+struct mihl_ctx {
+    char bind_addr[32];         ///< HTTP bind address
+    int port;                   ///< HTTP TCP port (80, 8080, etc.)
+    int maxnb_cnx;              ///< Max umer of allowed connections
+    unsigned log_level;         ///< MIHL_LOG_ERROR, etc.
+    SOCKET sockfd;              ///< TBD
+};
+
 struct mihl_cnx {
-    int active;                         // Is this connexion active ?
-    SOCKET sockfd;                      // Socked (as returned by accept)
-    mihl_cnxinfo_t info;                // Exporteable information
-    int keep_alive;                     // 'Keep-Alive:'
-    int is_keep_alive;                  // 'Connection:'
-    char *html_buffer;                  // HTML output buffer (mihl_add, mihl_send)
-    int html_buffer_len;                // Current length
-    int html_buffer_sz;                 // Length allocated (8K increment)
+    mihl_ctx_t *ctx;                // Mihsl context pointer
+    int active;                     // Is this connexion active ?
+    SOCKET sockfd;                  // Socked (as returned by accept)
+    mihl_cnxinfo_t info;            // Exporteable information
+    int keep_alive;                 // 'Keep-Alive:'
+    int is_keep_alive;              // 'Connection:'
+    char *html_buffer;              // HTML output buffer (mihl_add, mihl_send)
+    int html_buffer_len;            // Current length
+    int html_buffer_sz;             // Length allocated (8K increment)
 };
 GLOBAL int nb_connexions;               ///< Number of current connexions
 GLOBAL mihl_cnx_t *connexions;          ///< Description of the active connexions
