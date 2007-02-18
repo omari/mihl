@@ -44,6 +44,7 @@
 
 typedef struct {
     char *tag;                      // Tag, such as "/" 
+    int partial;                    // If 0, do strcmp(), else strncmp(partial)
     mihl_pf_handle_get_t *pf_get;   // If not NULL, function to execute
     mihl_pf_handle_post_t *pf_post; // If not NULL, function to execute
     char *filename;                 // If not NULL, filename to send

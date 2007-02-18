@@ -163,6 +163,8 @@ page_not_found( mihl_cnx_t *cnx, char const *tag, char const *host, void *param 
     mihl_add(  cnx, "<br>" );
     mihl_add(  cnx, " THIS PAGE IS NOT FOUND " );
     mihl_add(  cnx, "<br>" );
+    mihl_add(  cnx, "[%s]", tag );
+    mihl_add(  cnx, "<br>" );
     mihl_add(  cnx, "</body>" );
     mihl_add(  cnx, "</html>" );
     return mihl_send( cnx,
@@ -196,7 +198,7 @@ mihl_init( char const *bind_addr, int port, int maxnb_cnx, unsigned log_level )
         cnx->active = 0;
     }                           // for (connexions)
 
-    ctx->read_buffer_maxlen = 64*1024;
+    ctx->read_buffer_maxlen = 8*1024*1024;
     ctx->read_buffer = (char *)malloc( ctx->read_buffer_maxlen );
 
     ctx->nb_handles = 0;                 // TBD
@@ -277,9 +279,11 @@ search_for_handle( mihl_cnx_t *cnx, char *tag, char *host,
     mihl_handle_t *handle_nfound = NULL;
     for ( int n = 0; n < ctx->nb_handles; n++ ) {
         mihl_handle_t *handle = &ctx->handles[n];
-        if ( !handle->tag )
+        if ( !handle->tag ) {
             handle_nfound = handle;
-        if ( handle->tag && !strcmp( tag, handle->tag ) ) {
+        }
+        if ( handle->tag && 
+            ((!handle->partial && !strcmp(tag, handle->tag)) || (handle->partial && !strncmp(tag, handle->tag, handle->partial))) ) {
             if ( handle->pf_get )
                 return handle->pf_get( cnx, tag, host, handle->param );
             if ( handle->pf_post )
@@ -328,6 +332,9 @@ got_data_for_active_connexion( mihl_cnx_t *cnx )
 
     mihl_ctx_t *ctx = cnx->ctx;
     int len = tcp_read( cnx->sockfd, ctx->read_buffer, ctx->read_buffer_maxlen );
+
+    if ( len == ctx->read_buffer_maxlen-1 )
+        return 0;
     if ( ctx->log_level & MIHL_LOG_DEBUG ) {
         mihl_log( cnx->ctx, MIHL_LOG_DEBUG, "\015\012%d:[%s]\015\012", cnx->sockfd, ctx->read_buffer );
     }
@@ -380,6 +387,29 @@ got_data_for_active_connexion( mihl_cnx_t *cnx )
     decode_keys_values( cnx, ctx->read_buffer, 
         &nb_options, options_names, options_values, 50,
         &nb_variables, vars_names, vars_values, 50 );
+#if 0
+{   
+static int cpt = 0;
+printf( "%3d: len=%d / %d  nbopt=%d nbvars=%d\015\12", cpt, len, ctx->read_buffer_maxlen, nb_options, nb_variables );
+fflush( stdout);
+char fname[100];
+sprintf( fname, "a%03d", cpt ); 
+FILE *fp = fopen( fname, "w" );
+fwrite( ctx->read_buffer, len, 1, fp );
+fclose( fp );
+sprintf( fname, "b%03d", cpt++ ); 
+fp = fopen( fname, "w" );
+fprintf( fp, "%3d: len=%d / %d  nbopt=%d nbvars=%d\015\12", 
+cpt, len, ctx->read_buffer_maxlen, nb_options, nb_variables );
+fprintf( fp, "\015\012" );
+for ( int n = 0; n < nb_options; n++ ) 
+    fprintf( fp, "  %2d: %s = [%s]\015\012", n, options_names[n], options_values[n] );
+fprintf( fp, "\015\012" );
+for ( int n = 0; n < nb_variables; n++ ) 
+    fprintf( fp, "  %2d: %s = [%s]\015\012", n, vars_names[n], vars_values[n] );
+fclose( fp );
+}
+#endif
 
     /*
      *  Call the GET or POST handler
@@ -469,10 +499,16 @@ mihl_handle_get( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf, voi
         ctx->handles = (mihl_handle_t *)realloc( ctx->handles, sizeof(mihl_handle_t) * (ctx->nb_handles+1) );
     }
     mihl_handle_t *handle = &ctx->handles[ctx->nb_handles++];
-    if ( tag )
+    if ( tag ) {
         handle->tag = strdup( tag );
-    else
+        if ( !strchr( tag, '*') )
+            handle->partial = 0;                // If 0, do strcmp(), else strncmp(partial)
+        else
+            handle->partial = strlen(tag)-1;    // If 0, do strcmp(), else strncmp(partial)
+    }
+    else {
         handle->tag = NULL;
+    }
     handle->pf_get = pf;
     handle->pf_post = NULL;
     handle->param = param;
@@ -496,6 +532,10 @@ mihl_handle_post( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_post_t *pf, v
     }
     mihl_handle_t *handle = &ctx->handles[ctx->nb_handles++];
     handle->tag = strdup( tag );
+    if ( strchr( tag, '*') )
+        handle->partial = 0;                // If 0, do strcmp(), else strncmp(partial)
+    else
+        handle->partial = strlen(tag)-1;    // If 0, do strcmp(), else strncmp(partial)
     handle->pf_get = NULL;
     handle->pf_post = pf;
     handle->param = param;
@@ -510,6 +550,8 @@ int
 mihl_handle_file( mihl_ctx_t *ctx, char const *tag, char const *filename, 
     char const *content_type, int close_connection )
 {
+    if ( tag == NULL )
+        return -1;
     if ( ctx->handles == NULL ) {
         ctx->handles = (mihl_handle_t *)malloc( sizeof(mihl_handle_t) );
     }
@@ -518,6 +560,10 @@ mihl_handle_file( mihl_ctx_t *ctx, char const *tag, char const *filename,
     }
     mihl_handle_t *handle = &ctx->handles[ctx->nb_handles++];
     handle->tag = strdup( tag );
+    if ( strchr( tag, '*') )
+        handle->partial = 0;                // If 0, do strcmp(), else strncmp(partial)
+    else
+        handle->partial = strlen(tag)-1;    // If 0, do strcmp(), else strncmp(partial)
     handle->pf_get = NULL;
     handle->pf_post = NULL;
     handle->filename = strdup( filename );

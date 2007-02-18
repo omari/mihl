@@ -127,7 +127,7 @@ tcp_write( SOCKET sockfd, const char *buff, int buff_len )
 		int dcount = send( sockfd, (const char *)pbuff, len, MSG_NOSIGNAL );
 
         if ( (dcount == -1) && (errno == EPIPE) ) {
-            printf( "%s %d : >>> %d <<<<\n", __FILE__, __LINE__, ERRNO );
+            printf( "%s %d : >>> %d <<<<\015\012", __FILE__, __LINE__, ERRNO );
             fflush( stdout );
 			return -1;
         }
@@ -153,7 +153,6 @@ tcp_write( SOCKET sockfd, const char *buff, int buff_len )
 }								// tcp_write
 
 
-void toto() {}
 void
 decode_keys_values( mihl_cnx_t *cnx, char *_request, 
     int *nb_options, char *options_names[], char *options_values[], int maxnb_options,
@@ -194,7 +193,6 @@ decode_keys_values( mihl_cnx_t *cnx, char *_request,
     if ( eol ) {
         eol += 4;
         if ( strchr( eol, '=' ) != NULL ) {
-toto();
             strcat( eol, "&" );
             for (;;) {
                 char *item = strchr( eol, '&' );
@@ -275,7 +273,7 @@ mihl_send( mihl_cnx_t *cnx, char const *fmt_header, ... )
         cnx->html_buffer_len );
 	int count = tcp_write( cnx->sockfd, header, sizeof(ok200)-1+len1+len2 );
     if ( count == -1 ) {
-        printf( "\n>>> %s %d: OOPS %d!!!!!\n", __FILE__, __LINE__, ERRNO );
+        printf( "\n>>> %s %d: OOPS %d!!!!!\015\012", __FILE__, __LINE__, ERRNO );
         fflush( stdout );
         return -1;
     }
@@ -285,6 +283,7 @@ mihl_send( mihl_cnx_t *cnx, char const *fmt_header, ... )
         if ( count == -1 ) {
             printf( "\n>>> %s %d: OOPS %d!!!!!\n", __FILE__, __LINE__, ERRNO );
             fflush( stdout );
+            return -1;
         }
     }
 
