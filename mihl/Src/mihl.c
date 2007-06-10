@@ -1,3 +1,12 @@
+/**
+ *
+ * @file mihl.c
+ *
+ * HTTP embedded server library
+ * Copyright (C) 2006-2007  Olivier Singla
+ * http://mihl.sourceforge.net/
+ *
+ */
 
 #define _GNU_SOURCE
 #include <stdio.h>
@@ -18,7 +27,14 @@
 
 #include "tcp_utils.h"
 
-
+/**
+ * TBD
+ * 
+ * @param ctx TBD
+ * @param sockfd TBD
+ * @param client_addr TBD
+ * @return TBD
+ */
 static int
 add_new_connexion( mihl_ctx_t *ctx, SOCKET sockfd, struct sockaddr_in *client_addr )
 {
@@ -58,7 +74,12 @@ add_new_connexion( mihl_ctx_t *ctx, SOCKET sockfd, struct sockaddr_in *client_ad
     return ctx->nb_connexions-1;
 }                               // add_new_connexion
 
-
+/**
+ * TBD
+ * 
+ * @param cnx TBD
+ * @return TBD
+ */
 static void
 delete_connexion( mihl_cnx_t *cnx )
 {
@@ -79,7 +100,12 @@ delete_connexion( mihl_cnx_t *cnx )
     ctx->nb_connexions--;
 }                               // delete_connexion
 
-
+/**
+ * TBD
+ * 
+ * @param ctx TBD
+ * @return TBD
+ */
 static int
 bind_and_listen( mihl_ctx_t *ctx )
 {
@@ -153,7 +179,15 @@ bind_and_listen( mihl_ctx_t *ctx )
     
 }                               // bind_and_listen
 
-
+/**
+ * TBD
+ * 
+ * @param cnx TBD
+ * @param tag TBD
+ * @param host TBD
+ * @param param TBD
+ * @return TBD
+ */
 static int
 page_not_found( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
 {
@@ -171,7 +205,15 @@ page_not_found( mihl_cnx_t *cnx, char const *tag, char const *host, void *param 
 		"Content-type: text/html\r\n" );
 }                               // page_not_found
 
-
+/**
+ * TBD
+ * 
+ * @param bind_addr TBD
+ * @param port TBD
+ * @param maxnb_cnx TBD
+ * @param log_level TBD
+ * @return TBD
+ */
 mihl_ctx_t *
 mihl_init( char const *bind_addr, int port, int maxnb_cnx, unsigned log_level )
 {
@@ -210,7 +252,12 @@ mihl_init( char const *bind_addr, int port, int maxnb_cnx, unsigned log_level )
     return ctx;
 }                               // mihl_init
 
-
+/**
+ * TBD
+ * 
+ * @param ctx TBD
+ * @return TBD
+ */
 int
 mihl_end( mihl_ctx_t *ctx )
 {
@@ -218,7 +265,16 @@ mihl_end( mihl_ctx_t *ctx )
     return 0;
 }                               // mihl_end
 
-
+/**
+ * TBD
+ * 
+ * @param cnx TBD
+ * @param tag TBD
+ * @param filename TBD
+ * @param content_type TBD
+ * @param close_connection TBD
+ * @return TBD
+ */
 static int
 send_file( mihl_cnx_t *cnx, char *tag, char *filename, 
     char *content_type, int close_connection )
@@ -270,7 +326,17 @@ send_file( mihl_cnx_t *cnx, char *tag, char *filename,
     return 0;
 }                               // send_file
 
-
+/**
+ * TBD
+ * 
+ * @param cnx TBD
+ * @param tag TBD
+ * @param host TBD
+ * @param nb_variables TBD
+ * @param vars_names TBD
+ * @param vars_values TBD
+ * @return TBD
+ */
 static int
 search_for_handle( mihl_cnx_t *cnx, char *tag, char *host,
     int nb_variables, char **vars_names, char **vars_values )
@@ -296,7 +362,13 @@ search_for_handle( mihl_cnx_t *cnx, char *tag, char *host,
     return 0;
 }                               // search_for_handle
 
-
+/**
+ * TBD
+ * 
+ * @param ctx TBD
+ * @param now TBD
+ * @return TBD
+ */
 static int
 manage_new_connexions( mihl_ctx_t *ctx, time_t now )
 {
@@ -325,7 +397,12 @@ manage_new_connexions( mihl_ctx_t *ctx, time_t now )
 	}                           // for (;;)
 }                               // manage_new_connexions
 
-
+/**
+ * TBD
+ * 
+ * @param cnx TBD
+ * @return TBD
+ */
 static int
 got_data_for_active_connexion( mihl_cnx_t *cnx )
 {
@@ -426,7 +503,13 @@ fclose( fp );
     return 1;
 }                               // got_data_for_active_connexion
 
-
+/**
+ * TBD
+ * 
+ * @param ctx TBD
+ * @param now TBD
+ * @return TBD
+ */
 static int
 manage_existent_connexions( mihl_ctx_t *ctx, time_t now )
 {
@@ -472,7 +555,13 @@ manage_existent_connexions( mihl_ctx_t *ctx, time_t now )
 
 }                               // manage_existent_connexions
 
-
+/**
+ * TBD
+ * 
+ * @param ctx TBD
+ * @param now TBD
+ * @return TBD
+ */
 static int
 manage_timedout_connexions( mihl_ctx_t *ctx, time_t now )
 {
@@ -488,7 +577,15 @@ manage_timedout_connexions( mihl_ctx_t *ctx, time_t now )
     return 0;
 }                               // manage_timedout_connexions
 
-
+/**
+ * TBD
+ * 
+ * @param ctx TBD
+ * @param tag TBD
+ * @param pf TBD
+ * @param param TBD
+ * @return TBD
+ */
 int
 mihl_handle_get( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf, void *param )
 {
@@ -518,7 +615,15 @@ mihl_handle_get( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf, voi
     return ctx->nb_handles;
 }                               // mihl_handle_get
 
-
+/**
+ * TBD
+ * 
+ * @param ctx TBD
+ * @param tag TBD
+ * @param pf TBD
+ * @param param TBD
+ * @return TBD
+ */
 int
 mihl_handle_post( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_post_t *pf, void *param )
 {
@@ -545,7 +650,16 @@ mihl_handle_post( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_post_t *pf, v
     return ctx->nb_handles;
 }                               // mihl_handle_post
 
-
+/**
+ * TBD
+ * 
+ * @param ctx TBD
+ * @param tag TBD
+ * @param filename TBD
+ * @param content_type TBD
+ * @param close_connection TBD
+ * @return TBD
+ */
 int
 mihl_handle_file( mihl_ctx_t *ctx, char const *tag, char const *filename, 
     char const *content_type, int close_connection )
@@ -572,7 +686,12 @@ mihl_handle_file( mihl_ctx_t *ctx, char const *tag, char const *filename,
     return ctx->nb_handles;
 }                               // mihl_handle_file
 
-
+/**
+ * TBD
+ * 
+ * @param ctx TBD
+ * @return TBD
+ */
 int
 mihl_server( mihl_ctx_t *ctx )
 {
@@ -583,20 +702,40 @@ mihl_server( mihl_ctx_t *ctx )
     return ctx->nb_connexions;
 }                               // mihl_server
 
+/**
+ * TBD
+ * 
+ * @param ctx TBD
+ * @param level TBD
+ * @return TBD
+ */
 void 
 mihl_set_log_level( mihl_ctx_t *ctx, unsigned level )
 {
     ctx->log_level = level;
 }                               // mihl_set_log_level
 
-
+/**
+ * TBD 
+ * 
+ * @param ctx TBD
+ * @return TBD
+ */
 unsigned 
 mihl_get_log_level( mihl_ctx_t *ctx )
 {
     return ctx->log_level;
 }                               // mihl_get_log_level
 
-
+/**
+ * TBD 
+ * 
+ * @param ctx TBD
+ * @param level TBD
+ * @param fmt TBD
+ * @param ... TBD
+ * @return TBD
+ */
 int
 mihl_log( mihl_ctx_t *ctx, unsigned level, const char *fmt, ... )
 {
@@ -610,7 +749,12 @@ mihl_log( mihl_ctx_t *ctx, unsigned level, const char *fmt, ... )
     return len;
 }                               // mihl_log
 
-
+/**
+ * TBD 
+ * 
+ * @param ctx TBD
+ * @return TBD
+ */
 int 
 mihl_dump_info( mihl_ctx_t *ctx )
 {
@@ -641,6 +785,14 @@ mihl_dump_info( mihl_ctx_t *ctx )
     return ctx->nb_connexions;
 }                               // mihl_dump_info
 
+/**
+ * TBD 
+ * 
+ * @param ctx TBD
+ * @param maxnb_cnxinfos TBD
+ * @param infos TBD
+ * @return TBD
+ */
 int 
 mihl_info( mihl_ctx_t *ctx, int maxnb_cnxinfos, mihl_cnxinfo_t *infos )
 {

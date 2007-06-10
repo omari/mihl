@@ -1,3 +1,13 @@
+/**
+ *
+ * @file example1.c
+ *
+ * HTTP embedded server library: example
+ * Copyright (C) 2006-2007  Olivier Singla
+ * http://mihl.sourceforge.net/
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
