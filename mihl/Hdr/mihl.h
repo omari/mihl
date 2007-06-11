@@ -1,3 +1,12 @@
+/**
+ *
+ * @file mihl.h
+ *
+ * HTTP embedded server library
+ * Copyright (C) 2006-2007  Olivier Singla
+ * http://mihl.sourceforge.net/
+ *
+ */
 
 #ifdef __WINDAUBE__
 #   define _WIN32_WINNT 0x0500

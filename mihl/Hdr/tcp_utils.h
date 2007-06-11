@@ -1,3 +1,13 @@
+/**
+ *
+ * @file tcp_utils.h
+ *
+ * HTTP embedded server library
+ * Copyright (C) 2006-2007  Olivier Singla
+ * http://mihl.sourceforge.net/
+ *
+ */
+
 
 #ifdef __WINDAUBE__
 #   ifdef BUILD_DLL_TCPUTILS

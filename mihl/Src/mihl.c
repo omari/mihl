@@ -206,13 +206,24 @@ page_not_found( mihl_cnx_t *cnx, char const *tag, char const *host, void *param 
 }                               // page_not_found
 
 /**
- * TBD
+ * Library initializations: start waiting for HTTP connections
  * 
- * @param bind_addr TBD
- * @param port TBD
- * @param maxnb_cnx TBD
- * @param log_level TBD
- * @return TBD
+ * Initializes the library internally.
+ * 
+ * Typically, next library calls will be functions such as mihl_handle_get or mihl_handle_file.
+ * 
+ * @param bind_addr Address on which the connections will be established. NULL means INADDR_ANY.
+ * @param port TCP port used for the HTTP connection. 80 is the standard port, but any other port not yet in use might be used, 
+ * 		assuming you have sufficient privileges
+ * @param maxnb_cnx maximum number of allowed connections. If you did not installed your own handler, a standard page 
+ * 		will be displayed if you have a number of connections exceeds the maximum number allowed.
+ * @param log_level initial log level (can be changed later with mihl_set_log_level.
+ * @return
+ *  - an opaque context structure used by all further calls.
+ *    This enables to run several instances of the embedded server.
+ *  - or NULL, if the operation failed
+ * 
+ * @note Besides internal library initializations, this function performs bind() then listen().
  */
 mihl_ctx_t *
 mihl_init( char const *bind_addr, int port, int maxnb_cnx, unsigned log_level )
@@ -253,10 +264,13 @@ mihl_init( char const *bind_addr, int port, int maxnb_cnx, unsigned log_level )
 }                               // mihl_init
 
 /**
- * TBD
+ * This function is the opposite of mish_init(): it close all current open HTTP connections, 
+ * and release all resources that might have been allocated. All the sockets in use are closed.
  * 
- * @param ctx TBD
- * @return TBD
+ * @param ctx context structure as returned by mihl_init()
+ * @return
+ * 	- number of connections closed (which might be 0)
+ * 	- or -1 if an error occurred (errno is then set).
  */
 int
 mihl_end( mihl_ctx_t *ctx )
@@ -578,12 +592,15 @@ manage_timedout_connexions( mihl_ctx_t *ctx, time_t now )
 }                               // manage_timedout_connexions
 
 /**
- * TBD
+ * Provide a C function handler for a GET operation.
  * 
- * @param ctx TBD
- * @param tag TBD
- * @param pf TBD
- * @param param TBD
+ * The mihl_handle_get() function installs a C handler function that will be used to construct an HTTP page 
+ * for a given URL.
+ * 
+ * @param ctx opaque context structure as returned by mihl_init()
+ * @param tag HTTP base URL (such as  “/” or ‘/nextpage.html”).
+ * @param pf pointer to the C handler function that will be called for this particular HTTP URL.
+ * @param param user pointer that will be provided to the C handler function.
  * @return TBD
  */
 int
@@ -616,13 +633,18 @@ mihl_handle_get( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf, voi
 }                               // mihl_handle_get
 
 /**
- * TBD
+ * Provide a C function handler for a POST operation.
  * 
- * @param ctx TBD
- * @param tag TBD
- * @param pf TBD
- * @param param TBD
- * @return TBD
+ * The mihl_handle_get() function installs a C handler function that will be used to construct 
+ * an HTTP page for a given URL
+ * 
+ * @param ctx opaque context structure as returned by mihl_init()
+ * @param tag HTTP base URL (such as  “/” or ‘/nextpage.html”).
+ * @param pf pointer to the C handler function that will be called for this particular HTTP URL.
+ * @param param user pointer that will be provided to the C handler function.
+ * @return
+ *  - 0 if the operation succeeded
+ *  - or -1 if an error occurred (errno is then set)
  */
 int
 mihl_handle_post( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_post_t *pf, void *param )
@@ -651,14 +673,16 @@ mihl_handle_post( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_post_t *pf, v
 }                               // mihl_handle_post
 
 /**
- * TBD
+ * This function is used to describe a file that will be served for a given HTTP request.
  * 
- * @param ctx TBD
- * @param tag TBD
- * @param filename TBD
- * @param content_type TBD
- * @param close_connection TBD
- * @return TBD
+ * @param ctx opaque context structure as returned by mihl_init()
+ * @param tag HTTP base URL (such as “/image.jpg” for instance)
+ * @param filename ilename to send. The full pathname can be given.
+ * @param content_type HTTP content type, such as “image/jpeg”, “image/gif”, “text/javascript”, etc.
+ * @param close_connection indicate if the HTTP connection should be closed or not.
+ * @return
+ * 	- 0 if the operation succeeded,
+ * 	- or -1 if an error occurred (errno is then set).
  */
 int
 mihl_handle_file( mihl_ctx_t *ctx, char const *tag, char const *filename, 
@@ -687,10 +711,25 @@ mihl_handle_file( mihl_ctx_t *ctx, char const *tag, char const *filename,
 }                               // mihl_handle_file
 
 /**
- * TBD
+ * Manage new connections, existent connections, and connections timeout.
  * 
- * @param ctx TBD
- * @return TBD
+ * MIHL is based on a non-blocking and single thread mode; therefore you’ll have to call this function 
+ * on a frequent basis in order to:
+ * 		- establish new connections;
+ * 		- serve pages for existent connections;
+ * 		- and finally close timed out connections.
+ * 
+ * In the case of an existent connection, typically a user-provided callback function is called. 
+ * Its job is to build a new page which is then sent to the client. In a single-thread model, 
+ * each of these functions should not take too much time: the next callback function will be ‘scheduled’ 
+ * only when the current function is done (sort of a  ‘cooperative multi-tasking’).
+ * 
+ * @param ctx opaque context structure as returned by mihl_init()
+ * @return
+ * 	- ABC
+ * 	- BCD
+ * 
+ * @note Remember that this is a non blocking call. If you do not call this function, no new connection can be established.
  */
 int
 mihl_server( mihl_ctx_t *ctx )
@@ -786,12 +825,14 @@ mihl_dump_info( mihl_ctx_t *ctx )
 }                               // mihl_dump_info
 
 /**
- * TBD 
+ * Provide information on current connections.
  * 
  * @param ctx TBD
  * @param maxnb_cnxinfos TBD
  * @param infos TBD
- * @return TBD
+ * @return
+ * 	- number of connections which are documented (which might be 0)
+ * 	- or -1 if an error occurred (errno is then set).
  */
 int 
 mihl_info( mihl_ctx_t *ctx, int maxnb_cnxinfos, mihl_cnxinfo_t *infos )

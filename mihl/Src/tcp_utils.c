@@ -42,7 +42,16 @@
 #define BUILD_DLL_TCPUTILS
 #include "tcp_utils.h"
 
-
+/**
+ * TBD
+ * 
+ * @param sockfd TBD
+ * @param buffer TBD
+ * @param maxlen TBD
+ * @return
+ * 	- X
+ * 	- or -1 if an error occurred (errno is then set).
+ */
 int
 tcp_read( SOCKET sockfd, char *buffer, int maxlen )
 {
@@ -99,7 +108,16 @@ tcp_read( SOCKET sockfd, char *buffer, int maxlen )
 	return dcount+index;
 }                               // tcp_read
 
-
+/**
+ * TBD
+ * 
+ * @param sockfd TBD
+ * @param buff TBD
+ * @param buff_len TBD
+ * @return
+ * 	- X
+ * 	- or -1 if an error occurred (errno is then set).
+ */
 int
 tcp_write( SOCKET sockfd, const char *buff, int buff_len )
 {
@@ -161,7 +179,20 @@ tcp_write( SOCKET sockfd, const char *buff, int buff_len )
 	return cnt;
 }								// tcp_write
 
-
+/**
+ * TBD
+ * 
+ * @param cnx TBD
+ * @param _request TBD
+ * @param nb_options TBD
+ * @param options_names TBD
+ * @param options_values TBD
+ * @param maxnb_options TBD
+ * @param nb_variables TBD
+ * @param vars_names TBD
+ * @param vars_values TBD
+ * @param maxnb_values TBD
+ */
 void
 decode_keys_values( mihl_cnx_t *cnx, char *_request, 
     int *nb_options, char *options_names[], char *options_values[], int maxnb_options,
@@ -247,7 +278,23 @@ decode_keys_values( mihl_cnx_t *cnx, char *_request,
 
 }                               // decode_keys_values
 
-
+/**
+ * Build HTML page for a given HTTP URL.
+ * 
+ * Used within a C handler function (such as one provide to mihl_handle_get or mihl_handle_post), 
+ * to build a page content. Once the page will is finished, a call to mihl_add should be done.
+ * 
+ * @param cnx Opaque pointer, as provided to the C handler function (GET).
+ * @param fmt printf like format and optional arguments to describe the data to add into the page 
+ * 		(typically HTML content).
+ * @param ... Optional printf like format arguments 
+ * @return
+ * 	- 0 if the operation succeeded
+ * 	- or -1 if an error occurred (errno is then set).
+ * 
+ * @note mihl_add and mihl_send use a dynamic buffer, which is allocated when needed, 
+ * 	but only released with mihl_end().
+ */
 int 
 mihl_add( mihl_cnx_t *cnx, char const *fmt, ... )
 {
@@ -267,7 +314,16 @@ mihl_add( mihl_cnx_t *cnx, char const *fmt, ... )
     return len;
 }                               // mihl_add
 
-
+/**
+ * TBD
+ * 
+ * @param cnx TBD
+ * @param fmt_header TBD
+ * @param ... TBD
+ * @return
+ * 	- X
+ * 	- or -1 if an error occurred (errno is then set).
+ */
 int
 mihl_send( mihl_cnx_t *cnx, char const *fmt_header, ... )
 {
@@ -298,10 +354,17 @@ mihl_send( mihl_cnx_t *cnx, char const *fmt_header, ... )
 
     cnx->html_buffer_len = 0;
     return count;
-}                               // TcpSend::flush
-
+}                               // mihl_send
 
 #ifndef __WINDAUBE__
+/**
+ * TBD
+ * 
+ * @param fd TBD
+ * @return
+ * 	- X
+ * 	- or -1 if an error occurred (errno is then set).
+ */
 static int
 filelength( int fd ) 
 {
@@ -311,7 +374,16 @@ filelength( int fd )
 }                               // filelength
 #endif
 
-
+/**
+ * TBD
+ * 
+ * @param fname TBD
+ * @param file TBD
+ * @param length TBD
+ * @return
+ * 	- X
+ * 	- or -1 if an error occurred (errno is then set).
+ */
 int 
 read_file( char *fname, char **file, int *length )
 {

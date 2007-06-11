@@ -1,19 +1,27 @@
+/**
+ *
+ * @file example_utils.h
+ *
+ * HTTP embedded server library
+ * Copyright (C) 2006-2007  Olivier Singla
+ * http://mihl.sourceforge.net/
+ *
+ */
+
 #ifdef __WINDAUBE__
 
 #include <windows.h>
 #include <conio.h>
 
 static int
-peekch( void ) 
-{
+peekch( void ) {
     if ( kbhit() )
         return _getch();
     return -1;
 }
 
 static inline void
-delay( int msec )
-{
+delay( int msec ) {
     Sleep( msec );
 }
 
@@ -93,7 +101,6 @@ delay( int msec )
 
 #endif
 
-
 static void
 help( void ) 
 {
@@ -105,8 +112,7 @@ help( void )
 
 
 static int
-peek_key( mihl_ctx_t *ctx )
-{
+peek_key( mihl_ctx_t *ctx ) {
     unsigned vlog = mihl_get_log_level( ctx );
     delay ( 1 );
     int key = peekch( );

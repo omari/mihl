@@ -17,6 +17,15 @@
 
 #include "example_utils.h"
 
+/**
+ * Program entry point
+ * 
+ * @param cnx TBD
+ * @param tag TBD
+ * @param host TBD
+ * @param param TBD
+ * @return 0
+ */
 int
 http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
 {
@@ -33,6 +42,15 @@ http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
     return 0;
 }
 
+/**
+ * Program entry point
+ * 
+ * @param cnx TBD
+ * @param tag TBD
+ * @param host TBD
+ * @param param TBD
+ * @return 0
+ */
 int
 http_nextpage( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
 {
@@ -47,7 +65,15 @@ http_nextpage( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
     return 0;
 }                               // http_nextpage
 
-
+/**
+ * Program entry point
+ * 
+ * @param argc TBD
+ * @param argv TBD
+ * @return
+ * 	- 0 if OK
+ * 	- or -1 if an error occurred (errno is then set).
+ */
 int
 main( int argc, char *argv[] )
 {

@@ -1,3 +1,13 @@
+/**
+ *
+ * @file glovars.h
+ *
+ * HTTP embedded server library
+ * Copyright (C) 2006-2007  Olivier Singla
+ * http://mihl.sourceforge.net/
+ *
+ */
+
 
 #ifdef __MAIN__
 #   define GLOBAL
