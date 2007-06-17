@@ -1,3 +1,5 @@
-#Wed May 30 00:13:11 EDT 2007
+#Sun Jun 17 01:40:09 GMT-04:00 2007
 eclipse.preferences.version=1
+instance/org.eclipse.core.net/org.eclipse.core.net.hasMigrated=true
 indexerId=org.eclipse.cdt.core.fastIndexer
+indexer/indexerId=org.eclipse.cdt.core.fastIndexer
