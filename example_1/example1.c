@@ -1,12 +1,20 @@
 /**
- *
  * @file example1.c
  *
- * HTTP embedded server library: example
- * Copyright (C) 2006-2007  Olivier Singla
- * http://mihl.sourceforge.net/
- *
  */
+
+/**
+ * @mainpage MIHL: Minimal Httpd Library - Example #1
+ * 
+ * HTTP embedded server library \n
+ * Copyright (C) 2006-2007  Olivier Singla \n
+ * http://mihl.sourceforge.net/ \n\n
+ *
+ * Simple use of GET.
+ * Display a page with a JPEG image and a link to a 2nd page. 
+ * The 2nd page contains a link to the 1st page.
+ * 
+ **/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,8 +34,7 @@
  * @param param TBD
  * @return 0
  */
-int
-http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
+int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
 {
     mihl_add( cnx, "<html>" );
     mihl_add( cnx, "<body>" );
@@ -51,8 +58,7 @@ http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
  * @param param TBD
  * @return 0
  */
-int
-http_nextpage( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
+int http_nextpage( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
 {
     mihl_add( cnx, "<html>" );
     mihl_add( cnx, "<body>" );
@@ -74,8 +80,7 @@ http_nextpage( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
  * 	- 0 if OK
  * 	- or -1 if an error occurred (errno is then set).
  */
-int
-main( int argc, char *argv[] )
+int main( int argc, char *argv[] )
 {
     help( );
 
