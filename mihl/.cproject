@@ -3,10 +3,16 @@
 <cproject>
   
   
+  
+  
   <storageModule moduleId="org.eclipse.cdt.core.settings">
     
     
+    
+    
     <cconfiguration id="cdt.managedbuild.config.gnu.so.debug.409323649">
+      
+      
       
       
       <storageModule moduleId="org.eclipse.cdt.core.settings" name="Debug" id="cdt.managedbuild.config.gnu.so.debug.409323649" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
@@ -26,8 +32,10 @@
       </storageModule>
       
       
+      
+      
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        <configuration id="cdt.managedbuild.config.gnu.so.debug.409323649" name="Debug" description="Shared Library, Debug" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" parent="cdt.managedbuild.config.gnu.so.debug" artifactName="mihl" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" artifactExtension="so" cleanCommand="rm -rf" prebuildStep="" postbuildStep="doxygen ../Doxyfile" preannouncebuildStep="" postannouncebuildStep="">
+        <configuration id="cdt.managedbuild.config.gnu.so.debug.409323649" name="Debug" description="Shared Library, Debug" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" parent="cdt.managedbuild.config.gnu.so.debug" artifactName="mihl" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" artifactExtension="so" cleanCommand="rm -rf" prebuildStep="" postbuildStep="" preannouncebuildStep="" postannouncebuildStep="">
           <folderInfo id="cdt.managedbuild.config.gnu.so.debug.409323649.1581196081" name="/" resourcePath="">
             <toolChain superClass="cdt.managedbuild.toolchain.gnu.so.debug" id="cdt.managedbuild.toolchain.gnu.so.debug.1982241601" name="GCC Tool Chain">
               <targetPlatform superClass="cdt.managedbuild.target.gnu.platform.so.debug" id="cdt.managedbuild.target.gnu.platform.so.debug.220500049" name="Debug Platform"/>
@@ -69,15 +77,27 @@
       </storageModule>
       
       
+      
+      
       <storageModule moduleId="scannerConfiguration"/>
       
+      
     
+      
       <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+      
+      
       <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+      
+    
     </cconfiguration>
     
     
+    
+    
     <cconfiguration id="cdt.managedbuild.config.gnu.so.release.1682290530">
+      
+      
       
       
       <storageModule moduleId="org.eclipse.cdt.core.settings" name="Release" id="cdt.managedbuild.config.gnu.so.release.1682290530" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
@@ -95,6 +115,8 @@
           <extension point="org.eclipse.cdt.core.ErrorParser" id="org.eclipse.cdt.core.GCCErrorParser"/>
         </extensions>
       </storageModule>
+      
+      
       
       
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
@@ -135,19 +157,33 @@
         </configuration>
       </storageModule>
       
+      
     
+      
       <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+      
+      
       <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+      
+      
       <storageModule moduleId="scannerConfiguration"/>
+      
+    
     </cconfiguration>
     
+    
+  
   
   </storageModule>
+  
+  
   
   
   <storageModule moduleId="cdtBuildSystem" version="4.0.0">
     <project id="mihl.cdt.managedbuild.target.gnu.so.841369747" name="Shared Library (Gnu)" projectType="cdt.managedbuild.target.gnu.so"/>
   </storageModule>
   
+  
+
 
 </cproject>
