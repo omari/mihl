@@ -4,7 +4,7 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING = UTF-8
-PROJECT_NAME = "mihl example"
+PROJECT_NAME = mihl_example
 PROJECT_NUMBER = 
 OUTPUT_DIRECTORY = 
 CREATE_SUBDIRS = NO
@@ -36,7 +36,7 @@ SUBGROUPING = YES
 #---------------------------------------------------------------------------
 EXTRACT_ALL = YES
 EXTRACT_PRIVATE = YES
-EXTRACT_STATIC = NO
+EXTRACT_STATIC = YES
 EXTRACT_LOCAL_CLASSES = YES
 EXTRACT_LOCAL_METHODS = NO
 HIDE_UNDOC_MEMBERS = NO
@@ -73,7 +73,7 @@ WARN_LOGFILE =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT = example1.c ../mihl/Hdr ../mihl/Src
+INPUT = ../mihl/Src Src 
 INPUT_ENCODING = UTF-8
 FILE_PATTERNS = *.c *.ixx *.ipp *.i++ *.inl *.h *.hh *.hxx *.hpp *.h++ *.idl *.odl *.cs *.php *.php3 *.inc *.m *.mm *.dox *.py *.C *.CC *.C++ *.II *.I++ *.H *.HH *.H++ *.CS *.PHP *.PHP3 *.M *.MM *.PY
 RECURSIVE = NO
@@ -91,14 +91,14 @@ FILTER_SOURCE_FILES = NO
 #---------------------------------------------------------------------------
 # configuration options related to source browsing
 #---------------------------------------------------------------------------
-SOURCE_BROWSER = NO
+SOURCE_BROWSER = YES
 INLINE_SOURCES = NO
 STRIP_CODE_COMMENTS = YES
-REFERENCED_BY_RELATION = NO
-REFERENCES_RELATION = NO
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION = YES
 REFERENCES_LINK_SOURCE = YES
 USE_HTAGS = NO
-VERBATIM_HEADERS = NO
+VERBATIM_HEADERS = YES
 #---------------------------------------------------------------------------
 # configuration options related to the alphabetical class index
 #---------------------------------------------------------------------------
