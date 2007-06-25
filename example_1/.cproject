@@ -3,13 +3,19 @@
 <cproject>
   
   
+  
+  
   <storageModule moduleId="org.eclipse.cdt.core.settings">
+    
+    
     
     
     <cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.603250840">
       
       
-      <storageModule moduleId="org.eclipse.cdt.core.settings" name="Debug" id="cdt.managedbuild.config.gnu.exe.debug.603250840" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+      
+      
+      <storageModule moduleId="org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.exe.debug.603250840" name="Debug" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
         <externalSettings/>
         <extensions>
           <extension point="org.eclipse.cdt.core.BinaryParser" id="org.eclipse.cdt.core.ELF"/>
@@ -19,6 +25,8 @@
           <extension point="org.eclipse.cdt.core.ErrorParser" id="org.eclipse.cdt.core.GCCErrorParser"/>
         </extensions>
       </storageModule>
+      
+      
       
       
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
@@ -33,7 +41,7 @@
               </tool>
               <tool superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.338132060" name="GCC C Compiler">
                 <option superClass="gnu.c.compiler.option.include.paths" id="gnu.c.compiler.option.include.paths.1327586108" name="Include paths (-I)" valueType="includePath">
-                  <listOptionValue value="&quot;${workspace_loc:/mihl/Hdr}&quot;" builtIn="false"/>
+                  <listOptionValue value="&quot;${workspace_loc:/mihl/Src}&quot;" builtIn="false"/>
                 </option>
                 <option superClass="gnu.c.compiler.option.misc.other" id="gnu.c.compiler.option.misc.other.920047629" name="Other flags" value="-c -fmessage-length=0 -std=gnu99" valueType="string"/>
                 <option superClass="gnu.c.compiler.exe.debug.option.optimization.level" id="gnu.c.compiler.exe.debug.option.optimization.level.1412628229" name="Optimization Level" defaultValue="gnu.c.optimization.level.none" valueType="enumerated"/>
@@ -59,18 +67,30 @@
       </storageModule>
       
       
+      
+      
       <storageModule moduleId="scannerConfiguration"/>
       
+      
     
+      
       <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+      
+      
       <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+      
+    
     </cconfiguration>
+    
+    
     
     
     <cconfiguration id="cdt.managedbuild.config.gnu.exe.release.1386886654">
       
       
-      <storageModule moduleId="org.eclipse.cdt.core.settings" name="Release" id="cdt.managedbuild.config.gnu.exe.release.1386886654" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+      
+      
+      <storageModule moduleId="org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.exe.release.1386886654" name="Release" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
         <externalSettings/>
         <extensions>
           <extension point="org.eclipse.cdt.core.BinaryParser" id="org.eclipse.cdt.core.ELF"/>
@@ -80,6 +100,8 @@
           <extension point="org.eclipse.cdt.core.ErrorParser" id="org.eclipse.cdt.core.GCCErrorParser"/>
         </extensions>
       </storageModule>
+      
+      
       
       
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
@@ -94,7 +116,7 @@
               </tool>
               <tool superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release" id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.603199729" name="GCC C Compiler">
                 <option superClass="gnu.c.compiler.option.include.paths" id="gnu.c.compiler.option.include.paths.1115007109" name="Include paths (-I)" valueType="includePath">
-                  <listOptionValue value="&quot;${workspace_loc:/mihl/Hdr}&quot;" builtIn="false"/>
+                  <listOptionValue value="&quot;${workspace_loc:/mihl/Src}&quot;" builtIn="false"/>
                 </option>
                 <option superClass="gnu.c.compiler.option.misc.other" id="gnu.c.compiler.option.misc.other.1173045009" name="Other flags" value="-c -fmessage-length=0 -std=gnu99" valueType="string"/>
                 <option superClass="gnu.c.compiler.exe.release.option.optimization.level" id="gnu.c.compiler.exe.release.option.optimization.level.1410478764" name="Optimization Level" defaultValue="gnu.c.optimization.level.most" valueType="enumerated"/>
@@ -119,19 +141,33 @@
         </configuration>
       </storageModule>
       
+      
     
+      
       <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+      
+      
       <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+      
+      
       <storageModule moduleId="scannerConfiguration"/>
+      
+    
     </cconfiguration>
     
+    
+  
   
   </storageModule>
+  
+  
   
   
   <storageModule moduleId="cdtBuildSystem" version="4.0.0">
     <project id="example_1.cdt.managedbuild.target.gnu.exe.1211470655" name="Executable (Gnu)" projectType="cdt.managedbuild.target.gnu.exe"/>
   </storageModule>
   
+  
+
 
 </cproject>
