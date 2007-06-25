@@ -5,12 +5,18 @@
   
   
   
+  
+  
   <storageModule moduleId="org.eclipse.cdt.core.settings">
     
     
     
     
+    
+    
     <cconfiguration id="cdt.managedbuild.config.gnu.so.debug.409323649">
+      
+      
       
       
       
@@ -34,6 +40,8 @@
       
       
       
+      
+      
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
         <configuration id="cdt.managedbuild.config.gnu.so.debug.409323649" name="Debug" description="Shared Library, Debug" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" parent="cdt.managedbuild.config.gnu.so.debug" artifactName="mihl" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" artifactExtension="so" cleanCommand="rm -rf" prebuildStep="" postbuildStep="" preannouncebuildStep="" postannouncebuildStep="">
           <folderInfo id="cdt.managedbuild.config.gnu.so.debug.409323649.1581196081" name="/" resourcePath="">
@@ -46,7 +54,7 @@
               </tool>
               <tool superClass="cdt.managedbuild.tool.gnu.c.compiler.so.debug" id="cdt.managedbuild.tool.gnu.c.compiler.so.debug.1084705543" name="GCC C Compiler">
                 <option superClass="gnu.c.compiler.option.include.paths" id="gnu.c.compiler.option.include.paths.1661326538" name="Include paths (-I)" valueType="includePath">
-                  <listOptionValue value="&quot;${workspace_loc:/mihl/Hdr}&quot;" builtIn="false"/>
+                  <listOptionValue value="&quot;${workspace_loc:/mihl/Src}&quot;" builtIn="false"/>
                 </option>
                 <option superClass="gnu.c.compiler.option.misc.other" id="gnu.c.compiler.option.misc.other.874935044" name="Other flags" value="-c -fmessage-length=0 -std=gnu99" valueType="string"/>
                 <option superClass="gnu.c.compiler.so.debug.option.optimization.level" id="gnu.c.compiler.so.debug.option.optimization.level.1395388121" name="Optimization Level" defaultValue="gnu.c.optimization.level.none" valueType="enumerated"/>
@@ -79,23 +87,35 @@
       
       
       
+      
+      
       <storageModule moduleId="scannerConfiguration"/>
+      
       
       
     
       
+      
       <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+      
+      
       
       
       <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
       
+      
+    
     
     </cconfiguration>
     
     
     
     
+    
+    
     <cconfiguration id="cdt.managedbuild.config.gnu.so.release.1682290530">
+      
+      
       
       
       
@@ -119,6 +139,8 @@
       
       
       
+      
+      
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
         <configuration id="cdt.managedbuild.config.gnu.so.release.1682290530" name="Release" description="Shared Library, Release" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" parent="cdt.managedbuild.config.gnu.so.release" artifactName="mihl" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" artifactExtension="so" cleanCommand="rm -rf" prebuildStep="" postbuildStep="" preannouncebuildStep="" postannouncebuildStep="">
           <folderInfo id="cdt.managedbuild.config.gnu.so.release.1682290530.623743331" name="/" resourcePath="">
@@ -131,7 +153,7 @@
               </tool>
               <tool superClass="cdt.managedbuild.tool.gnu.c.compiler.so.release" id="cdt.managedbuild.tool.gnu.c.compiler.so.release.1414942918" name="GCC C Compiler">
                 <option superClass="gnu.c.compiler.option.include.paths" id="gnu.c.compiler.option.include.paths.930612577" name="Include paths (-I)" valueType="includePath">
-                  <listOptionValue value="&quot;${workspace_loc:/mihl/Hdr}&quot;" builtIn="false"/>
+                  <listOptionValue value="&quot;${workspace_loc:/mihl/Src}&quot;" builtIn="false"/>
                 </option>
                 <option superClass="gnu.c.compiler.option.misc.other" id="gnu.c.compiler.option.misc.other.1171150998" name="Other flags" value="-c -fmessage-length=0 -std=gnu99" valueType="string"/>
                 <option superClass="gnu.c.compiler.so.release.option.optimization.level" id="gnu.c.compiler.so.release.option.optimization.level.22920210" name="Optimization Level" defaultValue="gnu.c.optimization.level.most" valueType="enumerated"/>
@@ -158,23 +180,35 @@
       </storageModule>
       
       
+      
     
       
+      
       <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+      
+      
       
       
       <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
       
       
+      
+      
       <storageModule moduleId="scannerConfiguration"/>
       
+      
+    
     
     </cconfiguration>
     
     
+    
+  
   
   
   </storageModule>
+  
+  
   
   
   
@@ -184,6 +218,8 @@
   </storageModule>
   
   
+  
+
 
 
 </cproject>
