@@ -7,7 +7,11 @@
   
   
   
+  
+  
   <storageModule moduleId="org.eclipse.cdt.core.settings">
+    
+    
     
     
     
@@ -21,7 +25,9 @@
       
       
       
-      <storageModule moduleId="org.eclipse.cdt.core.settings" name="Debug" id="cdt.managedbuild.config.gnu.so.debug.409323649" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+      
+      
+      <storageModule moduleId="org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.so.debug.409323649" name="Debug" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
         <externalSettings>
           <externalSetting>
             <entry kind="includePath" flags="VALUE_WORKSPACE_PATH" name="/mihl"/>
@@ -36,6 +42,8 @@
           <extension point="org.eclipse.cdt.core.ErrorParser" id="org.eclipse.cdt.core.GCCErrorParser"/>
         </extensions>
       </storageModule>
+      
+      
       
       
       
@@ -89,11 +97,15 @@
       
       
       
+      
+      
       <storageModule moduleId="scannerConfiguration"/>
       
       
       
+      
     
+      
       
       
       <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
@@ -101,12 +113,19 @@
       
       
       
+      
+      
       <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
       
       
+      
     
     
+    
+      <storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
     </cconfiguration>
+    
+    
     
     
     
@@ -120,7 +139,9 @@
       
       
       
-      <storageModule moduleId="org.eclipse.cdt.core.settings" name="Release" id="cdt.managedbuild.config.gnu.so.release.1682290530" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+      
+      
+      <storageModule moduleId="org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.so.release.1682290530" name="Release" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
         <externalSettings>
           <externalSetting>
             <entry kind="includePath" flags="VALUE_WORKSPACE_PATH" name="/mihl"/>
@@ -135,6 +156,8 @@
           <extension point="org.eclipse.cdt.core.ErrorParser" id="org.eclipse.cdt.core.GCCErrorParser"/>
         </extensions>
       </storageModule>
+      
+      
       
       
       
@@ -181,10 +204,14 @@
       
       
       
+      
     
       
       
+      
       <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+      
+      
       
       
       
@@ -194,19 +221,28 @@
       
       
       
+      
+      
       <storageModule moduleId="scannerConfiguration"/>
       
       
+      
     
     
+    
+      <storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
     </cconfiguration>
     
     
     
+    
+  
   
   
   
   </storageModule>
+  
+  
   
   
   
@@ -219,6 +255,8 @@
   
   
   
+  
+
 
 
 
