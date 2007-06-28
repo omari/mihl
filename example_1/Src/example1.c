@@ -26,7 +26,7 @@
 #include "example_utils.h"
 
 /**
- * Program entry point
+ * TBD
  * 
  * @param cnx TBD
  * @param tag TBD
@@ -34,8 +34,7 @@
  * @param param TBD
  * @return 0
  */
-int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
-{
+int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
     mihl_add( cnx, "<html>" );
     mihl_add( cnx, "<body>" );
     mihl_add( cnx, "This is a test HTML page for MIHL.<br>" );
@@ -50,7 +49,7 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
 }
 
 /**
- * Program entry point
+ * TBD
  * 
  * @param cnx TBD
  * @param tag TBD
@@ -58,8 +57,7 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
  * @param param TBD
  * @return 0
  */
-int http_nextpage( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
-{
+int http_nextpage( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
     mihl_add( cnx, "<html>" );
     mihl_add( cnx, "<body>" );
     mihl_add( cnx, "This is another page...<br>" );
@@ -80,15 +78,14 @@ int http_nextpage( mihl_cnx_t *cnx, char const *tag, char const *host, void *par
  * 	- 0 if OK
  * 	- or -1 if an error occurred (errno is then set).
  */
-int main( int argc, char *argv[] )
-{
+int main( int argc, char *argv[] ) {
     help( );
 
     mihl_ctx_t *ctx = mihl_init( NULL, 8080, 8, 
         MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO | MIHL_LOG_INFO_VERBOSE );
 
     mihl_handle_get( ctx, "/", http_root, NULL );
-    mihl_handle_file( ctx, "/image.jpg", "image.jpg", "image/jpeg", 0 );
+    mihl_handle_file( ctx, "/image.jpg", "../image.jpg", "image/jpeg", 0 );
     mihl_handle_get( ctx, "/nextpage.html", http_nextpage, NULL );
 
     for (;;) {
