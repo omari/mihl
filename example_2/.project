@@ -3,6 +3,7 @@
 	<name>example_2</name>
 	<comment></comment>
 	<projects>
+		<project>mihl</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
