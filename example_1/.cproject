@@ -5,7 +5,11 @@
   
   
   
+  
+  
   <storageModule moduleId="org.eclipse.cdt.core.settings">
+    
+    
     
     
     
@@ -15,7 +19,11 @@
       
       
       
-      <storageModule moduleId="org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.exe.debug.603250840" name="Debug" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+      
+      
+      <storageModule moduleId="org.eclipse.cdt.core.settings" name="Debug" id="cdt.managedbuild.config.gnu.exe.debug.603250840" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+        
+        
         <externalSettings/>
         <extensions>
           <extension point="org.eclipse.cdt.core.BinaryParser" id="org.eclipse.cdt.core.ELF"/>
@@ -29,12 +37,16 @@
       
       
       
+      
+      
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
+        
+      
         <configuration id="cdt.managedbuild.config.gnu.exe.debug.603250840" name="Debug" description="" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" parent="cdt.managedbuild.config.gnu.exe.debug" artifactName="example_1" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" artifactExtension="" cleanCommand="rm -rf" prebuildStep="" postbuildStep="" preannouncebuildStep="" postannouncebuildStep="">
           <folderInfo id="cdt.managedbuild.config.gnu.exe.debug.603250840.1143628101" name="/" resourcePath="">
             <toolChain superClass="cdt.managedbuild.toolchain.gnu.exe.debug" id="cdt.managedbuild.toolchain.gnu.exe.debug.1837092202" name="GCC Tool Chain">
               <targetPlatform superClass="cdt.managedbuild.target.gnu.platform.exe.debug" id="cdt.managedbuild.target.gnu.platform.exe.debug.704682850" name="Debug Platform"/>
-              <builder superClass="cdt.managedbuild.target.gnu.builder.exe.debug" id="cdt.managedbuild.target.gnu.builder.exe.debug.1019663746" name="Gnu Make Builder" keepEnvironmentInBuildfile="false" buildPath="${workspace_loc:/example_1/Debug}"/>
+              <builder superClass="cdt.managedbuild.target.gnu.builder.exe.debug" id="cdt.managedbuild.target.gnu.builder.exe.debug.1019663746" name="Gnu Make Builder" autoBuildTarget="all" enableAutoBuild="true" incrementalBuildTarget="all" enabledIncrementalBuild="true" cleanBuildTarget="clean" enableCleanBuild="true" keepEnvironmentInBuildfile="false" buildPath="${workspace_loc:/example_1/Debug}"/>
               <tool superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug" id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.866969365" name="GCC C++ Compiler">
                 <option superClass="gnu.cpp.compiler.exe.debug.option.optimization.level" id="gnu.cpp.compiler.exe.debug.option.optimization.level.311432012" name="Optimization Level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
                 <option superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" id="gnu.cpp.compiler.exe.debug.option.debugging.level.860843271" name="Debug Level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
@@ -69,18 +81,28 @@
       
       
       
+      
+      
       <storageModule moduleId="scannerConfiguration"/>
       
       
+      
     
+      
       
       <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
       
       
+      
+      
       <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
       
+      
+    
     
     </cconfiguration>
+    
+    
     
     
     
@@ -90,7 +112,11 @@
       
       
       
-      <storageModule moduleId="org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.exe.release.1386886654" name="Release" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+      
+      
+      <storageModule moduleId="org.eclipse.cdt.core.settings" name="Release" id="cdt.managedbuild.config.gnu.exe.release.1386886654" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+        
+        
         <externalSettings/>
         <extensions>
           <extension point="org.eclipse.cdt.core.BinaryParser" id="org.eclipse.cdt.core.ELF"/>
@@ -104,7 +130,11 @@
       
       
       
+      
+      
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
+        
+      
         <configuration id="cdt.managedbuild.config.gnu.exe.release.1386886654" name="Release" description="" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" parent="cdt.managedbuild.config.gnu.exe.release" artifactName="example_1" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" artifactExtension="" cleanCommand="rm -rf" prebuildStep="" postbuildStep="" preannouncebuildStep="" postannouncebuildStep="">
           <folderInfo id="cdt.managedbuild.config.gnu.exe.release.1386886654.344482779" name="/" resourcePath="">
             <toolChain superClass="cdt.managedbuild.toolchain.gnu.exe.release" id="cdt.managedbuild.toolchain.gnu.exe.release.2002270570" name="GCC Tool Chain">
@@ -142,23 +172,35 @@
       </storageModule>
       
       
+      
     
       
+      
       <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+      
+      
       
       
       <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
       
       
+      
+      
       <storageModule moduleId="scannerConfiguration"/>
       
+      
+    
     
     </cconfiguration>
     
     
+    
+  
   
   
   </storageModule>
+  
+  
   
   
   
@@ -168,6 +210,8 @@
   </storageModule>
   
   
+  
+
 
 
 </cproject>
