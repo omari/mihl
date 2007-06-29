@@ -14,7 +14,7 @@
         </extensions>
       </storageModule>
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        <configuration id="cdt.managedbuild.config.gnu.exe.debug.864626085" name="Debug" description="" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" parent="cdt.managedbuild.config.gnu.exe.debug" artifactName="example_3" cleanCommand="rm -rf">
+        <configuration id="cdt.managedbuild.config.gnu.exe.debug.864626085" name="Debug" description="" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" parent="cdt.managedbuild.config.gnu.exe.debug" artifactName="example_3" artifactExtension="" cleanCommand="rm -rf">
           <folderInfo id="cdt.managedbuild.config.gnu.exe.debug.864626085." name="/" resourcePath="">
             <toolChain superClass="cdt.managedbuild.toolchain.gnu.exe.debug" id="cdt.managedbuild.toolchain.gnu.exe.debug.316691274" name="Linux GCC">
               <targetPlatform superClass="cdt.managedbuild.target.gnu.platform.exe.debug" id="cdt.managedbuild.target.gnu.platform.exe.debug.1367578720" name="Debug Platform"/>
@@ -27,9 +27,20 @@
               <tool superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1127532643" name="GCC C Compiler">
                 <option superClass="gnu.c.compiler.exe.debug.option.optimization.level" id="gnu.c.compiler.exe.debug.option.optimization.level.1480478368" name="Optimization Level" defaultValue="gnu.c.optimization.level.none" valueType="enumerated"/>
                 <option superClass="gnu.c.compiler.exe.debug.option.debugging.level" id="gnu.c.compiler.exe.debug.option.debugging.level.130941811" name="Debug Level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+                <option superClass="gnu.c.compiler.option.misc.other" id="gnu.c.compiler.option.misc.other.888685094" name="Other flags" value="-c -fmessage-length=0 -std=gnu99" valueType="string"/>
+                <option superClass="gnu.c.compiler.option.include.paths" id="gnu.c.compiler.option.include.paths.1537635269" name="Include paths (-I)" valueType="includePath">
+                  <listOptionValue value="&quot;${workspace_loc:/mihl/Src}&quot;" builtIn="false"/>
+                  <listOptionValue value="&quot;${workspace_loc:/example_3/Src}&quot;" builtIn="false"/>
+                </option>
                 <inputType superClass="cdt.managedbuild.tool.gnu.c.compiler.input" id="cdt.managedbuild.tool.gnu.c.compiler.input.689192295"/>
               </tool>
               <tool superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug" id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1451187729" name="GCC C Linker">
+                <option superClass="gnu.c.link.option.libs" id="gnu.c.link.option.libs.429219495" name="Libraries (-l)" valueType="libs">
+                  <listOptionValue value="mihl" builtIn="false"/>
+                </option>
+                <option superClass="gnu.c.link.option.paths" id="gnu.c.link.option.paths.1559794850" name="Library search path (-L)" valueType="libPaths">
+                  <listOptionValue value="&quot;${workspace_loc:/mihl/Debug}&quot;" builtIn="false"/>
+                </option>
                 <inputType superClass="cdt.managedbuild.tool.gnu.c.linker.input" id="cdt.managedbuild.tool.gnu.c.linker.input.1681136937">
                   <additionalInput paths="$(USER_OBJS)" kind="additionalinputdependency"/>
                   <additionalInput paths="$(LIBS)" kind="additionalinput"/>
@@ -322,9 +333,20 @@
               <tool superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release" id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.836159500" name="GCC C Compiler">
                 <option superClass="gnu.c.compiler.exe.release.option.optimization.level" id="gnu.c.compiler.exe.release.option.optimization.level.284562175" name="Optimization Level" defaultValue="gnu.c.optimization.level.most" valueType="enumerated"/>
                 <option superClass="gnu.c.compiler.exe.release.option.debugging.level" id="gnu.c.compiler.exe.release.option.debugging.level.371567979" name="Debug Level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
+                <option superClass="gnu.c.compiler.option.misc.other" id="gnu.c.compiler.option.misc.other.842596565" value="-c -fmessage-length=0 -gnu=gnu99" valueType="string"/>
+                <option superClass="gnu.c.compiler.option.include.paths" id="gnu.c.compiler.option.include.paths.1874857721" valueType="includePath">
+                  <listOptionValue value="&quot;${workspace_loc:/mihl/Src}&quot;" builtIn="false"/>
+                  <listOptionValue value="&quot;${workspace_loc:/example_3/Src}&quot;" builtIn="false"/>
+                </option>
                 <inputType superClass="cdt.managedbuild.tool.gnu.c.compiler.input" id="cdt.managedbuild.tool.gnu.c.compiler.input.1715057859"/>
               </tool>
               <tool superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release" id="cdt.managedbuild.tool.gnu.c.linker.exe.release.701716118" name="GCC C Linker">
+                <option superClass="gnu.c.link.option.libs" id="gnu.c.link.option.libs.1103802534" valueType="libs">
+                  <listOptionValue value="mihl" builtIn="false"/>
+                </option>
+                <option superClass="gnu.c.link.option.paths" id="gnu.c.link.option.paths.488355832" valueType="libPaths">
+                  <listOptionValue value="&quot;${workspace_loc:/mihl/Release}&quot;" builtIn="false"/>
+                </option>
                 <inputType superClass="cdt.managedbuild.tool.gnu.c.linker.input" id="cdt.managedbuild.tool.gnu.c.linker.input.887977951">
                   <additionalInput paths="$(USER_OBJS)" kind="additionalinputdependency"/>
                   <additionalInput paths="$(LIBS)" kind="additionalinput"/>

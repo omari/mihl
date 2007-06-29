@@ -25,6 +25,15 @@
 
 #include "example_utils.h"
 
+/**
+ * TBD
+ * 
+ * @param cnx TBD
+ * @param tag TBD
+ * @param host TBD
+ * @param param TBD
+ * @return 0
+ */
 int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
     mihl_add( cnx, "<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>" );
     mihl_add( cnx, "<html>" );
@@ -121,10 +130,16 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
     return 0;
 }                               // http_root
 
-
-int
-http_data( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
-{
+/**
+ * TBD
+ * 
+ * @param cnx TBD
+ * @param tag TBD
+ * @param host TBD
+ * @param param TBD
+ * @return 0
+ */
+int http_data( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
     int index = (int)param;
     static int cpts[3] = { 0, 0, 0 };
     mihl_add( cnx, "cpt=%d", cpts[index]++ );
@@ -133,7 +148,15 @@ http_data( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
     return 0;
 }                               // http_data
 
-
+/**
+ * Program entry point
+ * 
+ * @param argc TBD
+ * @param argv TBD
+ * @return
+ * 	- 0 if OK
+ * 	- or -1 if an error occurred (errno is then set).
+ */
 int main( int argc, char *argv[] ) {
 
 	help( );
@@ -145,8 +168,8 @@ int main( int argc, char *argv[] ) {
     mihl_handle_get( ctx, "/data1", http_data, (void *)0 );
     mihl_handle_get( ctx, "/data2", http_data, (void *)1 );
     mihl_handle_get( ctx, "/data3", http_data, (void *)2 );
-    mihl_handle_file( ctx, "/image.jpg", "image.jpg", "image/jpeg", 0 );
-    mihl_handle_file( ctx, "/prototype.js", "prototype.js", "text/javascript", 0 );
+    mihl_handle_file( ctx, "/image.jpg", "../image.jpg", "image/jpeg", 0 );
+    mihl_handle_file( ctx, "/prototype.js", "../prototype.js", "text/javascript", 0 );
 
     for (;;) {
         int status = mihl_server( ctx );
