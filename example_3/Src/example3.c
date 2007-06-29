@@ -107,15 +107,18 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
     mihl_add( cnx, "};" );
 
     mihl_add( cnx, "function showData1( originalRequest ) {" );
-    mihl_add( cnx, "  field1.innerText = originalRequest.responseText;" );
+    mihl_add( cnx, "  document.getElementById('field1').childNodes[0].nodeValue = originalRequest.responseText;" );
+//  mihl_add( cnx, "  field1.innerText = originalRequest.responseText;" );
     mihl_add( cnx, "};" );
 
     mihl_add( cnx, "function showData2( originalRequest ) {" );
-    mihl_add( cnx, "  field2.innerText = originalRequest.responseText;" );
+    mihl_add( cnx, "  document.getElementById('field2').childNodes[0].nodeValue = originalRequest.responseText;" );
+//  mihl_add( cnx, "  field2.innerText = originalRequest.responseText;" );
     mihl_add( cnx, "};" );
 
     mihl_add( cnx, "function showData3( originalRequest ) {" );
-    mihl_add( cnx, "  field3.innerText = originalRequest.responseText;" );
+    mihl_add( cnx, "  document.getElementById('field3').childNodes[0].nodeValue = originalRequest.responseText;" );
+//  mihl_add( cnx, "  field3.innerText = originalRequest.responseText;" );
     mihl_add( cnx, "};" );
 
     mihl_add( cnx, "-->" );
