@@ -37,11 +37,12 @@
 int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
     mihl_add( cnx, "<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>" );
     mihl_add( cnx, "<html>" );
-    mihl_add( cnx, "<head>" );
+    mihl_add( cnx, "<title>MIHL - Example 2</title>" );
     mihl_add( cnx, "  <meta content='text/html; charset=ISO-8859-1'" );
     mihl_add( cnx, " http-equiv='content-type'>" );
     mihl_add( cnx, "  <title>MIHL Test page</title>" );
     mihl_add( cnx, "</head>" );
+    mihl_add( cnx, "<title>MIHL - Example 2</title>" );
     mihl_add( cnx, "<body>" );
     mihl_add( cnx, "This is a test HTML page for MIHL.<br>" );
     mihl_add( cnx, "<br>" );
