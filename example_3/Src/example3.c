@@ -28,7 +28,7 @@
 /**
  * TBD
  * 
- * @param cnx TBD
+ * @param cnx opaque context structure as returned by mihl_init()
  * @param tag TBD
  * @param host TBD
  * @param param TBD
@@ -136,7 +136,7 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
 /**
  * TBD
  * 
- * @param cnx TBD
+ * @param cnx opaque context structure as returned by mihl_init()
  * @param tag TBD
  * @param host TBD
  * @param param TBD
@@ -154,8 +154,8 @@ int http_data( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
 /**
  * Program entry point
  * 
- * @param argc TBD
- * @param argv TBD
+ * @param argc Number of arguments
+ * @param argv Arguments given on the command line
  * @return
  * 	- 0 if OK
  * 	- or -1 if an error occurred (errno is then set).
@@ -166,6 +166,8 @@ int main( int argc, char *argv[] ) {
 
     mihl_ctx_t *ctx = mihl_init( NULL, 8080, 8, 
         MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO | MIHL_LOG_INFO_VERBOSE );
+    if ( !ctx )
+    	return -1;
 
     mihl_handle_get( ctx, "/", http_root, NULL );
     mihl_handle_get( ctx, "/data1", http_data, (void *)0 );
