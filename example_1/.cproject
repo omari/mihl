@@ -22,8 +22,6 @@
       
       
       <storageModule moduleId="org.eclipse.cdt.core.settings" name="Debug" id="cdt.managedbuild.config.gnu.exe.debug.603250840" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
-        
-        
         <externalSettings/>
         <extensions>
           <extension point="org.eclipse.cdt.core.BinaryParser" id="org.eclipse.cdt.core.ELF"/>
@@ -40,8 +38,6 @@
       
       
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        
-      
         <configuration id="cdt.managedbuild.config.gnu.exe.debug.603250840" name="Debug" description="" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" parent="cdt.managedbuild.config.gnu.exe.debug" artifactName="example_1" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" artifactExtension="" cleanCommand="rm -rf" prebuildStep="" postbuildStep="" preannouncebuildStep="" postannouncebuildStep="">
           <folderInfo id="cdt.managedbuild.config.gnu.exe.debug.603250840.1143628101" name="/" resourcePath="">
             <toolChain superClass="cdt.managedbuild.toolchain.gnu.exe.debug" id="cdt.managedbuild.toolchain.gnu.exe.debug.1837092202" name="GCC Tool Chain">
@@ -115,8 +111,6 @@
       
       
       <storageModule moduleId="org.eclipse.cdt.core.settings" name="Release" id="cdt.managedbuild.config.gnu.exe.release.1386886654" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
-        
-        
         <externalSettings/>
         <extensions>
           <extension point="org.eclipse.cdt.core.BinaryParser" id="org.eclipse.cdt.core.ELF"/>
@@ -133,8 +127,6 @@
       
       
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        
-      
         <configuration id="cdt.managedbuild.config.gnu.exe.release.1386886654" name="Release" description="" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" parent="cdt.managedbuild.config.gnu.exe.release" artifactName="example_1" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" artifactExtension="" cleanCommand="rm -rf" prebuildStep="" postbuildStep="" preannouncebuildStep="" postannouncebuildStep="">
           <folderInfo id="cdt.managedbuild.config.gnu.exe.release.1386886654.344482779" name="/" resourcePath="">
             <toolChain superClass="cdt.managedbuild.toolchain.gnu.exe.release" id="cdt.managedbuild.toolchain.gnu.exe.release.2002270570" name="GCC Tool Chain">

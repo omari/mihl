@@ -26,7 +26,7 @@
 #include "example_utils.h"
 
 /**
- * TBD
+ * GET Handler for the URL: /
  * 
  * @param cnx TBD
  * @param tag TBD
@@ -40,6 +40,7 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
     mihl_add( cnx, "This is a test HTML page for MIHL.<br>" );
     mihl_add( cnx, "<br>Here is a JPEG Image:<br>" );
     mihl_add( cnx, "<img style='width: 70px; height: 72px;' alt='' src='image.jpg'><br><br>" );
+    mihl_add( cnx, "host= [%s]<br><br>", host );
     mihl_add( cnx, "<a href='nextpage.html'>Next Page<a>" );
     mihl_add( cnx, "</body>" );
     mihl_add( cnx, "</html>" );
