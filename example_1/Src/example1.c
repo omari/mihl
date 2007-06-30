@@ -28,7 +28,7 @@
 /**
  * GET Handler for the URL: /
  * 
- * @param cnx TBD
+ * @param cnx opaque context structure as returned by mihl_init()
  * @param tag TBD
  * @param host TBD
  * @param param TBD
@@ -41,7 +41,8 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
     mihl_add( cnx, "<br>Here is a JPEG Image:<br>" );
     mihl_add( cnx, "<img style='width: 70px; height: 72px;' alt='' src='image.jpg'><br><br>" );
     mihl_add( cnx, "host= [%s]<br><br>", host );
-    mihl_add( cnx, "<a href='nextpage.html'>Next Page<a>" );
+    mihl_add( cnx, "<a href='nextpage.html'>Next Page<a><br><br>" );
+    mihl_add( cnx, "<a href='unknown.html'>Non-Existent Page<a><br><br>" );
     mihl_add( cnx, "</body>" );
     mihl_add( cnx, "</html>" );
     mihl_send( cnx,
@@ -52,7 +53,7 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
 /**
  * TBD
  * 
- * @param cnx TBD
+ * @param cnx opaque context structure as returned by mihl_init()
  * @param tag TBD
  * @param host TBD
  * @param param TBD
@@ -73,8 +74,8 @@ int http_nextpage( mihl_cnx_t *cnx, char const *tag, char const *host, void *par
 /**
  * Program entry point
  * 
- * @param argc TBD
- * @param argv TBD
+ * @param argc Number of arguments
+ * @param argv Arguments given on the command line
  * @return
  * 	- 0 if OK
  * 	- or -1 if an error occurred (errno is then set).
@@ -84,6 +85,8 @@ int main( int argc, char *argv[] ) {
 
     mihl_ctx_t *ctx = mihl_init( NULL, 8080, 8, 
         MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO | MIHL_LOG_INFO_VERBOSE );
+    if ( !ctx )
+    	return -1;
 
     mihl_handle_get( ctx, "/", http_root, NULL );
     mihl_handle_file( ctx, "/image.jpg", "../image.jpg", "image/jpeg", 0 );
