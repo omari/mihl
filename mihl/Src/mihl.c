@@ -426,12 +426,19 @@ manage_new_connexions( mihl_ctx_t *ctx, time_t now )
  * @param cnx TBD
  * @return TBD
  */
-static int
-got_data_for_active_connexion( mihl_cnx_t *cnx )
-{
+static int got_data_for_active_connexion( mihl_cnx_t *cnx ) {
 
     mihl_ctx_t *ctx = cnx->ctx;
-    int len = tcp_read( cnx->sockfd, ctx->read_buffer, ctx->read_buffer_maxlen );
+    int len = 0;
+    for (;;) {
+    	int l = tcp_read( cnx->sockfd, &ctx->read_buffer[len], ctx->read_buffer_maxlen-len );
+    	if ( l == 0 )
+    		break;
+    	len += l;
+    	char *p = strstr( ctx->read_buffer, "\r\n\r\n" );
+    	if ( p )
+    		break;
+    }							// for (;;)
 
     if ( len == ctx->read_buffer_maxlen-1 )
         return 0;
