@@ -44,9 +44,7 @@
  * 	- X
  * 	- or -1 if an error occurred (errno is then set).
  */
-int
-tcp_read( SOCKET sockfd, char *buffer, int maxlen )
-{
+int tcp_read( SOCKET sockfd, char *buffer, int maxlen ) {
     maxlen--;
 	int dcount;
     int index = 0;
@@ -103,9 +101,7 @@ tcp_read( SOCKET sockfd, char *buffer, int maxlen )
  * 	- X
  * 	- or -1 if an error occurred (errno is then set).
  */
-int
-tcp_write( SOCKET sockfd, const char *buff, int buff_len )
-{
+int tcp_write( SOCKET sockfd, const char *buff, int buff_len ) {
 
 	int cnt = 0;
 	errno = 0;
@@ -155,11 +151,9 @@ tcp_write( SOCKET sockfd, const char *buff, int buff_len )
  * @param vars_values TBD
  * @param maxnb_values TBD
  */
-void
-decode_keys_values( mihl_cnx_t *cnx, char *_request, 
+void decode_keys_values( mihl_cnx_t *cnx, char *_request,  
     int *nb_options, char *options_names[], char *options_values[], int maxnb_options,
-    int *nb_variables, char *vars_names[], char *vars_values[], int maxnb_values )
-{
+    int *nb_variables, char *vars_names[], char *vars_values[], int maxnb_values ) {
     *nb_options = 0;
     *nb_variables = 0;
     int l = (int)strlen(_request);
@@ -257,9 +251,7 @@ decode_keys_values( mihl_cnx_t *cnx, char *_request,
  * @note mihl_add and mihl_send use a dynamic buffer, which is allocated when needed, 
  * 	but only released with mihl_end().
  */
-int 
-mihl_add( mihl_cnx_t *cnx, char const *fmt, ... )
-{
+int mihl_add( mihl_cnx_t *cnx, char const *fmt, ... ) {
     if ( cnx->html_buffer_len + 1024 >= cnx->html_buffer_sz ) {
         cnx->html_buffer_sz += 8192;
         cnx->html_buffer = (char *)realloc( cnx->html_buffer, cnx->html_buffer_sz );
@@ -286,9 +278,7 @@ mihl_add( mihl_cnx_t *cnx, char const *fmt, ... )
  * 	- X
  * 	- or -1 if an error occurred (errno is then set).
  */
-int
-mihl_send( mihl_cnx_t *cnx, char const *fmt_header, ... )
-{
+int mihl_send( mihl_cnx_t *cnx, char const *fmt_header, ... ) {
     char header[2048];
     char ok200[] = "HTTP/1.1 200 OK\r\n";
     strcpy( header, ok200 );
@@ -326,9 +316,7 @@ mihl_send( mihl_cnx_t *cnx, char const *fmt_header, ... )
  * 	- X
  * 	- or -1 if an error occurred (errno is then set).
  */
-static int
-filelength( int fd ) 
-{
+static int filelength( int fd ) {
     off_t len = lseek( fd, 0, SEEK_END );
     lseek( fd, 0, SEEK_SET );
     return (int)len;
@@ -344,9 +332,7 @@ filelength( int fd )
  * 	- X
  * 	- or -1 if an error occurred (errno is then set).
  */
-int 
-read_file( char *fname, char **file, int *length )
-{
+int read_file( char *fname, char **file, int *length ) {
     int fd = open( fname, O_RDONLY | O_BINARY );
     if ( fd == -1 )
         return -1;

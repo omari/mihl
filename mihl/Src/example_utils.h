@@ -16,6 +16,13 @@ static int initialized = 0;
 
 static struct termios termattr, save_termattr;
 
+/**
+ * TBD
+ * 
+ * @return
+ * 	- X
+ * 	- or -1 if an error occurred (errno is then set).
+ */
 static int set_tty_raw( void ) {
     int i = tcgetattr( 0, &termattr );
     if ( i < 0 )  {
@@ -43,11 +50,21 @@ static int set_tty_raw( void ) {
     return 0;
 }
 
+/**
+ * TBD
+ */
 static void bye_bye( void ) {
     if ( initialized )
         tcsetattr( 0, TCSAFLUSH, &save_termattr );
 }
 
+/**
+ * TBD
+ * 
+ * @return
+ * 	- X
+ * 	- or -1 if an error occurred (errno is then set).
+ */
 static int peekch( void ) {
     if ( !initialized ) {
         initialized = 1;
@@ -65,10 +82,18 @@ static int peekch( void ) {
     return ch;
 }
 
+/**
+ * TBD
+ * 
+ * @param msec TBD
+ */
 static inline void delay( int msec ) {
     usleep( msec*1000 );
 }
 
+/**
+ * TBD
+ */
 static void help( void ) {
     printf( "x : eXit aplication\n" );
     printf( "i : dump Information\n" );
@@ -76,7 +101,14 @@ static void help( void ) {
     printf( "d : toggle DEBUG mode\n" );
 }                               // help
 
-
+/**
+ * TBD
+ * 
+ * @param ctx opaque context structure as returned by mihl_init()
+ * @return
+ * 	- X
+ * 	- or -1 if an error occurred (errno is then set).
+ */
 static int peek_key( mihl_ctx_t *ctx ) {
     unsigned vlog = mihl_get_log_level( ctx );
     delay ( 1 );
