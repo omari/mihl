@@ -168,7 +168,7 @@ static int bind_and_listen( mihl_ctx_t *ctx ) {
  * TBD
  * 
  * @param cnx opaque context structure as returned by mihl_init()
- * @param tag TBD
+ * @param tag URL of the non existent page
  * @param host TBD
  * @param param TBD
  * @return TBD
@@ -236,6 +236,7 @@ mihl_ctx_t *mihl_init( char const *bind_addr, int port, int maxnb_cnx, unsigned 
     ctx->read_buffer_maxlen = 8*1024*1024;
     ctx->read_buffer = (char *)malloc( ctx->read_buffer_maxlen );
 
+    // Install the default handler for non existent page
     ctx->nb_handles = 0;                 // TBD
     ctx->handles = NULL;                 // TBD
     mihl_handle_get( ctx, NULL, page_not_found, NULL );
@@ -244,6 +245,17 @@ mihl_ctx_t *mihl_init( char const *bind_addr, int port, int maxnb_cnx, unsigned 
 
     return ctx;
 }                               // mihl_init
+
+/**
+ * Utility function to return the Connexion Context, which is the value given by
+ * mihl_init().  
+ * 
+ * @param cnx opaque context structure as returned by mihl_init()
+ * @return Connexion context as given by mihl_init()
+ */
+mihl_ctx_t *mihl_get_ctx( mihl_cnx_t *cnx ) {
+	return cnx->ctx;
+}								// mihl_get_ctx
 
 /**
  * This function is the opposite of mish_init(): it close all current open HTTP connections, 
@@ -506,6 +518,7 @@ fclose( fp );
  */
 static int manage_existent_connexions( mihl_ctx_t *ctx, time_t now ) {
 
+	// Do nothing if there no active connexion
     if ( ctx->nb_connexions == 0 )
         return 0;
 
@@ -539,7 +552,6 @@ static int manage_existent_connexions( mihl_ctx_t *ctx, time_t now ) {
     }                           // for (connexions)
     
     return 1;
-
 }                               // manage_existent_connexions
 
 /**
@@ -688,9 +700,7 @@ int mihl_handle_file( mihl_ctx_t *ctx, char const *tag, char const *filename, ch
  * only when the current function is done (sort of a  ‘cooperative multi-tasking’).
  * 
  * @param ctx opaque context structure as returned by mihl_init()
- * @return
- * 	- ABC
- * 	- BCD
+ * @return The current number of active connexions.
  * 
  * @note Remember that this is a non blocking call. If you do not call this function, no new connection can be established.
  */

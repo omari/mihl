@@ -30,6 +30,8 @@ typedef int (mihl_pf_handle_get_t)(mihl_cnx_t *, char const *, char const *, voi
 
 typedef int (mihl_pf_handle_post_t)(mihl_cnx_t *, char const *, char const *, int, char **, char **, void *);
 
+mihl_ctx_t *mihl_get_ctx( mihl_cnx_t *cnx );
+
 int mihl_log( mihl_ctx_t *, unsigned level, const char *fmt, ... );
 
 mihl_ctx_t *mihl_init( char const *bind_addr, int port, int maxnb_cnx, unsigned log_level );
