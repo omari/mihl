@@ -55,16 +55,42 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
  * TBD
  * 
  * @param cnx opaque context structure as returned by mihl_init()
+ * @param tag URL of the non existent page
+ * @param host TBD
+ * @param param TBD
+ * @return TBD
+ */
+static int http_page_not_found( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
+    mihl_add(  cnx, "<html>" );
+    mihl_add(  cnx, "<head>" );
+    mihl_add(  cnx, "</head>" );
+    mihl_add(  cnx, "<br>" );
+    mihl_add(  cnx, " THIS PAGE IS NOT FOUND " );
+    mihl_add(  cnx, "<br>" );
+    mihl_add(  cnx, "The tag is [%s]", tag );
+    mihl_add(  cnx, "<br>" );
+    mihl_add(  cnx, "</body>" );
+    mihl_add(  cnx, "</html>" );
+    return mihl_send( cnx,
+		"Content-type: text/html\r\n" );
+}                               // http_page_not_found
+
+/**
+ * TBD
+ * 
+ * @param cnx opaque context structure as returned by mihl_init()
  * @param tag TBD
  * @param host TBD
  * @param param TBD
  * @return 0
  */
 int http_nextpage( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
+    mihl_handle_get( mihl_get_ctx(cnx), NULL, http_page_not_found, NULL );
     mihl_add( cnx, "<html>" );
     mihl_add( cnx, "<body>" );
     mihl_add( cnx, "This is another page...<br>" );
-    mihl_add( cnx, "<a href='/'>Previous Page<a>" );
+    mihl_add( cnx, "<a href='/'>Previous Page<a><br><br>" );
+    mihl_add( cnx, "<a href='another_unknown.html'>Non-Existent Page<a><br><br>" );
     mihl_add( cnx, "</body>" );
     mihl_add( cnx, "</html>" );
     mihl_send( cnx,
