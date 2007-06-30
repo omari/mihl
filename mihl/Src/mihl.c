@@ -657,6 +657,8 @@ int mihl_handle_get( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf,
     	FREE( handle_found->tag );
     if ( pf ) {
     	handle_found->pf_get = pf;
+    	if ( tag )
+    		handle_found->tag = strdup( tag );
     }
     
 	return -1;
