@@ -323,13 +323,14 @@ static int filelength( int fd ) {
 }                               // filelength
 
 /**
- * TBD
+ * Read en entire file in memory.
+ * The buffer is dynamically allocated (malloc).
  * 
  * @param fname TBD
  * @param file TBD
  * @param length TBD
  * @return
- * 	- X
+ * 	- The length of the file
  * 	- or -1 if an error occurred (errno is then set).
  */
 int read_file( char *fname, char **file, int *length ) {
@@ -339,10 +340,12 @@ int read_file( char *fname, char **file, int *length ) {
 
     int len = filelength( fd );
     *file = (char *)malloc( len+1 );
-    assert( *file != NULL );
+    if ( *file == NULL )
+    	return -1;
 
-    int count = read( fd, *file, len ); 
-    assert( count == len );
+    int count = read( fd, *file, len );
+    if ( count != len )
+    	return -1;
 
     close( fd );
     *length = len;

@@ -72,3 +72,5 @@ void mihl_set_log_level( mihl_ctx_t *, unsigned level );
 unsigned mihl_get_log_level( mihl_ctx_t * );
 
 int mihl_dump_info( mihl_ctx_t * );
+
+int mihl_dump_info_handlers( mihl_ctx_t *ctx );

@@ -863,3 +863,39 @@ int mihl_info( mihl_ctx_t *ctx, int maxnb_cnxinfos, mihl_cnxinfo_t *infos ) {
     }                           // for (connexions)
     return nb_cnxinfos;
 }                               // mihl_info
+
+/**
+ * TBD 
+ * 
+ * @param ctx TBD
+ * @return The number of active connexions
+ */
+int mihl_dump_info_handlers( mihl_ctx_t *ctx ) {
+    unsigned level = ctx->log_level;
+    ctx->log_level = MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO |
+        MIHL_LOG_INFO_VERBOSE | MIHL_LOG_DEBUG;
+    mihl_log( ctx, MIHL_LOG_DEBUG, "%d handles\015\012", ctx->nb_handles );
+    printf( "   %-32s %-32s\r\n", "Tag", "Type" );
+    for ( int n = 0; n < ctx->nb_handles; n++ ) {
+        mihl_handle_t *handle = &ctx->handles[n];
+        char tag[32];
+        memset( tag, 0, sizeof(tag) );
+        if ( !handle->tag )
+        	strcpy( tag, "" );
+        else
+        	strncpy( tag, handle->tag, sizeof(tag)-1 );
+        char type[32];
+        memset( type, 0, sizeof(type) );
+        if ( handle->pf_get )
+        	strcpy( type, "*GET*" );
+        else if ( handle->pf_post )
+        	strcpy( type, "*POST*" );
+        else if ( handle->filename != NULL )
+        	strncpy( type, handle->filename, sizeof(type)-1 );
+        printf( "%2d: %-32s %-32s", n, tag, type );
+        printf( "\015\012" );
+    }							// for (n)
+    fflush( stdout );
+    ctx->log_level = level;
+    return ctx->nb_connexions;
+}                               // mihl_dump_info_handlers

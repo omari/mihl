@@ -121,6 +121,7 @@ static int peek_key( mihl_ctx_t *ctx ) {
         case 'i' :
         case 'I' :
             mihl_dump_info( ctx );
+            mihl_dump_info_handlers( ctx );
             break;
         case 'v' :
         case 'V' :
