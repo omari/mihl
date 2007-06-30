@@ -38,6 +38,7 @@
  */
 int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
     mihl_add( cnx, "<html>" );
+    mihl_add( cnx, "<title>MIHL - Example 1</title>" );
     mihl_add( cnx, "<body>" );
     mihl_add( cnx, "This is a test HTML page for MIHL.<br>" );
     mihl_add( cnx, "<br>Here is a JPEG Image:<br>" );
