@@ -14,6 +14,7 @@
  * Display a page with a JPEG image and a link to a 2nd page. 
  * The 2nd page contains a link to the 1st page.
  * There is also a link to a non existent page.
+ * The 2nd page install a user-provided handler to manage non existent page.
  * 
  **/
 
@@ -52,7 +53,7 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
 }
 
 /**
- * TBD
+ * User-provided handler to manage non existent page.
  * 
  * @param cnx opaque context structure as returned by mihl_init()
  * @param tag URL of the non existent page
@@ -84,11 +85,11 @@ static int http_page_not_found( mihl_cnx_t *cnx, char const *tag, char const *ho
  * @param param TBD
  * @return 0
  */
-int http_nextpage( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
-    mihl_handle_get( mihl_get_ctx(cnx), NULL, http_page_not_found, NULL );
-    mihl_add( cnx, "<html>" );
+int http_nextpage2( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
+    
+	mihl_add( cnx, "<html>" );
     mihl_add( cnx, "<body>" );
-    mihl_add( cnx, "This is another page...<br>" );
+    mihl_add( cnx, "This is another page, again... TWO ...<br>" );
     mihl_add( cnx, "<a href='/'>Previous Page<a><br><br>" );
     mihl_add( cnx, "<a href='another_unknown.html'>Non-Existent Page<a><br><br>" );
     mihl_add( cnx, "</body>" );
@@ -96,7 +97,36 @@ int http_nextpage( mihl_cnx_t *cnx, char const *tag, char const *host, void *par
     mihl_send( cnx,
 		"Content-type: text/html\r\n" );
     return 0;
-}                               // http_nextpage
+}                               // http_nextpage2
+
+/**
+ * TBD
+ * 
+ * @param cnx opaque context structure as returned by mihl_init()
+ * @param tag TBD
+ * @param host TBD
+ * @param param TBD
+ * @return 0
+ */
+int http_nextpage1( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
+    
+	// Install a handler for non existent pages
+	mihl_handle_get( mihl_get_ctx(cnx), NULL, http_page_not_found, NULL );
+
+	// Change one handler 
+    mihl_handle_get( mihl_get_ctx(cnx), "/nextpage.html", http_nextpage2, NULL );
+
+	mihl_add( cnx, "<html>" );
+    mihl_add( cnx, "<body>" );
+    mihl_add( cnx, "This is another page... ONE ...<br>" );
+    mihl_add( cnx, "<a href='/'>Previous Page<a><br><br>" );
+    mihl_add( cnx, "<a href='another_unknown.html'>Non-Existent Page<a><br><br>" );
+    mihl_add( cnx, "</body>" );
+    mihl_add( cnx, "</html>" );
+    mihl_send( cnx,
+		"Content-type: text/html\r\n" );
+    return 0;
+}                               // http_nextpage1
 
 /**
  * Program entry point
@@ -117,7 +147,7 @@ int main( int argc, char *argv[] ) {
 
     mihl_handle_get( ctx, "/", http_root, NULL );
     mihl_handle_file( ctx, "/image.jpg", "../image.jpg", "image/jpeg", 0 );
-    mihl_handle_get( ctx, "/nextpage.html", http_nextpage, NULL );
+    mihl_handle_get( ctx, "/nextpage.html", http_nextpage1, NULL );
 
     for (;;) {
         int status = mihl_server( ctx );
