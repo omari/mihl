@@ -13,6 +13,7 @@
  * Simple use of GET.
  * Display a page with a JPEG image and a link to a 2nd page. 
  * The 2nd page contains a link to the 1st page.
+ * There is also a link to a non existent page.
  * 
  **/
 
