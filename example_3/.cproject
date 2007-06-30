@@ -9,7 +9,7 @@
     <cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.864626085">
       
       
-      <storageModule moduleId="org.eclipse.cdt.core.settings" name="Debug" id="cdt.managedbuild.config.gnu.exe.debug.864626085" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+      <storageModule moduleId="org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.exe.debug.864626085" name="Debug" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
         <externalSettings/>
         <extensions>
           <extension point="org.eclipse.cdt.core.BinaryParser" id="org.eclipse.cdt.core.ELF"/>
@@ -824,7 +824,7 @@
     <cconfiguration id="cdt.managedbuild.config.gnu.exe.release.1108727167">
       
       
-      <storageModule moduleId="org.eclipse.cdt.core.settings" name="Release" id="cdt.managedbuild.config.gnu.exe.release.1108727167" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+      <storageModule moduleId="org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.exe.release.1108727167" name="Release" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
         <externalSettings/>
         <extensions>
           <extension point="org.eclipse.cdt.core.BinaryParser" id="org.eclipse.cdt.core.ELF"/>
