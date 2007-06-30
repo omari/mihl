@@ -39,7 +39,7 @@
 /**
  * TBD
  * 
- * @param ctx TBD
+ * @param ctx opaque context structure as returned by mihl_init()
  * @param sockfd TBD
  * @param client_addr TBD
  * @return TBD
@@ -84,7 +84,7 @@ static int add_new_connexion( mihl_ctx_t *ctx, SOCKET sockfd, struct sockaddr_in
 /**
  * TBD
  * 
- * @param cnx TBD
+ * @param cnx opaque context structure as returned by mihl_init()
  * @return TBD
  */
 static void delete_connexion( mihl_cnx_t *cnx ) {
@@ -108,20 +108,10 @@ static void delete_connexion( mihl_cnx_t *cnx ) {
 /**
  * TBD
  * 
- * @param ctx TBD
+ * @param ctx opaque context structure as returned by mihl_init()
  * @return TBD
  */
 static int bind_and_listen( mihl_ctx_t *ctx ) {
-
-#ifdef __WINDAUBE__
-    // Initialize Winsock
-    WSADATA wsaData;
-    int iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
-    if ( iResult != NO_ERROR ) {
-        mihl_log( ctx, MIHL_LOG_ERROR, "Error at WSAStartup()\015\012" );
-        exit( -1 );
-    }
-#endif
 
     // Create sockets for the telnet and http connections
 	ctx->sockfd = socket( AF_INET, SOCK_STREAM, 0 );
@@ -138,15 +128,7 @@ static int bind_and_listen( mihl_ctx_t *ctx ) {
     }
 
     // Non blocking Socket
-#ifdef __WINDAUBE__
-    unsigned long cmd = 1;
-    if ( ioctlsocket( ctx->sockfd, FIONBIO, &cmd ) != 0 ) {
-		mihl_log( ctx, MIHL_LOG_ERROR, "Unable to fcntl a socket:FIONBIO !\015\012" );
-        exit( -1 );
-    }
-#else
     fcntl( ctx->sockfd, F_SETFL, fcntl( ctx->sockfd, F_GETFL, 0 ) | O_NONBLOCK );
-#endif
 
     // Bind the socket 
 	struct sockaddr_in server_addr;
@@ -185,7 +167,7 @@ static int bind_and_listen( mihl_ctx_t *ctx ) {
 /**
  * TBD
  * 
- * @param cnx TBD
+ * @param cnx opaque context structure as returned by mihl_init()
  * @param tag TBD
  * @param host TBD
  * @param param TBD
@@ -280,7 +262,7 @@ int mihl_end( mihl_ctx_t *ctx ) {
 /**
  * TBD
  * 
- * @param cnx TBD
+ * @param cnx opaque context structure as returned by mihl_init()
  * @param tag TBD
  * @param filename TBD
  * @param content_type TBD
@@ -339,7 +321,7 @@ static int send_file( mihl_cnx_t *cnx, char *tag, char *filename, char *content_
 /**
  * TBD
  * 
- * @param cnx TBD
+ * @param cnx opaque context structure as returned by mihl_init()
  * @param tag TBD
  * @param host TBD
  * @param nb_variables TBD
@@ -372,7 +354,7 @@ static int search_for_handle( mihl_cnx_t *cnx, char *tag, char *host, int nb_var
 /**
  * TBD
  * 
- * @param ctx TBD
+ * @param ctx opaque context structure as returned by mihl_init()
  * @param now TBD
  * @return TBD
  */
@@ -405,7 +387,7 @@ static int manage_new_connexions( mihl_ctx_t *ctx, time_t now ) {
 /**
  * TBD
  * 
- * @param cnx TBD
+ * @param cnx opaque context structure as returned by mihl_init()
  * @return TBD
  */
 static int got_data_for_active_connexion( mihl_cnx_t *cnx ) {
@@ -543,13 +525,8 @@ static int manage_existent_connexions( mihl_ctx_t *ctx, time_t now ) {
 	tv.tv_sec = 0;
 	tv.tv_usec = 0;
 	int status = select( (int)last_sockfd+1, &ready, NULL, NULL, &tv );
-#ifdef __WINDAUBE__
     if ( status == 0 )
         return 0;
-#else
-    if ( status == 0 )
-        return 0;
-#endif
 	assert( status != -1 );
 
     for ( int ncnx = 0; ncnx < ctx->maxnb_cnx; ncnx++ ) {

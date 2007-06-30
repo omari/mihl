@@ -19,21 +19,13 @@
 #include <stdarg.h>
 #include <fcntl.h>
 
-#ifdef __WINDAUBE__
-#   define _WIN32_WINNT 0x0500
-#   include <winsock2.h>
-#   include <Mswsock.h>
-#   include <windows.h>
-#   include <io.h>
-#else
-#   include <unistd.h>
-#   include <sys/select.h>
-#   include <sys/types.h>
-#   include <sys/socket.h>
-#   include <netinet/in.h>
-#   include <arpa/inet.h>
-#   include <netdb.h>
-#endif
+#include <unistd.h>
+#include <sys/select.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
 
 #include "mihl.h"
 
@@ -67,17 +59,10 @@ tcp_read( SOCKET sockfd, char *buffer, int maxlen )
             Sleep( 1000 );
 			continue;
         }
-#ifndef __WINDAUBE__
 		if ( (dcount == -1) && (errno == ECONNRESET) ) {
             dcount = 0;
 			break;
         }
-#else
-		if ( (dcount == -1) && ((ERRNO == WSAECONNABORTED) || (ERRNO == WSAECONNRESET)) ) {
-            dcount = 0;
-			break;
-        }
-#endif
         if ( dcount == 0 ) {
 //          printf( "%s %d : !!! %d: maxlen=%d index=%d errno=%d !!!\n", 
 //              __FILE__, __LINE__, errcnt, maxlen, index, ERRNO );
@@ -127,29 +112,6 @@ tcp_write( SOCKET sockfd, const char *buff, int buff_len )
     char const *pbuff = buff;
     int len = buff_len;
 	for (;;) {
-
-#ifdef __WINDAUBE__
-	    fd_set ready;
-	    struct timeval tv;
-	    FD_ZERO( &ready );
-	    FD_SET( sockfd, &ready );
-	    tv.tv_sec  = 30;
-	    tv.tv_usec = 0;
-        errno = 0;
-	    int status = select( 0, NULL, &ready, NULL, &tv );
-        if ( status == -1 ) {
-            printf( "~~~~~~~~~~~~~~~~~ %s %d : errno=%d\n", __FILE__, __LINE__, ERRNO );
-            fflush( stdout );
-		    return -1;
-        }
-	    assert( status != -1 );
-	    if ( !FD_ISSET( sockfd, &ready ) ) {
-            printf( "%s %d : >>> %d <<<<\n", __FILE__, __LINE__, ERRNO );
-            fflush( stdout );
-//		    errno = ETIMEDOUT;
-		    return -1;
-	    }
-#endif
 
 		int dcount = send( sockfd, (const char *)pbuff, len, MSG_NOSIGNAL );
 
@@ -356,7 +318,6 @@ mihl_send( mihl_cnx_t *cnx, char const *fmt_header, ... )
     return count;
 }                               // mihl_send
 
-#ifndef __WINDAUBE__
 /**
  * TBD
  * 
@@ -372,7 +333,6 @@ filelength( int fd )
     lseek( fd, 0, SEEK_SET );
     return (int)len;
 }                               // filelength
-#endif
 
 /**
  * TBD

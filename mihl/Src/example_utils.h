@@ -8,25 +8,6 @@
  *
  */
 
-#ifdef __WINDAUBE__
-
-#include <windows.h>
-#include <conio.h>
-
-static int
-peekch( void ) {
-    if ( kbhit() )
-        return _getch();
-    return -1;
-}
-
-static inline void
-delay( int msec ) {
-    Sleep( msec );
-}
-
-#else
-
 #include <unistd.h>
 #include <termios.h>
 #include <fcntl.h>
@@ -35,9 +16,7 @@ static int initialized = 0;
 
 static struct termios termattr, save_termattr;
 
-static int
-set_tty_raw( void ) 
-{
+static int set_tty_raw( void ) {
     int i = tcgetattr( 0, &termattr );
     if ( i < 0 )  {
         printf( "%m\n" ); 
@@ -64,19 +43,12 @@ set_tty_raw( void )
     return 0;
 }
 
-
-
-static void
-bye_bye( void )
-{
+static void bye_bye( void ) {
     if ( initialized )
         tcsetattr( 0, TCSAFLUSH, &save_termattr );
 }
 
-
-static int
-peekch( void )
-{
+static int peekch( void ) {
     if ( !initialized ) {
         initialized = 1;
         set_tty_raw( );
@@ -93,17 +65,11 @@ peekch( void )
     return ch;
 }
 
-static inline void
-delay( int msec )
-{
+static inline void delay( int msec ) {
     usleep( msec*1000 );
 }
 
-#endif
-
-static void
-help( void ) 
-{
+static void help( void ) {
     printf( "x : eXit aplication\n" );
     printf( "i : dump Information\n" );
     printf( "v : toggle VERBOSE mode\n" );
@@ -111,8 +77,7 @@ help( void )
 }                               // help
 
 
-static int
-peek_key( mihl_ctx_t *ctx ) {
+static int peek_key( mihl_ctx_t *ctx ) {
     unsigned vlog = mihl_get_log_level( ctx );
     delay ( 1 );
     int key = peekch( );

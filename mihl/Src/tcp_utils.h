@@ -9,15 +9,7 @@
  */
 
 
-#ifdef __WINDAUBE__
-#   ifdef BUILD_DLL_TCPUTILS
-#       define PUBLIC __declspec(dllexport)
-#   else
-#       define PUBLIC __declspec(dllimport)
-#   endif
-#else
-#   define PUBLIC
-#endif
+#define PUBLIC
 
 int tcp_read( SOCKET sockfd, char *buffer, int maxlen );
 

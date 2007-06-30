@@ -8,40 +8,21 @@
  *
  */
 
-#ifdef __WINDAUBE__
-#   define _WIN32_WINNT 0x0500
-#   include <winsock2.h>
-#   include <Mswsock.h>
-#   include <windows.h>
-#   include <io.h>
-#else
-#   ifndef __USE_XOPEN_EXTENDED
-#       define __USE_XOPEN_EXTENDED
-#   endif
-#   include <unistd.h>
-#   include <sys/select.h>
-#   include <sys/types.h>
-#   include <sys/socket.h>
-#   include <netinet/in.h>
-#   include <arpa/inet.h>
-#   include <netdb.h>
-#   include <stdint.h>
+#ifndef __USE_XOPEN_EXTENDED
+#   define __USE_XOPEN_EXTENDED
 #endif
+#include <unistd.h>
+#include <sys/select.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <stdint.h>
 
-#ifdef __WINDAUBE__
-#   ifdef BUILD_DLL_MIHL
-#       define PUBLIC __declspec(dllexport)
-#   else
-#       define PUBLIC __declspec(dllimport)
-#   endif
-#else
-#   define PUBLIC
-#endif
+#define PUBLIC
 
-#ifdef __WINDAUBE__
-#else
-    typedef int SOCKET;
-#endif
+typedef int SOCKET;
 
 typedef struct mihl_ctx mihl_ctx_t;
 

@@ -17,36 +17,14 @@
 #   define INIT(X)
 #endif
 
-#ifdef __WINDAUBE__
+#define ERRNO errno
+#define SOCKET_ERROR -1
 
-#   define ERRNO WSAGetLastError()
+#define Sleep(X) sleep(X/1000)
 
-#   define EADDRINUSE  WSAEADDRINUSE 
-#   define EWOULDBLOCK WSAEWOULDBLOCK
-#   define ECONNRESET  WSAECONNRESET
+#define closesocket close
 
-#   define SHUT_RDWR SD_BOTH
-    typedef int socklen_t;
-
-#   define vsnprintf _vsnprintf
-#   define open _open
-
-    typedef unsigned int uint32_t;
-
-#   define MSG_NOSIGNAL 0
-
-#else
-
-#   define ERRNO errno
-#   define SOCKET_ERROR -1
-
-#   define Sleep(X) sleep(X/1000)
-
-#   define closesocket close
-
-#   define O_BINARY 0
-
-#endif
+#define O_BINARY 0
 
 #define STRNCPY( DST, SRC, LEN ) \
     strncpy( DST, SRC, LEN-1 ); \
