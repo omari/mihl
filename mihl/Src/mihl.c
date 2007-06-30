@@ -512,7 +512,7 @@ fclose( fp );
 /**
  * TBD
  * 
- * @param ctx TBD
+ * @param ctx The opaque context structure which was given by mihl_init()
  * @param now TBD
  * @return TBD
  */
@@ -583,15 +583,17 @@ static int manage_timedout_connexions( mihl_ctx_t *ctx, time_t now ) {
  * @param tag HTTP base URL (such as  “/” or ‘/nextpage.html”).
  * @param pf pointer to the C handler function that will be called for this particular HTTP URL.
  * @param param user pointer that will be provided to the C handler function.
- * @return TBD
+ * @return
+ *  - 0 if the operation succeeded
+ *  - or -1 if an error occurred (errno is then set)
  */
-int mihl_handle_get( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf, void *param ) {
-    if ( ctx->handles == NULL ) {
+static int mihl_handle_get_add( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf, void *param ) {
+    if ( ctx->handles == NULL )
         ctx->handles = (mihl_handle_t *)malloc( sizeof(mihl_handle_t) );
-    }
-    else {
+    else
         ctx->handles = (mihl_handle_t *)realloc( ctx->handles, sizeof(mihl_handle_t) * (ctx->nb_handles+1) );
-    }
+    if ( !ctx->handles )
+    	return -1;
     mihl_handle_t *handle = &ctx->handles[ctx->nb_handles++];
     if ( tag ) {
         handle->tag = strdup( tag );
@@ -610,6 +612,54 @@ int mihl_handle_get( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf,
     handle->content_type = NULL;
     handle->close_connection = 0;
     return ctx->nb_handles;
+}                               // mihl_handle_get_add
+
+/**
+ * Provide a C function handler for a GET operation.
+ * 
+ * The mihl_handle_get() function installs a C handler function that will be used to construct an HTTP page 
+ * for a given URL.
+ * 
+ * @param ctx opaque context structure as returned by mihl_init()
+ * @param tag HTTP base URL (such as  “/” or ‘/nextpage.html”).
+ * 		If this is NULL, the handler will be called for every non found page.
+ * @param pf pointer to the C handler function that will be called for this particular HTTP URL.
+ * @param param user pointer that will be provided to the C handler function.
+ * @return
+ *  - 0 if the operation succeeded
+ *  - or -1 if an error occurred (errno is then set)
+ */
+int mihl_handle_get( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf, void *param ) {
+
+	// Is there already a handler installed for this tag ?
+    mihl_handle_t *handle_found = NULL;
+    for ( int n = 0; n < ctx->nb_handles; n++ ) {
+        mihl_handle_t *handle = &ctx->handles[n];
+        if ( handle->pf_post || handle->filename || !handle->pf_get )
+        	continue;
+        if ( !handle->tag && !tag ) {
+            handle_found = handle;
+            break;
+        }
+        if ( handle->tag && 
+            ((!handle->partial && !strcmp(tag, handle->tag)) || (handle->partial && !strncmp(tag, handle->tag, handle->partial))) ) {
+            handle_found = handle;
+            break;
+        }
+    }
+
+    // Not a handler already installed for this tag, add a new one
+    if ( !handle_found )
+		return mihl_handle_get_add( ctx, tag, pf, param );
+    
+    // Modify the existent handler
+    if ( handle_found->tag )
+    	FREE( handle_found->tag );
+    if ( pf ) {
+    	handle_found->pf_get = pf;
+    }
+    
+	return -1;
 }                               // mihl_handle_get
 
 /**
@@ -659,18 +709,20 @@ int mihl_handle_post( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_post_t *p
  * @param content_type HTTP content type, such as “image/jpeg”, “image/gif”, “text/javascript”, etc.
  * @param close_connection indicate if the HTTP connection should be closed or not.
  * @return
- * 	- 0 if the operation succeeded,
+ * 	- the number of defined handles if the operation succeeded,
  * 	- or -1 if an error occurred (errno is then set).
  */
 int mihl_handle_file( mihl_ctx_t *ctx, char const *tag, char const *filename, char const *content_type, int close_connection ) {
     if ( tag == NULL )
         return -1;
-    if ( ctx->handles == NULL ) {
+    if ( !filename || !content_type )
+        return -1;
+    if ( ctx->handles == NULL ) 
         ctx->handles = (mihl_handle_t *)malloc( sizeof(mihl_handle_t) );
-    }
-    else {
+    else 
         ctx->handles = (mihl_handle_t *)realloc( ctx->handles, sizeof(mihl_handle_t) * (ctx->nb_handles+1) );
-    }
+    if ( !ctx->handles )
+    	return -1;
     mihl_handle_t *handle = &ctx->handles[ctx->nb_handles++];
     handle->tag = strdup( tag );
     if ( strchr( tag, '*') )
@@ -757,7 +809,7 @@ int mihl_log( mihl_ctx_t *ctx, unsigned level, const char *fmt, ... ) {
  * TBD 
  * 
  * @param ctx TBD
- * @return TBD
+ * @return The number of active connexions
  */
 int mihl_dump_info( mihl_ctx_t *ctx ) {
     unsigned level = ctx->log_level;
