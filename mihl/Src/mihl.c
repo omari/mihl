@@ -44,9 +44,7 @@
  * @param client_addr TBD
  * @return TBD
  */
-static int
-add_new_connexion( mihl_ctx_t *ctx, SOCKET sockfd, struct sockaddr_in *client_addr )
-{
+static int add_new_connexion( mihl_ctx_t *ctx, SOCKET sockfd, struct sockaddr_in *client_addr ) {
 
     // Find a new slot to store the new active connexion
     if ( ctx->nb_connexions == ctx->maxnb_cnx ) {
@@ -89,9 +87,7 @@ add_new_connexion( mihl_ctx_t *ctx, SOCKET sockfd, struct sockaddr_in *client_ad
  * @param cnx TBD
  * @return TBD
  */
-static void
-delete_connexion( mihl_cnx_t *cnx )
-{
+static void delete_connexion( mihl_cnx_t *cnx ) {
     mihl_ctx_t *ctx = cnx->ctx;
     mihl_log( ctx, MIHL_LOG_INFO_VERBOSE, "Delete connexion for socket %d\015\012", cnx->sockfd );
 	shutdown( cnx->sockfd, SHUT_RDWR );	    // Close the connection
@@ -115,9 +111,7 @@ delete_connexion( mihl_cnx_t *cnx )
  * @param ctx TBD
  * @return TBD
  */
-static int
-bind_and_listen( mihl_ctx_t *ctx )
-{
+static int bind_and_listen( mihl_ctx_t *ctx ) {
 
 #ifdef __WINDAUBE__
     // Initialize Winsock
@@ -197,9 +191,7 @@ bind_and_listen( mihl_ctx_t *ctx )
  * @param param TBD
  * @return TBD
  */
-static int
-page_not_found( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
-{
+static int page_not_found( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
     mihl_add(  cnx, "<html>" );
     mihl_add(  cnx, "<head>" );
     mihl_add(  cnx, "</head>" );
@@ -234,9 +226,8 @@ page_not_found( mihl_cnx_t *cnx, char const *tag, char const *host, void *param 
  * 
  * @note Besides internal library initializations, this function performs bind() then listen().
  */
-mihl_ctx_t *
-mihl_init( char const *bind_addr, int port, int maxnb_cnx, unsigned log_level )
-{
+mihl_ctx_t *mihl_init( char const *bind_addr, int port, int maxnb_cnx, unsigned log_level ) {
+	
     mihl_ctx_t *ctx = (mihl_ctx_t *)malloc( sizeof(mihl_ctx_t) );
     if ( ctx == NULL )
         return NULL;
@@ -281,9 +272,7 @@ mihl_init( char const *bind_addr, int port, int maxnb_cnx, unsigned log_level )
  * 	- number of connections closed (which might be 0)
  * 	- or -1 if an error occurred (errno is then set).
  */
-int
-mihl_end( mihl_ctx_t *ctx )
-{
+int mihl_end( mihl_ctx_t *ctx ) {
     FREE( ctx->read_buffer );
     return 0;
 }                               // mihl_end
@@ -298,9 +287,7 @@ mihl_end( mihl_ctx_t *ctx )
  * @param close_connection TBD
  * @return TBD
  */
-static int
-send_file( mihl_cnx_t *cnx, char *tag, char *filename, 
-    char *content_type, int close_connection )
+static int send_file( mihl_cnx_t *cnx, char *tag, char *filename, char *content_type, int close_connection ) 
 {
     char *file;
     int length;
@@ -360,10 +347,7 @@ send_file( mihl_cnx_t *cnx, char *tag, char *filename,
  * @param vars_values TBD
  * @return TBD
  */
-static int
-search_for_handle( mihl_cnx_t *cnx, char *tag, char *host,
-    int nb_variables, char **vars_names, char **vars_values )
-{
+static int search_for_handle( mihl_cnx_t *cnx, char *tag, char *host, int nb_variables, char **vars_names, char **vars_values ) {
     mihl_ctx_t *ctx = cnx->ctx;
     mihl_handle_t *handle_nfound = NULL;
     for ( int n = 0; n < ctx->nb_handles; n++ ) {
@@ -392,9 +376,7 @@ search_for_handle( mihl_cnx_t *cnx, char *tag, char *host,
  * @param now TBD
  * @return TBD
  */
-static int
-manage_new_connexions( mihl_ctx_t *ctx, time_t now )
-{
+static int manage_new_connexions( mihl_ctx_t *ctx, time_t now ) {
     for (;;) {
 	    socklen_t client_addr_len = sizeof( struct sockaddr_in );
 	    struct sockaddr_in client_addr;
@@ -540,9 +522,7 @@ fclose( fp );
  * @param now TBD
  * @return TBD
  */
-static int
-manage_existent_connexions( mihl_ctx_t *ctx, time_t now )
-{
+static int manage_existent_connexions( mihl_ctx_t *ctx, time_t now ) {
 
     if ( ctx->nb_connexions == 0 )
         return 0;
@@ -592,9 +572,7 @@ manage_existent_connexions( mihl_ctx_t *ctx, time_t now )
  * @param now TBD
  * @return TBD
  */
-static int
-manage_timedout_connexions( mihl_ctx_t *ctx, time_t now )
-{
+static int manage_timedout_connexions( mihl_ctx_t *ctx, time_t now ) {
     for ( int ncnx = 0; ncnx < ctx->maxnb_cnx; ncnx++ ) {
         mihl_cnx_t *cnx = &ctx->connexions[ncnx];
         if ( !cnx->active )
@@ -603,7 +581,6 @@ manage_timedout_connexions( mihl_ctx_t *ctx, time_t now )
         if ( t >= cnx->keep_alive ) 
             delete_connexion( cnx );
     }                           // for (connexions)
-
     return 0;
 }                               // manage_timedout_connexions
 
@@ -619,9 +596,7 @@ manage_timedout_connexions( mihl_ctx_t *ctx, time_t now )
  * @param param user pointer that will be provided to the C handler function.
  * @return TBD
  */
-int
-mihl_handle_get( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf, void *param )
-{
+int mihl_handle_get( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf, void *param ) {
     if ( ctx->handles == NULL ) {
         ctx->handles = (mihl_handle_t *)malloc( sizeof(mihl_handle_t) );
     }
@@ -662,9 +637,7 @@ mihl_handle_get( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf, voi
  *  - 0 if the operation succeeded
  *  - or -1 if an error occurred (errno is then set)
  */
-int
-mihl_handle_post( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_post_t *pf, void *param )
-{
+int mihl_handle_post( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_post_t *pf, void *param ) {
     if ( tag == NULL )
         return -1;
     if ( ctx->handles == NULL ) {
@@ -700,10 +673,7 @@ mihl_handle_post( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_post_t *pf, v
  * 	- 0 if the operation succeeded,
  * 	- or -1 if an error occurred (errno is then set).
  */
-int
-mihl_handle_file( mihl_ctx_t *ctx, char const *tag, char const *filename, 
-    char const *content_type, int close_connection )
-{
+int mihl_handle_file( mihl_ctx_t *ctx, char const *tag, char const *filename, char const *content_type, int close_connection ) {
     if ( tag == NULL )
         return -1;
     if ( ctx->handles == NULL ) {
@@ -747,9 +717,7 @@ mihl_handle_file( mihl_ctx_t *ctx, char const *tag, char const *filename,
  * 
  * @note Remember that this is a non blocking call. If you do not call this function, no new connection can be established.
  */
-int
-mihl_server( mihl_ctx_t *ctx )
-{
+int mihl_server( mihl_ctx_t *ctx ) {
     time_t now = time( NULL );
     manage_new_connexions( ctx, now );
     manage_existent_connexions( ctx, now );
@@ -764,9 +732,7 @@ mihl_server( mihl_ctx_t *ctx )
  * @param level TBD
  * @return TBD
  */
-void 
-mihl_set_log_level( mihl_ctx_t *ctx, unsigned level )
-{
+void mihl_set_log_level( mihl_ctx_t *ctx, unsigned level ) {
     ctx->log_level = level;
 }                               // mihl_set_log_level
 
@@ -776,9 +742,7 @@ mihl_set_log_level( mihl_ctx_t *ctx, unsigned level )
  * @param ctx TBD
  * @return TBD
  */
-unsigned 
-mihl_get_log_level( mihl_ctx_t *ctx )
-{
+unsigned mihl_get_log_level( mihl_ctx_t *ctx ) {
     return ctx->log_level;
 }                               // mihl_get_log_level
 
@@ -791,9 +755,7 @@ mihl_get_log_level( mihl_ctx_t *ctx )
  * @param ... TBD
  * @return TBD
  */
-int
-mihl_log( mihl_ctx_t *ctx, unsigned level, const char *fmt, ... )
-{
+int mihl_log( mihl_ctx_t *ctx, unsigned level, const char *fmt, ... ) {
     if ( !(level & ctx->log_level) )
         return 0;
 	va_list ap;
@@ -810,9 +772,7 @@ mihl_log( mihl_ctx_t *ctx, unsigned level, const char *fmt, ... )
  * @param ctx TBD
  * @return TBD
  */
-int 
-mihl_dump_info( mihl_ctx_t *ctx )
-{
+int mihl_dump_info( mihl_ctx_t *ctx ) {
     unsigned level = ctx->log_level;
     ctx->log_level = MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO |
         MIHL_LOG_INFO_VERBOSE | MIHL_LOG_DEBUG;
@@ -850,9 +810,7 @@ mihl_dump_info( mihl_ctx_t *ctx )
  * 	- number of connections which are documented (which might be 0)
  * 	- or -1 if an error occurred (errno is then set).
  */
-int 
-mihl_info( mihl_ctx_t *ctx, int maxnb_cnxinfos, mihl_cnxinfo_t *infos )
-{
+int mihl_info( mihl_ctx_t *ctx, int maxnb_cnxinfos, mihl_cnxinfo_t *infos ) {
     if ( maxnb_cnxinfos <= 0 )
         return 0;
     int nb_cnxinfos = 0;
