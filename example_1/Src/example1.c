@@ -46,6 +46,8 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
     mihl_add( cnx, "host= [%s]<br><br>", host );
     mihl_add( cnx, "<a href='nextpage.html'>Next Page<a><br><br>" );
     mihl_add( cnx, "<a href='unknown.html'>Non-Existent Page<a><br><br>" );
+    mihl_add( cnx, "(Do <b>wget -r http://mihl.sourceforge.net</b> in the directory where the executable is)<br>" );
+    mihl_add( cnx, "<a href='index.html'>Static Pages<a><br><br>" );
     mihl_add( cnx, "</body>" );
     mihl_add( cnx, "</html>" );
     mihl_send( cnx,
@@ -130,6 +132,59 @@ int http_nextpage1( mihl_cnx_t *cnx, char const *tag, char const *host, void *pa
 }                               // http_nextpage1
 
 /**
+ * User-provided handler to manage non existent page.
+ * 
+ * @param cnx opaque context structure as returned by mihl_init()
+ * @param tag URL of the non existent page
+ * @param host TBD
+ * @param param TBD
+ * @return TBD
+ */
+static int http_index_all_pages( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
+	int l = strlen(tag);
+	if ( (l < 2) || (tag[0] != '/') ) {
+		return -1;
+	}
+	if ( (l > 4) && !strcmp( &tag[l-4], ".gif" ) ) 
+		return send_file( cnx, tag, &tag[1], "image/gif", 0 );
+	else if ( (l > 4) && !strcmp( &tag[l-4], ".jpg" ) ) 
+		return send_file( cnx, tag, &tag[1], "image/jpeg", 0 );
+	printf( "-- %s\r\n", tag );
+	fflush( stdout );
+	return 0;
+}                               // http_index_all_pages
+
+/**
+ * GET Handler for the URL: /index.html
+ * 
+ * @param cnx opaque context structure as returned by mihl_init()
+ * @param tag TBD
+ * @param host TBD
+ * @param param TBD
+ * @return 0
+ */
+int http_index( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
+	if ( chdir( "mihl.sourceforge.net" ) == -1 ) {
+	    mihl_add( cnx, "<html>" );
+	    mihl_add( cnx, "<title>MIHL - Example 1 - index.html</title>" );
+	    mihl_add( cnx, "<body>" );
+	    mihl_add( cnx, "This is a test HTML page for MIHL.<br>" );
+		mihl_add( cnx, "<br>Unable to chdir into 'mihl.sourceforge.net': %m<br>" );
+	    mihl_add( cnx, "</body>" );
+	    mihl_add( cnx, "</html>" );
+	    mihl_send( cnx,
+			"Content-type: text/html\r\n" );
+	}
+	
+	// Install a handler for non existent pages
+	mihl_handle_get( mihl_get_ctx(cnx), NULL, http_index_all_pages, NULL );
+
+	int status = send_file( cnx, tag, "index.html", "text/html", 0 );
+	printf( "status=%d\n", status );
+    return 0;
+}								// http_index
+
+/**
  * Program entry point
  * 
  * @param argc Number of arguments
@@ -139,6 +194,7 @@ int http_nextpage1( mihl_cnx_t *cnx, char const *tag, char const *host, void *pa
  * 	- or -1 if an error occurred (errno is then set).
  */
 int main( int argc, char *argv[] ) {
+	
     help( );
 
     mihl_ctx_t *ctx = mihl_init( NULL, 8080, 8, 
@@ -149,6 +205,7 @@ int main( int argc, char *argv[] ) {
     mihl_handle_get( ctx, "/", http_root, NULL );
     mihl_handle_file( ctx, "/image.jpg", "../image.jpg", "image/jpeg", 0 );
     mihl_handle_get( ctx, "/nextpage.html", http_nextpage1, NULL );
+    mihl_handle_get( ctx, "/index.html", http_index, NULL );
 
     for (;;) {
         int status = mihl_server( ctx );
