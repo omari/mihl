@@ -281,8 +281,7 @@ int mihl_end( mihl_ctx_t *ctx ) {
  * @param close_connection TBD
  * @return TBD
  */
-static int send_file( mihl_cnx_t *cnx, char *tag, char *filename, char *content_type, int close_connection ) 
-{
+int send_file( mihl_cnx_t *cnx, char *tag, char *filename, char *content_type, int close_connection ) {
     char *file;
     int length;
     if ( read_file( filename, &file, &length ) == -1 ) {
