@@ -36,7 +36,7 @@
  * @param param TBD
  * @return 0
  */
-int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
+static int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
     mihl_add( cnx, "<html>" );
     mihl_add( cnx, "<title>MIHL - Example 1</title>" );
     mihl_add( cnx, "<body>" );
@@ -53,7 +53,7 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
     mihl_send( cnx,
 		"Content-type: text/html\r\n" );
     return 0;
-}
+}								// http_root
 
 /**
  * User-provided handler to manage non existent page.
