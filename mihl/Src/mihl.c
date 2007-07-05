@@ -35,6 +35,7 @@
 #include "glovars.h"
 
 #include "tcp_utils.h"
+#include "b64.h"
 
 /**
  * TBD
@@ -76,6 +77,7 @@ oops:;
     cnx->info.host = NULL;              // 'Host:'
     cnx->info.user_agent = NULL;        // 'User-Agent:'
     cnx->keep_alive = 300;              // Default timeout
+    cnx->authorization = NULL;			// 'Authorization:'
     cnx->html_buffer_len = 0;                               // Current length
     cnx->html_buffer_sz = 8192;                             // Length allocated (8K increment)
     cnx->html_buffer = (char*)malloc(cnx->html_buffer_sz);  // HTML output buffer (mihl_add, mihl_send)
@@ -192,7 +194,7 @@ static int page_not_found( mihl_cnx_t *cnx, char const *tag, char const *host, v
     mihl_add(  cnx, "<br>" );
     mihl_add(  cnx, "</body>" );
     mihl_add(  cnx, "</html>" );
-    return mihl_send( cnx,
+    return mihl_send( cnx, NULL,
 		"Content-type: text/html\r\n" );
 }                               // page_not_found
 
@@ -820,7 +822,7 @@ int mihl_log( mihl_ctx_t *ctx, unsigned level, const char *fmt, ... ) {
 /**
  * TBD 
  * 
- * @param ctx TBD
+ * @param ctx opaque context structure as returned by mihl_init()
  * @return The number of active connexions
  */
 int mihl_dump_info( mihl_ctx_t *ctx ) {
@@ -854,7 +856,7 @@ int mihl_dump_info( mihl_ctx_t *ctx ) {
 /**
  * Provide information on current connections.
  * 
- * @param ctx TBD
+ * @param ctx opaque context structure as returned by mihl_init()
  * @param maxnb_cnxinfos TBD
  * @param infos TBD
  * @return
@@ -879,7 +881,7 @@ int mihl_info( mihl_ctx_t *ctx, int maxnb_cnxinfos, mihl_cnxinfo_t *infos ) {
 /**
  * TBD 
  * 
- * @param ctx TBD
+ * @param ctx opaque context structure as returned by mihl_init()
  * @return The number of active connexions
  */
 int mihl_dump_info_handlers( mihl_ctx_t *ctx ) {
@@ -911,3 +913,13 @@ int mihl_dump_info_handlers( mihl_ctx_t *ctx ) {
     ctx->log_level = level;
     return ctx->nb_connexions;
 }                               // mihl_dump_info_handlers
+
+/**
+ * TBD 
+ * 
+ * @param ctx opaque context structure as returned by mihl_init()
+ * @return Value of the string 'Authorization:' if found, or NULL if not found
+ */
+char *mihl_authorization( mihl_cnx_t *cnx ) {
+	return cnx->authorization;
+}								// mihl_authorization

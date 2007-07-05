@@ -8,6 +8,8 @@
  *
  */
 
+#ifndef TCP_UTIL_H_
+#define TCP_UTIL_H_
 
 int tcp_read( SOCKET sockfd, char *buffer, int maxlen );
 
@@ -18,3 +20,5 @@ void decode_keys_values( mihl_cnx_t *cnx, char *_request,
     int *nb_variables, char *vars_names[], char *vars_values[], int maxnb_values );
 
 int read_file( char const *fname, char **file, int *length );
+
+#endif /*TCP_UTIL_H_*/

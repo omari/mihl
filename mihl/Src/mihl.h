@@ -8,6 +8,9 @@
  *
  */
 
+#ifndef MIHL_H_
+#define MIHL_H_
+
 #ifndef __USE_XOPEN_EXTENDED
 #   define __USE_XOPEN_EXTENDED
 #endif
@@ -42,7 +45,7 @@ int mihl_server( mihl_ctx_t * );
 
 int mihl_add( mihl_cnx_t *cnx, char const *fmt, ... );
 
-int mihl_send( mihl_cnx_t *cnx, char const *fmt_header, ... );
+int mihl_send( mihl_cnx_t *cnx, char const *answer, char const *fmt_header, ... );
 
 int mihl_handle_get( mihl_ctx_t *ctx, char const *tag, mihl_pf_handle_get_t *pf, void *param );
 
@@ -78,3 +81,7 @@ int mihl_dump_info( mihl_ctx_t * );
 int mihl_dump_info_handlers( mihl_ctx_t *ctx );
 
 int send_file( mihl_cnx_t *cnx, char const *tag, char const *filename, char *content_type, int close_connection );
+
+char *mihl_authorization( mihl_cnx_t *cnx );
+
+#endif /*MIHL_H_*/

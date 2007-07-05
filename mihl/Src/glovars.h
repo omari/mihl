@@ -62,6 +62,7 @@ struct mihl_cnx {
     mihl_cnxinfo_t info;            ///< Exporteable information
     int keep_alive;                 ///< 'Keep-Alive:'
     int is_keep_alive;              ///< 'Connection:'
+    char *authorization;			///< 'Authorization:'
     char *html_buffer;              ///< HTML output buffer (mihl_add, mihl_send)
     int html_buffer_len;            ///< Current length
     int html_buffer_sz;             ///< Length allocated (8K increment)

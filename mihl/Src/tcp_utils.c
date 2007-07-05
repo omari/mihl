@@ -31,8 +31,8 @@
 
 #include "glovars.h"
 
-#define BUILD_DLL_TCPUTILS
 #include "tcp_utils.h"
+#include "b64.h"
 
 /**
  * TBD
@@ -223,6 +223,8 @@ void decode_keys_values( mihl_cnx_t *cnx, char *_request,
             cnx->info.user_agent = strdup( value );
         else if ( !strcmp( key, "Keep-Alive" ) )
             cnx->keep_alive = atoi( value );
+        else if ( !strcmp( key, "Authorization" ) )
+            cnx->authorization = strdup( value );
         else if ( !strcmp( key, "Connection" ) ) {
             if ( !strcmp( value, "keep-alive" ) )
                 cnx->is_keep_alive = 1;
@@ -276,24 +278,31 @@ int mihl_add( mihl_cnx_t *cnx, char const *fmt, ... ) {
 /**
  * TBD
  * 
- * @param cnx TBD
+ * @param cnx opaque context structure as returned by mihl_init()
+ * @param[in] answer HTTP answer to send, If NULL, will send "HTTP/1.1 200 OK\r\n"
  * @param fmt_header TBD
  * @param ... TBD
  * @return
  * 	- X
  * 	- or -1 if an error occurred (errno is then set).
  */
-int mihl_send( mihl_cnx_t *cnx, char const *fmt_header, ... ) {
+int mihl_send( mihl_cnx_t *cnx, char const *answer, char const *fmt_header, ... ) {
     char header[2048];
-    char ok200[] = "HTTP/1.1 200 OK\r\n";
-    strcpy( header, ok200 );
+    if ( !answer ) {
+        static char const ok200[] = "HTTP/1.1 200 OK\r\n";
+    	strncpy( header, ok200, sizeof(header)-1 );
+    }
+    else {
+    	strncpy( header, answer, sizeof(header)-1 );
+    }
+    int l = strlen( header );
 	va_list ap;
 	va_start( ap, fmt_header );
-	int len1 = vsnprintf( &header[sizeof(ok200)-1], 1768, fmt_header, ap );
+	int len1 = vsnprintf( &header[l], sizeof(header)-l-1, fmt_header, ap );
 	va_end( ap );
-    int len2 = sprintf( &header[sizeof(ok200)-1+len1], "Content-Length: %d\r\n\r\n",
+    int len2 = sprintf( &header[l+len1], "Content-Length: %d\r\n\r\n",
         cnx->html_buffer_len );
-	int count = tcp_write( cnx->sockfd, header, sizeof(ok200)-1+len1+len2 );
+	int count = tcp_write( cnx->sockfd, header, l+len1+len2 );
     if ( count == -1 ) {
         printf( "\n>>> %s %d: OOPS %d!!!!!\015\012", __FILE__, __LINE__, ERRNO );
         fflush( stdout );
