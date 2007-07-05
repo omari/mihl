@@ -104,9 +104,9 @@ void base64_decode( char const *bin, size_t size, char *bout, size_t maxlen ) {
     	v = ((v < 43) || (v > 122)) ? 0 : cd64[v-43];
     	if ( v )
     		v = (v == '$') ? 0 : v-61;
-    	in[i] = v;
+    	in[i] = v-1;
     }
     decodeblock( in, out ); 
-    for( int i = 0; i < 4; i++ )
+    for( int i = 0; i < 3; i++ )
         bout[bi++] = out[i];
 }								// base64_encode
