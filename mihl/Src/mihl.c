@@ -39,16 +39,21 @@
 /**
  * TBD
  * 
+ * Called by: manage_new_connexions
+ * 
  * @param ctx opaque context structure as returned by mihl_init()
  * @param sockfd TBD
  * @param client_addr TBD
- * @return TBD
+ * @return:
+ *   - -1 if an error occured
+ *   - or Index into the table of the connexions
  */
 static int add_new_connexion( mihl_ctx_t *ctx, SOCKET sockfd, struct sockaddr_in *client_addr ) {
 
     // Find a new slot to store the new active connexion
     if ( ctx->nb_connexions == ctx->maxnb_cnx ) {
-        mihl_log( ctx, MIHL_LOG_INFO, "Too many connexions (%d): connexion refused\015\012", 
+oops:;
+    	mihl_log( ctx, MIHL_LOG_INFO, "Too many connexions (%d): connexion refused\015\012", 
             ctx->nb_connexions );
         return -1;
     }
@@ -58,7 +63,8 @@ static int add_new_connexion( mihl_ctx_t *ctx, SOCKET sockfd, struct sockaddr_in
         if ( !cnx->active )
             break;
     }                           // for (connexions)
-    assert( cnx != NULL );
+    if ( cnx == NULL )
+    	goto oops;				// Should never happens anyway
     ctx->nb_connexions++;
 
     cnx->active = 1;    
@@ -85,7 +91,7 @@ static int add_new_connexion( mihl_ctx_t *ctx, SOCKET sockfd, struct sockaddr_in
  * TBD
  * 
  * @param cnx opaque context structure as returned by mihl_init()
- * @return TBD
+ * @return Index into the table of the connexions
  */
 static void delete_connexion( mihl_cnx_t *cnx ) {
     mihl_ctx_t *ctx = cnx->ctx;
@@ -107,6 +113,8 @@ static void delete_connexion( mihl_cnx_t *cnx ) {
 
 /**
  * TBD
+ * 
+ * Called from: mihl_init
  * 
  * @param ctx opaque context structure as returned by mihl_init()
  * @return TBD
@@ -365,8 +373,10 @@ static int search_for_handle( mihl_cnx_t *cnx, char *tag, char *host, int nb_var
 /**
  * TBD
  * 
+ * Called by: mihl_server
+ * 
  * @param ctx opaque context structure as returned by mihl_init()
- * @param now TBD
+ * @param now Current time
  * @return TBD
  */
 static int manage_new_connexions( mihl_ctx_t *ctx, time_t now ) {
@@ -768,29 +778,28 @@ int mihl_server( mihl_ctx_t *ctx ) {
 /**
  * TBD
  * 
- * @param ctx TBD
- * @param level TBD
- * @return TBD
+ * @param ctx opaque context structure as returned by mihl_init()
+ * @param level Specify which log levels we are interested in
  */
-void mihl_set_log_level( mihl_ctx_t *ctx, unsigned level ) {
+void mihl_set_log_level( mihl_ctx_t *ctx, mihl_log_level_t level ) {
     ctx->log_level = level;
 }                               // mihl_set_log_level
 
 /**
  * TBD 
  * 
- * @param ctx TBD
- * @return TBD
+ * @param ctx opaque context structure as returned by mihl_init()
+ * @return Specify which log levels we are interested in
  */
-unsigned mihl_get_log_level( mihl_ctx_t *ctx ) {
+mihl_log_level_t mihl_get_log_level( mihl_ctx_t *ctx ) {
     return ctx->log_level;
 }                               // mihl_get_log_level
 
 /**
  * TBD 
  * 
- * @param ctx TBD
- * @param level TBD
+ * @param ctx opaque context structure as returned by mihl_init()
+ * @param level MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO | 
  * @param fmt TBD
  * @param ... TBD
  * @return TBD

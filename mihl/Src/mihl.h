@@ -62,14 +62,16 @@ typedef struct {
 
 int mihl_info( mihl_ctx_t *ctx, int maxnb_cnxinfos, mihl_cnxinfo_t *infos );
 
-#define MIHL_LOG_ERROR          0x01
-#define MIHL_LOG_WARNING        0x02
-#define MIHL_LOG_INFO           0x04
-#define MIHL_LOG_INFO_VERBOSE   0x08
-#define MIHL_LOG_DEBUG          0x10
-void mihl_set_log_level( mihl_ctx_t *, unsigned level );
+typedef enum mihl_log_level {
+	MIHL_LOG_ERROR = 0x01,
+	MIHL_LOG_WARNING = 0x02,
+	MIHL_LOG_INFO = 0x04,
+	MIHL_LOG_INFO_VERBOSE = 0x08,
+	MIHL_LOG_DEBUG = 0x10
+} mihl_log_level_t;
+void mihl_set_log_level( mihl_ctx_t *, mihl_log_level_t level );
 
-unsigned mihl_get_log_level( mihl_ctx_t * );
+mihl_log_level_t mihl_get_log_level( mihl_ctx_t * );
 
 int mihl_dump_info( mihl_ctx_t * );
 
