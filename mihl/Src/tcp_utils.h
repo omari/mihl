@@ -17,4 +17,4 @@ void decode_keys_values( mihl_cnx_t *cnx, char *_request,
     int *nb_options, char *options_names[], char *options_values[], int maxnb_options,
     int *nb_variables, char *vars_names[], char *vars_values[], int maxnb_values );
 
-int read_file( char *fname, char **file, int *length );
+int read_file( char const *fname, char **file, int *length );

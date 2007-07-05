@@ -140,20 +140,23 @@ int tcp_write( SOCKET sockfd, const char *buff, int buff_len ) {
 /**
  * TBD
  * 
- * @param cnx TBD
+ * Called by: got_data_for_active_connexion
+ * 
+ * @param cnx opaque context structure as returned by mihl_init()
  * @param _request TBD
- * @param nb_options TBD
- * @param options_names TBD
- * @param options_values TBD
+ * @param[out] nb_options TBD
+ * @param[out] options_names TBD
+ * @param[out] options_values TBD
  * @param maxnb_options TBD
- * @param nb_variables TBD
- * @param vars_names TBD
- * @param vars_values TBD
+ * @param[out] nb_variables TBD
+ * @param[out] vars_names TBD
+ * @param[out] vars_values TBD
  * @param maxnb_values TBD
  */
 void decode_keys_values( mihl_cnx_t *cnx, char *_request,  
     int *nb_options, char *options_names[], char *options_values[], int maxnb_options,
     int *nb_variables, char *vars_names[], char *vars_values[], int maxnb_values ) {
+	
     *nb_options = 0;
     *nb_variables = 0;
     int l = (int)strlen(_request);
@@ -177,13 +180,13 @@ void decode_keys_values( mihl_cnx_t *cnx, char *_request,
                     q++;
                 options_values[*nb_options] = strdup(q);
                 (*nb_options)++;
-            }
-        }
+            }					// if (q)
+        }						// if (colon)
         line = eol;
         eol = strstr( eol, "\r\n" );
     }                           // while (line)
 
-    // POST
+    // Handle POST
     strcpy( request, _request );
     eol = strstr( request, "\r\n\r\n" );
     if ( eol ) {
@@ -204,8 +207,8 @@ void decode_keys_values( mihl_cnx_t *cnx, char *_request,
                 (*nb_variables)++;
                 eol = &item[1];
             }                   // for (;;)
-        }
-    }
+        }						// if
+    }							// if ( eol )
 
     free(request);
     request = NULL;
@@ -224,13 +227,15 @@ void decode_keys_values( mihl_cnx_t *cnx, char *_request,
             if ( !strcmp( value, "keep-alive" ) )
                 cnx->is_keep_alive = 1;
         }
-    }
+    }							// for (n)
 
+#if 0
     for ( int n = 0; n < *nb_variables; n++ ) {
         char *key = vars_names[n];
         char *value = vars_values[n];
-//      printf( "    %d: '%s' = '%s'\n", n, key, value );
+        printf( "    %d: '%s' = '%s'\n", n, key, value );
     }
+#endif
 
 }                               // decode_keys_values
 
@@ -333,7 +338,7 @@ static int filelength( int fd ) {
  * 	- The length of the file
  * 	- or -1 if an error occurred (errno is then set).
  */
-int read_file( char *fname, char **file, int *length ) {
+int read_file( char const *fname, char **file, int *length ) {
     int fd = open( fname, O_RDONLY | O_BINARY );
     if ( fd == -1 )
         return -1;

@@ -11,6 +11,8 @@
   
   
   
+  
+  
   <storageModule moduleId="org.eclipse.cdt.core.settings">
     
     
@@ -22,7 +24,11 @@
     
     
     
+    
+    
     <cconfiguration id="cdt.managedbuild.config.gnu.so.debug.409323649">
+      
+      
       
       
       
@@ -48,6 +54,8 @@
           <extension point="org.eclipse.cdt.core.ErrorParser" id="org.eclipse.cdt.core.GCCErrorParser"/>
         </extensions>
       </storageModule>
+      
+      
       
       
       
@@ -109,13 +117,17 @@
       
       
       
+      
+      
       <storageModule moduleId="scannerConfiguration"/>
       
       
       
       
       
+      
     
+      
       
       
       
@@ -129,17 +141,23 @@
       
       
       
+      
+      
       <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
       
       
       
       
+      
     
     
     
+      
       
       <storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
       
+      
+    
     
     </cconfiguration>
     
@@ -152,7 +170,11 @@
     
     
     
+    
+    
     <cconfiguration id="cdt.managedbuild.config.gnu.so.release.1682290530">
+      
+      
       
       
       
@@ -178,6 +200,8 @@
           <extension point="org.eclipse.cdt.core.ErrorParser" id="org.eclipse.cdt.core.GCCErrorParser"/>
         </extensions>
       </storageModule>
+      
+      
       
       
       
@@ -230,12 +254,16 @@
       
       
       
+      
     
       
       
       
       
+      
       <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+      
+      
       
       
       
@@ -253,17 +281,23 @@
       
       
       
+      
+      
       <storageModule moduleId="scannerConfiguration"/>
       
       
       
       
+      
     
     
     
+      
       
       <storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
       
+      
+    
     
     </cconfiguration>
     
@@ -271,12 +305,16 @@
     
     
     
+    
+  
   
   
   
   
   
   </storageModule>
+  
+  
   
   
   
@@ -295,6 +333,8 @@
   
   
   
+  
+
 
 
 

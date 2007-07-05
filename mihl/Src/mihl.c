@@ -289,7 +289,7 @@ int mihl_end( mihl_ctx_t *ctx ) {
  * @param close_connection TBD
  * @return TBD
  */
-int send_file( mihl_cnx_t *cnx, char *tag, char *filename, char *content_type, int close_connection ) {
+int send_file( mihl_cnx_t *cnx, char const *tag, char const *filename, char *content_type, int close_connection ) {
     char *file;
     int length;
     if ( read_file( filename, &file, &length ) == -1 ) {
@@ -340,6 +340,8 @@ int send_file( mihl_cnx_t *cnx, char *tag, char *filename, char *content_type, i
 /**
  * TBD
  * 
+ * Called from: got_data_for_active_connexion
+ * 
  * @param cnx opaque context structure as returned by mihl_init()
  * @param tag TBD
  * @param host TBD
@@ -348,7 +350,7 @@ int send_file( mihl_cnx_t *cnx, char *tag, char *filename, char *content_type, i
  * @param vars_values TBD
  * @return TBD
  */
-static int search_for_handle( mihl_cnx_t *cnx, char *tag, char *host, int nb_variables, char **vars_names, char **vars_values ) {
+static int search_for_handle( mihl_cnx_t *cnx, char const *tag, char *host, int nb_variables, char **vars_names, char **vars_values ) {
     mihl_ctx_t *ctx = cnx->ctx;
     mihl_handle_t *handle_nfound = NULL;
     for ( int n = 0; n < ctx->nb_handles; n++ ) {
@@ -473,12 +475,12 @@ static int got_data_for_active_connexion( mihl_cnx_t *cnx ) {
      *  Decode Key/Value pairs
      */
     int nb_options;
-    char *options_names[50], *options_values[50];
+    char *options_names[80], *options_values[80];
     int nb_variables;
-    char *vars_names[50], *vars_values[50];
+    char *vars_names[80], *vars_values[80];
     decode_keys_values( cnx, ctx->read_buffer, 
-        &nb_options, options_names, options_values, 50,
-        &nb_variables, vars_names, vars_values, 50 );
+        &nb_options, options_names, options_values, 80,
+        &nb_variables, vars_names, vars_values, 80 );
 #if 0
 {   
 static int cpt = 0;
