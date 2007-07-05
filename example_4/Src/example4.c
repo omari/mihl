@@ -45,7 +45,7 @@ static int http_index_sdp( mihl_cnx_t *cnx, char const *tag, char const *host, v
 	mihl_add( cnx, "a=cliprect:0,0,%d,%d", 240, 320 );
 	mihl_add( cnx, "a=framesize:96 %d-%d", 320, 240 );
 	mihl_add( cnx, "b=AS:1372" );
-    mihl_send( cnx,
+    mihl_send( cnx, NULL,
 		"Content-type: text/html\r\n" );
     return 0;
 }								// http_index_sdp
