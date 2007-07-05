@@ -82,7 +82,7 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
     mihl_add( cnx, "<br>" );
     mihl_add( cnx, "</body>" );
     mihl_add( cnx, "</html>" );
-    mihl_send( cnx,
+    mihl_send( cnx, NULL,
 		"Content-type: text/html\r\n" );
     return 0;
 }                               // http_root
@@ -112,7 +112,7 @@ int http_root_post( mihl_cnx_t *cnx, char const *tag, char const *host,
         mihl_add( cnx, "  %2d: %s = [%s]<BR>", n, vars_names[n], vars_values[n] );
     mihl_add( cnx, "</body>" );
     mihl_add( cnx, "</html>" );
-    mihl_send( cnx,
+    mihl_send( cnx, NULL,
 		"Content-type: text/html\r\n" );
     
     return 0;
