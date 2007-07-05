@@ -129,7 +129,7 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
     mihl_add( cnx, "</BODY>" );
 
     mihl_add( cnx, "</html>" );
-    mihl_send( cnx,
+    mihl_send( cnx, NULL,
 		"Content-type: text/html\r\n" );
     return 0;
 }                               // http_root
@@ -147,7 +147,7 @@ int http_data( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
     int index = (int)param;
     static int cpts[3] = { 0, 0, 0 };
     mihl_add( cnx, "cpt=%d", cpts[index]++ );
-    mihl_send( cnx,
+    mihl_send( cnx, NULL,
 		"Content-type: text/xml\r\n" );
     return 0;
 }                               // http_data
