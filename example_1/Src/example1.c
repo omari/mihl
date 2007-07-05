@@ -33,7 +33,7 @@
  * @param cnx opaque context structure as returned by mihl_init()
  * @param tag TBD
  * @param host TBD
- * @param param TBD
+ * @param param User-provided parameter, was provided with mihl_handle_get 
  * @return 0
  */
 static int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
@@ -48,9 +48,10 @@ static int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *
     mihl_add( cnx, "<a href='unknown.html'>Non-Existent Page<a><br><br>" );
     mihl_add( cnx, "(Do <b>wget -r http://mihl.sourceforge.net</b> in the directory where the executable is)<br>" );
     mihl_add( cnx, "<a href='index.html'>Static Pages<a><br><br>" );
+    mihl_add( cnx, "<a href='protected.html'>Protected Page<a><br><br>" );
     mihl_add( cnx, "</body>" );
     mihl_add( cnx, "</html>" );
-    mihl_send( cnx,
+    mihl_send( cnx, NULL,
 		"Content-type: text/html\r\n" );
     return 0;
 }								// http_root
@@ -61,7 +62,7 @@ static int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *
  * @param cnx opaque context structure as returned by mihl_init()
  * @param tag URL of the non existent page
  * @param host TBD
- * @param param TBD
+ * @param param User-provided parameter, was provided with mihl_handle_get 
  * @return TBD
  */
 static int http_page_not_found( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
@@ -75,7 +76,7 @@ static int http_page_not_found( mihl_cnx_t *cnx, char const *tag, char const *ho
     mihl_add(  cnx, "<br>" );
     mihl_add(  cnx, "</body>" );
     mihl_add(  cnx, "</html>" );
-    return mihl_send( cnx,
+    return mihl_send( cnx, NULL,
 		"Content-type: text/html\r\n" );
 }                               // http_page_not_found
 
@@ -85,7 +86,7 @@ static int http_page_not_found( mihl_cnx_t *cnx, char const *tag, char const *ho
  * @param cnx opaque context structure as returned by mihl_init()
  * @param tag TBD
  * @param host TBD
- * @param param TBD
+ * @param param User-provided parameter, was provided with mihl_handle_get 
  * @return 0
  */
 int http_nextpage2( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
@@ -97,7 +98,7 @@ int http_nextpage2( mihl_cnx_t *cnx, char const *tag, char const *host, void *pa
     mihl_add( cnx, "<a href='another_unknown.html'>Non-Existent Page<a><br><br>" );
     mihl_add( cnx, "</body>" );
     mihl_add( cnx, "</html>" );
-    mihl_send( cnx,
+    mihl_send( cnx, NULL,
 		"Content-type: text/html\r\n" );
     return 0;
 }                               // http_nextpage2
@@ -108,7 +109,7 @@ int http_nextpage2( mihl_cnx_t *cnx, char const *tag, char const *host, void *pa
  * @param cnx opaque context structure as returned by mihl_init()
  * @param tag TBD
  * @param host TBD
- * @param param TBD
+ * @param param User-provided parameter, was provided with mihl_handle_get 
  * @return 0
  */
 int http_nextpage1( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
@@ -126,7 +127,7 @@ int http_nextpage1( mihl_cnx_t *cnx, char const *tag, char const *host, void *pa
     mihl_add( cnx, "<a href='another_unknown.html'>Non-Existent Page<a><br><br>" );
     mihl_add( cnx, "</body>" );
     mihl_add( cnx, "</html>" );
-    mihl_send( cnx,
+    mihl_send( cnx, NULL,
 		"Content-type: text/html\r\n" );
     return 0;
 }                               // http_nextpage1
@@ -137,7 +138,7 @@ int http_nextpage1( mihl_cnx_t *cnx, char const *tag, char const *host, void *pa
  * @param cnx opaque context structure as returned by mihl_init()
  * @param tag URL of the non existent page
  * @param host TBD
- * @param param TBD
+ * @param param User-provided parameter, was provided with mihl_handle_get 
  * @return TBD
  */
 static int http_index_all_pages( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
@@ -160,7 +161,7 @@ static int http_index_all_pages( mihl_cnx_t *cnx, char const *tag, char const *h
  * @param cnx opaque context structure as returned by mihl_init()
  * @param tag TBD
  * @param host TBD
- * @param param TBD
+ * @param param User-provided parameter, was provided with mihl_handle_get 
  * @return 0
  */
 int http_index( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
@@ -172,7 +173,7 @@ int http_index( mihl_cnx_t *cnx, char const *tag, char const *host, void *param 
 		mihl_add( cnx, "<br>Unable to chdir into 'mihl.sourceforge.net': %m<br>" );
 	    mihl_add( cnx, "</body>" );
 	    mihl_add( cnx, "</html>" );
-	    mihl_send( cnx,
+	    mihl_send( cnx, NULL,
 			"Content-type: text/html\r\n" );
 	}
 	
@@ -183,6 +184,35 @@ int http_index( mihl_cnx_t *cnx, char const *tag, char const *host, void *param 
 	printf( "status=%d\n", status );
     return 0;
 }								// http_index
+
+/**
+ * GET Handler for the URL: /protected.html
+ * 
+ * @param cnx opaque context structure as returned by mihl_init()
+ * @param tag TBD
+ * @param host TBD
+ * @param param User-provided parameter, was provided with mihl_handle_get 
+ * @return 0
+ */
+static int http_protected( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
+	
+	if ( !mihl_authorization(cnx) ) {
+	    mihl_add( cnx, "<html>" );
+	    mihl_add( cnx, "<title>MIHL - Example 1</title>" );
+	    mihl_add( cnx, "<body>" );
+	    mihl_add( cnx, "Blah blah<br>" );
+	    mihl_add( cnx, "</body>" );
+	    mihl_add( cnx, "</html>" );
+	    mihl_send( cnx, "HTTP/1.0 401 Unauthorized\r\n",
+	    	"WWW-Authenticate: Basic realm=\"This page is protected!\"\r\n"
+			"Content-type: text/html\r\n" );
+	}
+	else {
+		printf( "\r\n[%s]\r\n", mihl_authorization(cnx) );
+		fflush( stdout );
+	}
+    return 0;
+}								// http_protected
 
 /**
  * Program entry point
@@ -206,6 +236,7 @@ int main( int argc, char *argv[] ) {
     mihl_handle_file( ctx, "/image.jpg", "../image.jpg", "image/jpeg", 0 );
     mihl_handle_get( ctx, "/nextpage.html", http_nextpage1, NULL );
     mihl_handle_get( ctx, "/index.html", http_index, NULL );
+    mihl_handle_get( ctx, "/protected.html", http_protected, NULL );
 
     for (;;) {
         int status = mihl_server( ctx );
