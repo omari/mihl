@@ -84,4 +84,8 @@ int send_file( mihl_cnx_t *cnx, char const *tag, char const *filename, char *con
 
 char *mihl_authorization( mihl_cnx_t *cnx );
 
+// b64.c
+void mihl_base64_encode( char const *bin, size_t size, char *bout, size_t maxlen );
+void mihl_base64_decode( char const *bin, size_t size, char *bout, size_t maxlen );
+
 #endif /*MIHL_H_*/

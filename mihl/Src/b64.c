@@ -58,7 +58,7 @@ static void encodeblock( unsigned char in[3], unsigned char out[4], int len ) {
  *  @param[out] bout Output buffer
  *  @param maxlen Size of the output buffer (to prevent buffer overflow)
  */
-void base64_encode( char const *bin, size_t size, char *bout, size_t maxlen ) {
+void mihl_base64_encode( char const *bin, size_t size, char *bout, size_t maxlen ) {
 
     memset( bout, 0, maxlen );
     int bi = 0;
@@ -79,7 +79,7 @@ void base64_encode( char const *bin, size_t size, char *bout, size_t maxlen ) {
         }
     }
 
-}                               // base64_encode
+}                               // mihl_base64_encode
 
 /*
 ** decodeblock
@@ -92,21 +92,28 @@ static void decodeblock( unsigned char in[4], unsigned char out[3] ) {
     out[ 2 ] = (unsigned char ) (((in[2] << 6) & 0xc0) | in[3]);
 }
 
-void base64_decode( char const *bin, size_t size, char *bout, size_t maxlen ) {
+void mihl_base64_decode( char const *bin, size_t size, char *bout, size_t maxlen ) {
 	static const char cd64[]=
 		"|$$$}rstuvwxyz{$$$$$$$>?@ABCDEFGHIJKLMNOPQRSTUVW$$$$$$XYZ[\\]^_`abcdefghijklmnopq";
     memset( bout, 0, maxlen );
     int bi = 0;
-    unsigned char in[4], out[3], v;
-    int index = 0;
-    for( int i = 0; i < 4; i++ ) {
-    	v = (unsigned char) bin[index++];
-    	v = ((v < 43) || (v > 122)) ? 0 : cd64[v-43];
-    	if ( v )
-    		v = (v == '$') ? 0 : v-61;
-    	in[i] = v-1;
-    }
-    decodeblock( in, out ); 
-    for( int i = 0; i < 3; i++ )
-        bout[bi++] = out[i];
-}								// base64_encode
+    for ( unsigned index = 0; index < size; ) {
+	    unsigned char in[4], out[3];
+	    for( int i = 0; i < 4; i++, index++ ) {
+            if ( index < size ) {
+		    	unsigned char v = (unsigned char) bin[index];
+		    	v = ((v < 43) || (v > 122)) ? 0 : cd64[v-43];
+		    	if ( v )
+		    		v = (v == '$') ? 0 : v-61;
+		    	in[i] = (v) ? v-1 : 0;
+            }
+            else {
+            	in[i] = 0;
+            }
+	    }
+       	decodeblock( in, out ); 
+       	for( int i = 0; i < 3; i++ )
+       		bout[bi++] = out[i];
+    }							// for (index)
+    bout[bi++] = 0;
+}								// mihl_base64_encode
