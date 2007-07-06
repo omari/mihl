@@ -48,7 +48,8 @@ static int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *
     mihl_add( cnx, "<a href='unknown.html'>Non-Existent Page<a><br><br>" );
     mihl_add( cnx, "(Do <b>wget -r http://mihl.sourceforge.net</b> in the directory where the executable is)<br>" );
     mihl_add( cnx, "<a href='index.html'>Static Pages<a><br><br>" );
-    mihl_add( cnx, "<a href='protected.html'>Protected Page<a><br><br>" );
+    mihl_add( cnx, "<a href='protected.html'>Protected Page<a><br>" );
+    mihl_add( cnx, "   (username=John, password=Smith)<br><br>" );
     mihl_add( cnx, "</body>" );
     mihl_add( cnx, "</html>" );
     mihl_send( cnx, NULL,
@@ -196,7 +197,8 @@ int http_index( mihl_cnx_t *cnx, char const *tag, char const *host, void *param 
  */
 static int http_protected( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
 	
-	if ( !mihl_authorization(cnx) ) {
+	char const *auth = mihl_authorization( cnx );
+	if ( !auth ) {
 	    mihl_add( cnx, "<html>" );
 	    mihl_add( cnx, "<title>MIHL - Example 1</title>" );
 	    mihl_add( cnx, "<body>" );
@@ -208,8 +210,32 @@ static int http_protected( mihl_cnx_t *cnx, char const *tag, char const *host, v
 			"Content-type: text/html\r\n" );
 	}
 	else {
-		printf( "\r\n[%s]\r\n", mihl_authorization(cnx) );
-		fflush( stdout );
+		int len = strlen( auth );
+		if ( (len < 7) || strncmp(auth, "Basic ", 6) ) {
+			
+		}
+		char realm[80];
+		mihl_base64_decode( &auth[6], strlen(auth)-6, realm, sizeof(realm)-1 );
+		if ( !strcmp( realm, "John:Smith" ) ) {
+			mihl_add( cnx, "<html>" );
+		    mihl_add( cnx, "<body>" );
+		    mihl_add( cnx, "Authentication succedded! Welcome John Smith!<br>" );
+		    mihl_add( cnx, "<a href='/'>Previous Page<a><br><br>" );
+		    mihl_add( cnx, "</body>" );
+		    mihl_add( cnx, "</html>" );
+		    mihl_send( cnx, NULL,
+				"Content-type: text/html\r\n" );
+		}
+		else {
+			mihl_add( cnx, "<html>" );
+		    mihl_add( cnx, "<body>" );
+		    mihl_add( cnx, "Authentication did not succedded! You are not John Smith!<br>" );
+		    mihl_add( cnx, "<a href='/'>Previous Page<a><br><br>" );
+		    mihl_add( cnx, "</body>" );
+		    mihl_add( cnx, "</html>" );
+		    mihl_send( cnx, NULL,
+				"Content-type: text/html\r\n" );
+		}
 	}
     return 0;
 }								// http_protected
