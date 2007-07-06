@@ -15,6 +15,7 @@
  * The 2nd page contains a link to the 1st page.
  * There is also a link to a non existent page.
  * The 2nd page install a user-provided handler to manage non existent page.
+ * This example show also a simple use of a Basic Authentication.
  * 
  **/
 

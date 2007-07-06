@@ -1,9 +1,15 @@
 <?xml version="1.0"?>
 <?fileVersion 4.0.0?>
 <cproject>
+  
+  
   <storageModule moduleId="org.eclipse.cdt.core.settings">
+    
+    
     <cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.486002387">
-      <storageModule moduleId="org.eclipse.cdt.core.settings" name="Debug" id="cdt.managedbuild.config.gnu.exe.debug.486002387" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+      
+      
+      <storageModule moduleId="org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.exe.debug.486002387" name="Debug" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
         <externalSettings/>
         <extensions>
           <extension point="org.eclipse.cdt.core.BinaryParser" id="org.eclipse.cdt.core.ELF"/>
@@ -13,8 +19,10 @@
           <extension point="org.eclipse.cdt.core.ErrorParser" id="org.eclipse.cdt.core.GCCErrorParser"/>
         </extensions>
       </storageModule>
+      
+      
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        <configuration id="cdt.managedbuild.config.gnu.exe.debug.486002387" name="Debug" description="" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" parent="cdt.managedbuild.config.gnu.exe.debug" artifactName="example_1" artifactExtension="" cleanCommand="rm -rf" prebuildStep="" postbuildStep="" preannouncebuildStep="" postannouncebuildStep="">
+        <configuration id="cdt.managedbuild.config.gnu.exe.debug.486002387" name="Debug" description="" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" parent="cdt.managedbuild.config.gnu.exe.debug" artifactName="mihl_example_1" artifactExtension="" cleanCommand="rm -rf" prebuildStep="" postbuildStep="" preannouncebuildStep="" postannouncebuildStep="">
           <folderInfo id="cdt.managedbuild.config.gnu.exe.debug.486002387." name="/" resourcePath="">
             <toolChain superClass="cdt.managedbuild.toolchain.gnu.exe.debug" id="cdt.managedbuild.toolchain.gnu.exe.debug.1479261015" name="Linux GCC">
               <targetPlatform superClass="cdt.managedbuild.target.gnu.platform.exe.debug" id="cdt.managedbuild.target.gnu.platform.exe.debug.2113574046" name="Debug Platform"/>
@@ -57,6 +65,13 @@
           </sourceEntries>
         </configuration>
       </storageModule>
+      
+      
+      
+      <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+      
+    
+      <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
       <storageModule moduleId="scannerConfiguration">
         <autodiscovery enabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile" problemReportingEnabled="true"/>
         <profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
@@ -246,7 +261,7 @@
           </profile>
           <profile id="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfile">
             <buildOutputProvider>
-              <openAction enabled="false" filePath=""/>
+              <openAction enabled="true" filePath=""/>
               <parser enabled="false"/>
             </buildOutputProvider>
             <scannerInfoProvider id="specsFile">
@@ -256,7 +271,7 @@
           </profile>
           <profile id="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP">
             <buildOutputProvider>
-              <openAction enabled="false" filePath=""/>
+              <openAction enabled="true" filePath=""/>
               <parser enabled="false"/>
             </buildOutputProvider>
             <scannerInfoProvider id="specsFile">
@@ -266,7 +281,7 @@
           </profile>
           <profile id="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC">
             <buildOutputProvider>
-              <openAction enabled="false" filePath=""/>
+              <openAction enabled="true" filePath=""/>
               <parser enabled="false"/>
             </buildOutputProvider>
             <scannerInfoProvider id="specsFile">
@@ -276,7 +291,7 @@
           </profile>
           <profile id="org.eclipse.cdt.managedbuilder.core.GCCWinManagedMakePerProjectProfile">
             <buildOutputProvider>
-              <openAction enabled="false" filePath=""/>
+              <openAction enabled="true" filePath=""/>
               <parser enabled="false"/>
             </buildOutputProvider>
             <scannerInfoProvider id="specsFile">
@@ -286,7 +301,7 @@
           </profile>
           <profile id="org.eclipse.cdt.managedbuilder.core.GCCWinManagedMakePerProjectProfileCPP">
             <buildOutputProvider>
-              <openAction enabled="false" filePath=""/>
+              <openAction enabled="true" filePath=""/>
               <parser enabled="false"/>
             </buildOutputProvider>
             <scannerInfoProvider id="specsFile">
@@ -296,7 +311,7 @@
           </profile>
           <profile id="org.eclipse.cdt.managedbuilder.core.GCCWinManagedMakePerProjectProfileC">
             <buildOutputProvider>
-              <openAction enabled="false" filePath=""/>
+              <openAction enabled="true" filePath=""/>
               <parser enabled="false"/>
             </buildOutputProvider>
             <scannerInfoProvider id="specsFile">
@@ -306,10 +321,13 @@
           </profile>
         </scannerConfigBuildInfo>
       </storageModule>
-      <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
     </cconfiguration>
+    
+    
     <cconfiguration id="cdt.managedbuild.config.gnu.exe.release.928961631">
-      <storageModule moduleId="org.eclipse.cdt.core.settings" name="Release" id="cdt.managedbuild.config.gnu.exe.release.928961631" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+      
+      
+      <storageModule moduleId="org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.exe.release.928961631" name="Release" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
         <externalSettings/>
         <extensions>
           <extension point="org.eclipse.cdt.core.BinaryParser" id="org.eclipse.cdt.core.ELF"/>
@@ -319,8 +337,10 @@
           <extension point="org.eclipse.cdt.core.ErrorParser" id="org.eclipse.cdt.core.GCCErrorParser"/>
         </extensions>
       </storageModule>
+      
+      
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        <configuration id="cdt.managedbuild.config.gnu.exe.release.928961631" name="Release" description="" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" parent="cdt.managedbuild.config.gnu.exe.release" artifactName="example_1" cleanCommand="rm -rf">
+        <configuration id="cdt.managedbuild.config.gnu.exe.release.928961631" name="Release" description="" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" parent="cdt.managedbuild.config.gnu.exe.release" artifactName="mihl_example_1" artifactExtension="" cleanCommand="rm -rf">
           <folderInfo id="cdt.managedbuild.config.gnu.exe.release.928961631." name="/" resourcePath="">
             <toolChain superClass="cdt.managedbuild.toolchain.gnu.exe.release" id="cdt.managedbuild.toolchain.gnu.exe.release.447882298" name="Linux GCC">
               <targetPlatform superClass="cdt.managedbuild.target.gnu.platform.exe.release" id="cdt.managedbuild.target.gnu.platform.exe.release.1229143576" name="Debug Platform"/>
@@ -333,18 +353,18 @@
               <tool superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release" id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1092709034" name="GCC C Compiler">
                 <option superClass="gnu.c.compiler.exe.release.option.optimization.level" id="gnu.c.compiler.exe.release.option.optimization.level.44732933" name="Optimization Level" defaultValue="gnu.c.optimization.level.most" valueType="enumerated"/>
                 <option superClass="gnu.c.compiler.exe.release.option.debugging.level" id="gnu.c.compiler.exe.release.option.debugging.level.1715402489" name="Debug Level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
-                <option superClass="gnu.c.compiler.option.misc.other" id="gnu.c.compiler.option.misc.other.559968469" value="-c -fmessage-length=0 -std=gnu99" valueType="string"/>
-                <option superClass="gnu.c.compiler.option.include.paths" id="gnu.c.compiler.option.include.paths.1363594124" valueType="includePath">
+                <option superClass="gnu.c.compiler.option.misc.other" id="gnu.c.compiler.option.misc.other.559968469" name="Other flags" value="-c -fmessage-length=0 -std=gnu99" valueType="string"/>
+                <option superClass="gnu.c.compiler.option.include.paths" id="gnu.c.compiler.option.include.paths.1363594124" name="Include paths (-I)" valueType="includePath">
                   <listOptionValue value="&quot;${workspace_loc:/mihl/Src}&quot;" builtIn="false"/>
                   <listOptionValue value="&quot;${workspace_loc:/example_1/Src}&quot;" builtIn="false"/>
                 </option>
                 <inputType superClass="cdt.managedbuild.tool.gnu.c.compiler.input" id="cdt.managedbuild.tool.gnu.c.compiler.input.964051637"/>
               </tool>
               <tool superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release" id="cdt.managedbuild.tool.gnu.c.linker.exe.release.1018827408" name="GCC C Linker">
-                <option superClass="gnu.c.link.option.libs" id="gnu.c.link.option.libs.1297781014" valueType="libs">
+                <option superClass="gnu.c.link.option.libs" id="gnu.c.link.option.libs.1297781014" name="Libraries (-l)" valueType="libs">
                   <listOptionValue value="mihl" builtIn="false"/>
                 </option>
-                <option superClass="gnu.c.link.option.paths" id="gnu.c.link.option.paths.1653338741" valueType="libPaths">
+                <option superClass="gnu.c.link.option.paths" id="gnu.c.link.option.paths.1653338741" name="Library search path (-L)" valueType="libPaths">
                   <listOptionValue value="&quot;${workspace_loc:/mihl/Release}&quot;" builtIn="false"/>
                 </option>
                 <inputType superClass="cdt.managedbuild.tool.gnu.c.linker.input" id="cdt.managedbuild.tool.gnu.c.linker.input.1940260730">
@@ -363,6 +383,13 @@
           </sourceEntries>
         </configuration>
       </storageModule>
+      
+      
+      
+      <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+      
+    
+      <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
       <storageModule moduleId="scannerConfiguration">
         <autodiscovery enabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile" problemReportingEnabled="true"/>
         <profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
@@ -552,7 +579,7 @@
           </profile>
           <profile id="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfile">
             <buildOutputProvider>
-              <openAction enabled="false" filePath=""/>
+              <openAction enabled="true" filePath=""/>
               <parser enabled="false"/>
             </buildOutputProvider>
             <scannerInfoProvider id="specsFile">
@@ -562,7 +589,7 @@
           </profile>
           <profile id="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP">
             <buildOutputProvider>
-              <openAction enabled="false" filePath=""/>
+              <openAction enabled="true" filePath=""/>
               <parser enabled="false"/>
             </buildOutputProvider>
             <scannerInfoProvider id="specsFile">
@@ -572,7 +599,7 @@
           </profile>
           <profile id="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC">
             <buildOutputProvider>
-              <openAction enabled="false" filePath=""/>
+              <openAction enabled="true" filePath=""/>
               <parser enabled="false"/>
             </buildOutputProvider>
             <scannerInfoProvider id="specsFile">
@@ -582,7 +609,7 @@
           </profile>
           <profile id="org.eclipse.cdt.managedbuilder.core.GCCWinManagedMakePerProjectProfile">
             <buildOutputProvider>
-              <openAction enabled="false" filePath=""/>
+              <openAction enabled="true" filePath=""/>
               <parser enabled="false"/>
             </buildOutputProvider>
             <scannerInfoProvider id="specsFile">
@@ -592,7 +619,7 @@
           </profile>
           <profile id="org.eclipse.cdt.managedbuilder.core.GCCWinManagedMakePerProjectProfileCPP">
             <buildOutputProvider>
-              <openAction enabled="false" filePath=""/>
+              <openAction enabled="true" filePath=""/>
               <parser enabled="false"/>
             </buildOutputProvider>
             <scannerInfoProvider id="specsFile">
@@ -602,7 +629,7 @@
           </profile>
           <profile id="org.eclipse.cdt.managedbuilder.core.GCCWinManagedMakePerProjectProfileC">
             <buildOutputProvider>
-              <openAction enabled="false" filePath=""/>
+              <openAction enabled="true" filePath=""/>
               <parser enabled="false"/>
             </buildOutputProvider>
             <scannerInfoProvider id="specsFile">
@@ -612,10 +639,15 @@
           </profile>
         </scannerConfigBuildInfo>
       </storageModule>
-      <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
     </cconfiguration>
+    
+  
   </storageModule>
+  
+  
   <storageModule moduleId="cdtBuildSystem" version="4.0.0">
     <project id="example_1.cdt.managedbuild.target.gnu.exe.690348579" name="Executable" projectType="cdt.managedbuild.target.gnu.exe"/>
   </storageModule>
+  
+
 </cproject>
