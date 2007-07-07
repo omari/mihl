@@ -47,8 +47,10 @@ static int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *
     mihl_add( cnx, "host= [%s]<br><br>", host );
     mihl_add( cnx, "<a href='nextpage.html'>Next Page<a><br><br>" );
     mihl_add( cnx, "<a href='unknown.html'>Non-Existent Page<a><br><br>" );
-    mihl_add( cnx, "(Do <b>wget -r http://mihl.sourceforge.net</b> in the directory where the executable is)<br>" );
-    mihl_add( cnx, "<a href='index.html'>Static Pages<a><br><br>" );
+    if ( access( "../image.jpg", R_OK ) == 0 ) {
+    	mihl_add( cnx, "(Do <b>wget -r http://mihl.sourceforge.net</b> in the directory where the executable is)<br>" );
+    	mihl_add( cnx, "<a href='index.html'>Static Pages<a><br><br>" );
+    }
     mihl_add( cnx, "<a href='protected.html'>Protected Page<a><br>" );
     mihl_add( cnx, "   (username=John, password=Smith)<br><br>" );
     mihl_add( cnx, "</body>" );
@@ -252,7 +254,7 @@ static int http_protected( mihl_cnx_t *cnx, char const *tag, char const *host, v
  */
 int main( int argc, char *argv[] ) {
 	
-    help( );
+    help( 8080 );
 
     mihl_ctx_t *ctx = mihl_init( NULL, 8080, 8, 
         MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO | MIHL_LOG_INFO_VERBOSE );
@@ -260,7 +262,10 @@ int main( int argc, char *argv[] ) {
     	return -1;
 
     mihl_handle_get( ctx, "/", http_root, NULL );
-    mihl_handle_file( ctx, "/image.jpg", "../image.jpg", "image/jpeg", 0 );
+    if ( access( "../image.jpg", R_OK ) == 0 )
+    	mihl_handle_file( ctx, "/image.jpg", "../image.jpg", "image/jpeg", 0 );
+    else
+    	mihl_handle_file( ctx, "/image.jpg", "/etc/mihl/examples/1/image.jpg", "image/jpeg", 0 );
     mihl_handle_get( ctx, "/nextpage.html", http_nextpage1, NULL );
     mihl_handle_get( ctx, "/index.html", http_index, NULL );
     mihl_handle_get( ctx, "/protected.html", http_protected, NULL );
