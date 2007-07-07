@@ -13,7 +13,11 @@
   
   
   
+  
+  
   <storageModule moduleId="org.eclipse.cdt.core.settings">
+    
+    
     
     
     
@@ -39,7 +43,9 @@
       
       
       
-      <storageModule moduleId="org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.so.debug.409323649" name="Debug" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+      
+      
+      <storageModule moduleId="org.eclipse.cdt.core.settings" name="Debug" id="cdt.managedbuild.config.gnu.so.debug.409323649" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
         <externalSettings>
           <externalSetting>
             <entry kind="includePath" flags="VALUE_WORKSPACE_PATH" name="/mihl"/>
@@ -54,6 +60,8 @@
           <extension point="org.eclipse.cdt.core.ErrorParser" id="org.eclipse.cdt.core.GCCErrorParser"/>
         </extensions>
       </storageModule>
+      
+      
       
       
       
@@ -119,6 +127,8 @@
       
       
       
+      
+      
       <storageModule moduleId="scannerConfiguration"/>
       
       
@@ -126,7 +136,9 @@
       
       
       
+      
     
+      
       
       
       
@@ -143,23 +155,31 @@
       
       
       
+      
+      
       <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
       
       
       
       
       
+      
     
     
     
+      
       
       
       <storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
       
       
+      
+    
     
     
     </cconfiguration>
+    
+    
     
     
     
@@ -185,7 +205,9 @@
       
       
       
-      <storageModule moduleId="org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.so.release.1682290530" name="Release" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+      
+      
+      <storageModule moduleId="org.eclipse.cdt.core.settings" name="Release" id="cdt.managedbuild.config.gnu.so.release.1682290530" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
         <externalSettings>
           <externalSetting>
             <entry kind="includePath" flags="VALUE_WORKSPACE_PATH" name="/mihl"/>
@@ -212,12 +234,14 @@
       
       
       
+      
+      
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
         <configuration id="cdt.managedbuild.config.gnu.so.release.1682290530" name="Release" description="Shared Library, Release" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" parent="cdt.managedbuild.config.gnu.so.release" artifactName="mihl" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" artifactExtension="so" cleanCommand="rm -rf" prebuildStep="" postbuildStep="" preannouncebuildStep="" postannouncebuildStep="">
           <folderInfo id="cdt.managedbuild.config.gnu.so.release.1682290530.623743331" name="/" resourcePath="">
             <toolChain superClass="cdt.managedbuild.toolchain.gnu.so.release" id="cdt.managedbuild.toolchain.gnu.so.release.1779271754" name="GCC Tool Chain">
               <targetPlatform superClass="cdt.managedbuild.target.gnu.platform.so.release" id="cdt.managedbuild.target.gnu.platform.so.release.1733563628" name="Debug Platform"/>
-              <builder superClass="cdt.managedbuild.target.gnu.builder.so.release" id="cdt.managedbuild.target.gnu.builder.so.release.1238752403" name="Gnu Make Builder" keepEnvironmentInBuildfile="false" buildPath="${workspace_loc:/mihl/Release}"/>
+              <builder superClass="cdt.managedbuild.target.gnu.builder.so.release" id="cdt.managedbuild.target.gnu.builder.so.release.1238752403" name="Gnu Make Builder" autoBuildTarget="all" enableAutoBuild="true" incrementalBuildTarget="all" enabledIncrementalBuild="true" cleanBuildTarget="clean" enableCleanBuild="true" keepEnvironmentInBuildfile="false" buildPath="${workspace_loc:/mihl/Release}"/>
               <tool superClass="cdt.managedbuild.tool.gnu.cpp.compiler.so.release" id="cdt.managedbuild.tool.gnu.cpp.compiler.so.release.1960205967" name="GCC C++ Compiler">
                 <option superClass="gnu.cpp.compiler.so.release.option.optimization.level" id="gnu.cpp.compiler.so.release.option.optimization.level.1850700222" name="Optimization Level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
                 <option superClass="gnu.cpp.compiler.so.release.option.debugging.level" id="gnu.cpp.compiler.so.release.option.debugging.level.1173104260" name="Debug Level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
@@ -255,13 +279,17 @@
       
       
       
+      
     
       
       
       
       
       
+      
       <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+      
+      
       
       
       
@@ -283,20 +311,26 @@
       
       
       
+      
+      
       <storageModule moduleId="scannerConfiguration"/>
       
       
       
       
       
+      
     
     
     
+      
       
       
       <storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
       
       
+      
+    
     
     
     </cconfiguration>
@@ -306,6 +340,8 @@
     
     
     
+    
+  
   
   
   
@@ -313,6 +349,8 @@
   
   
   </storageModule>
+  
+  
   
   
   
@@ -334,6 +372,8 @@
   
   
   
+  
+
 
 
 
