@@ -5,7 +5,11 @@
   
   
   
+  
+  
   <storageModule moduleId="org.eclipse.cdt.core.settings">
+    
+    
     
     
     
@@ -15,7 +19,9 @@
       
       
       
-      <storageModule moduleId="org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.exe.debug.864626085" name="Debug" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+      
+      
+      <storageModule moduleId="org.eclipse.cdt.core.settings" name="Debug" id="cdt.managedbuild.config.gnu.exe.debug.864626085" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
         <externalSettings/>
         <extensions>
           <extension point="org.eclipse.cdt.core.BinaryParser" id="org.eclipse.cdt.core.ELF"/>
@@ -25,6 +31,8 @@
           <extension point="org.eclipse.cdt.core.ErrorParser" id="org.eclipse.cdt.core.GCCErrorParser"/>
         </extensions>
       </storageModule>
+      
+      
       
       
       
@@ -77,7 +85,11 @@
       
       
       
+      
+      
       <storageModule moduleId="scannerConfiguration">
+        
+        
         
         
         
@@ -87,7 +99,11 @@
         
         
         
+        
+        
         <profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
+          
+          
           
           
           
@@ -97,7 +113,11 @@
             
             
             
+            
+            
             <openAction enabled="true" filePath=""/>
+            
+            
             
             
             
@@ -105,9 +125,13 @@
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
+          
+          
           
           
           
@@ -117,7 +141,11 @@
             
             
             
+            
+            
             <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}"/>
+            
+            
             
             
             
@@ -125,14 +153,20 @@
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -142,7 +176,11 @@
           
           
           
+          
+          
           <buildOutputProvider>
+            
+            
             
             
             
@@ -152,12 +190,18 @@
             
             
             
+            
+            
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
+          
+          
           
           
           
@@ -167,7 +211,11 @@
             
             
             
+            
+            
             <runAction useDefault="true" command="make" arguments="-f ${project_name}_scd.mk"/>
+            
+            
             
             
             
@@ -175,14 +223,20 @@
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -192,7 +246,11 @@
           
           
           
+          
+          
           <buildOutputProvider>
+            
+            
             
             
             
@@ -202,12 +260,18 @@
             
             
             
+            
+            
             <parser enabled="false"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
+          
+          
           
           
           
@@ -217,7 +281,11 @@
             
             
             
+            
+            
             <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}"/>
+            
+            
             
             
             
@@ -225,14 +293,20 @@
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -242,7 +316,11 @@
           
           
           
+          
+          
           <buildOutputProvider>
+            
+            
             
             
             
@@ -252,12 +330,18 @@
             
             
             
+            
+            
             <parser enabled="false"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
+          
+          
           
           
           
@@ -267,7 +351,11 @@
             
             
             
+            
+            
             <runAction useDefault="true" command="g++" arguments="-E -P -v -dD ${plugin_state_location}/specs.cpp"/>
+            
+            
             
             
             
@@ -275,14 +363,20 @@
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -292,7 +386,11 @@
           
           
           
+          
+          
           <buildOutputProvider>
+            
+            
             
             
             
@@ -302,12 +400,18 @@
             
             
             
+            
+            
             <parser enabled="false"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
+          
+          
           
           
           
@@ -317,7 +421,11 @@
             
             
             
+            
+            
             <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/specs.c"/>
+            
+            
             
             
             
@@ -325,14 +433,20 @@
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -342,7 +456,11 @@
           
           
           
+          
+          
           <buildOutputProvider>
+            
+            
             
             
             
@@ -352,9 +470,13 @@
             
             
             
+            
+            
             <parser enabled="false"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
@@ -362,7 +484,11 @@
           
           
           
+          
+          
           <scannerInfoProvider id="specsFile">
+            
+            
             
             
             
@@ -372,17 +498,25 @@
             
             
             
+            
+            
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -392,7 +526,11 @@
           
           
           
+          
+          
           <buildOutputProvider>
+            
+            
             
             
             
@@ -402,9 +540,13 @@
             
             
             
+            
+            
             <parser enabled="false"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
@@ -412,7 +554,11 @@
           
           
           
+          
+          
           <scannerInfoProvider id="specsFile">
+            
+            
             
             
             
@@ -422,17 +568,25 @@
             
             
             
+            
+            
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -442,7 +596,11 @@
           
           
           
+          
+          
           <buildOutputProvider>
+            
+            
             
             
             
@@ -452,12 +610,18 @@
             
             
             
+            
+            
             <parser enabled="false"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
+          
+          
           
           
           
@@ -467,7 +631,11 @@
             
             
             
+            
+            
             <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/specs.c"/>
+            
+            
             
             
             
@@ -475,14 +643,20 @@
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -492,7 +666,11 @@
           
           
           
+          
+          
           <autodiscovery enabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC" problemReportingEnabled="true"/>
+          
+          
           
           
           
@@ -502,7 +680,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -512,12 +694,18 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -527,7 +715,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}"/>
+              
+              
               
               
               
@@ -535,14 +727,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -552,7 +750,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -562,12 +764,18 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -577,7 +785,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="make" arguments="-f ${project_name}_scd.mk"/>
+              
+              
               
               
               
@@ -585,14 +797,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -602,7 +820,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -612,12 +834,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -627,7 +855,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}"/>
+              
+              
               
               
               
@@ -635,14 +867,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -652,7 +890,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -662,12 +904,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -677,7 +925,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="g++" arguments="-E -P -v -dD ${plugin_state_location}/specs.cpp"/>
+              
+              
               
               
               
@@ -685,14 +937,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -702,7 +960,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -712,12 +974,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -727,7 +995,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/specs.c"/>
+              
+              
               
               
               
@@ -735,14 +1007,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -752,7 +1030,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -762,9 +1044,13 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
@@ -772,7 +1058,11 @@
             
             
             
+            
+            
             <scannerInfoProvider id="specsFile">
+              
+              
               
               
               
@@ -782,17 +1072,25 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -802,7 +1100,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -812,9 +1114,13 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
@@ -822,7 +1128,11 @@
             
             
             
+            
+            
             <scannerInfoProvider id="specsFile">
+              
+              
               
               
               
@@ -832,17 +1142,25 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -852,7 +1170,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -862,12 +1184,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -877,7 +1205,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/specs.c"/>
+              
+              
               
               
               
@@ -885,19 +1217,27 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
           
           
+          
+        
         
         
         </scannerConfigBuildInfo>
+        
+        
         
         
         
@@ -907,7 +1247,11 @@
           
           
           
+          
+          
           <autodiscovery enabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC" problemReportingEnabled="true"/>
+          
+          
           
           
           
@@ -917,7 +1261,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -927,12 +1275,18 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -942,7 +1296,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}"/>
+              
+              
               
               
               
@@ -950,14 +1308,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -967,7 +1331,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -977,12 +1345,18 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -992,7 +1366,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="make" arguments="-f ${project_name}_scd.mk"/>
+              
+              
               
               
               
@@ -1000,14 +1378,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -1017,7 +1401,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -1027,12 +1415,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -1042,7 +1436,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}"/>
+              
+              
               
               
               
@@ -1050,14 +1448,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -1067,7 +1471,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -1077,12 +1485,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -1092,7 +1506,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="g++" arguments="-E -P -v -dD ${plugin_state_location}/specs.cpp"/>
+              
+              
               
               
               
@@ -1100,14 +1518,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -1117,7 +1541,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -1127,12 +1555,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -1142,7 +1576,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/specs.c"/>
+              
+              
               
               
               
@@ -1150,14 +1588,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -1167,7 +1611,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -1177,9 +1625,13 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
@@ -1187,7 +1639,11 @@
             
             
             
+            
+            
             <scannerInfoProvider id="specsFile">
+              
+              
               
               
               
@@ -1197,17 +1653,25 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -1217,7 +1681,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -1227,9 +1695,13 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
@@ -1237,7 +1709,11 @@
             
             
             
+            
+            
             <scannerInfoProvider id="specsFile">
+              
+              
               
               
               
@@ -1247,17 +1723,25 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -1267,7 +1751,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -1277,12 +1765,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -1292,7 +1786,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/specs.c"/>
+              
+              
               
               
               
@@ -1300,21 +1798,29 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
           
           
+          
+        
         
         
         </scannerConfigBuildInfo>
         
         
+        
+      
       
       
       </storageModule>
@@ -1322,15 +1828,23 @@
       
       
       
+      
+      
       <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
       
       
+      
     
+      
       
       <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
       
+      
+    
     
     </cconfiguration>
+    
+    
     
     
     
@@ -1340,7 +1854,9 @@
       
       
       
-      <storageModule moduleId="org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.exe.release.1108727167" name="Release" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
+      
+      
+      <storageModule moduleId="org.eclipse.cdt.core.settings" name="Release" id="cdt.managedbuild.config.gnu.exe.release.1108727167" buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider">
         <externalSettings/>
         <extensions>
           <extension point="org.eclipse.cdt.core.BinaryParser" id="org.eclipse.cdt.core.ELF"/>
@@ -1354,12 +1870,14 @@
       
       
       
+      
+      
       <storageModule moduleId="cdtBuildSystem" version="4.0.0">
         <configuration id="cdt.managedbuild.config.gnu.exe.release.1108727167" name="Release" description="" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" parent="cdt.managedbuild.config.gnu.exe.release" artifactName="mihl_example_3" artifactExtension="" cleanCommand="rm -rf">
           <folderInfo id="cdt.managedbuild.config.gnu.exe.release.1108727167." name="/" resourcePath="">
             <toolChain superClass="cdt.managedbuild.toolchain.gnu.exe.release" id="cdt.managedbuild.toolchain.gnu.exe.release.2070314661" name="Linux GCC">
               <targetPlatform superClass="cdt.managedbuild.target.gnu.platform.exe.release" id="cdt.managedbuild.target.gnu.platform.exe.release.894598182" name="Debug Platform"/>
-              <builder superClass="cdt.managedbuild.target.gnu.builder.exe.release" id="cdt.managedbuild.target.gnu.builder.exe.release.1797255920" name="Gnu Make Builder" managedBuildOn="true" keepEnvironmentInBuildfile="false" buildPath="${workspace_loc:/example_3/Release}"/>
+              <builder superClass="cdt.managedbuild.target.gnu.builder.exe.release" id="cdt.managedbuild.target.gnu.builder.exe.release.1797255920" name="Gnu Make Builder" autoBuildTarget="all" enableAutoBuild="true" incrementalBuildTarget="all" enabledIncrementalBuild="true" cleanBuildTarget="clean" enableCleanBuild="true" managedBuildOn="true" keepEnvironmentInBuildfile="false" buildPath="${workspace_loc:/example_3/Release}"/>
               <tool superClass="cdt.managedbuild.tool.gnu.archiver.base" id="cdt.managedbuild.tool.gnu.archiver.base.863214019" name="GCC Archiver"/>
               <tool superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release" id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1583170993" name="GCC C++ Compiler">
                 <option superClass="gnu.cpp.compiler.exe.release.option.optimization.level" id="gnu.cpp.compiler.exe.release.option.optimization.level.857148680" name="Optimization Level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
@@ -1368,7 +1886,7 @@
               <tool superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release" id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.836159500" name="GCC C Compiler">
                 <option superClass="gnu.c.compiler.exe.release.option.optimization.level" id="gnu.c.compiler.exe.release.option.optimization.level.284562175" name="Optimization Level" defaultValue="gnu.c.optimization.level.most" valueType="enumerated"/>
                 <option superClass="gnu.c.compiler.exe.release.option.debugging.level" id="gnu.c.compiler.exe.release.option.debugging.level.371567979" name="Debug Level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
-                <option superClass="gnu.c.compiler.option.misc.other" id="gnu.c.compiler.option.misc.other.842596565" name="Other flags" value="-c -fmessage-length=0 -gnu=gnu99" valueType="string"/>
+                <option superClass="gnu.c.compiler.option.misc.other" id="gnu.c.compiler.option.misc.other.842596565" name="Other flags" value="-c -fmessage-length=0 -std=gnu99" valueType="string"/>
                 <option superClass="gnu.c.compiler.option.include.paths" id="gnu.c.compiler.option.include.paths.1874857721" name="Include paths (-I)" valueType="includePath">
                   <listOptionValue value="&quot;${workspace_loc:/mihl/Src}&quot;" builtIn="false"/>
                   <listOptionValue value="&quot;${workspace_loc:/example_3/Src}&quot;" builtIn="false"/>
@@ -1402,7 +1920,11 @@
       
       
       
+      
+      
       <storageModule moduleId="scannerConfiguration">
+        
+        
         
         
         
@@ -1412,7 +1934,11 @@
         
         
         
+        
+        
         <profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
+          
+          
           
           
           
@@ -1422,7 +1948,11 @@
             
             
             
+            
+            
             <openAction enabled="true" filePath=""/>
+            
+            
             
             
             
@@ -1430,9 +1960,13 @@
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
+          
+          
           
           
           
@@ -1442,7 +1976,11 @@
             
             
             
+            
+            
             <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}"/>
+            
+            
             
             
             
@@ -1450,14 +1988,20 @@
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -1467,7 +2011,11 @@
           
           
           
+          
+          
           <buildOutputProvider>
+            
+            
             
             
             
@@ -1477,12 +2025,18 @@
             
             
             
+            
+            
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
+          
+          
           
           
           
@@ -1492,7 +2046,11 @@
             
             
             
+            
+            
             <runAction useDefault="true" command="make" arguments="-f ${project_name}_scd.mk"/>
+            
+            
             
             
             
@@ -1500,14 +2058,20 @@
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -1517,7 +2081,11 @@
           
           
           
+          
+          
           <buildOutputProvider>
+            
+            
             
             
             
@@ -1527,12 +2095,18 @@
             
             
             
+            
+            
             <parser enabled="false"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
+          
+          
           
           
           
@@ -1542,7 +2116,11 @@
             
             
             
+            
+            
             <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}"/>
+            
+            
             
             
             
@@ -1550,14 +2128,20 @@
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -1567,7 +2151,11 @@
           
           
           
+          
+          
           <buildOutputProvider>
+            
+            
             
             
             
@@ -1577,12 +2165,18 @@
             
             
             
+            
+            
             <parser enabled="false"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
+          
+          
           
           
           
@@ -1592,7 +2186,11 @@
             
             
             
+            
+            
             <runAction useDefault="true" command="g++" arguments="-E -P -v -dD ${plugin_state_location}/specs.cpp"/>
+            
+            
             
             
             
@@ -1600,14 +2198,20 @@
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -1617,7 +2221,11 @@
           
           
           
+          
+          
           <buildOutputProvider>
+            
+            
             
             
             
@@ -1627,12 +2235,18 @@
             
             
             
+            
+            
             <parser enabled="false"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
+          
+          
           
           
           
@@ -1642,7 +2256,11 @@
             
             
             
+            
+            
             <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/specs.c"/>
+            
+            
             
             
             
@@ -1650,14 +2268,20 @@
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -1667,7 +2291,11 @@
           
           
           
+          
+          
           <buildOutputProvider>
+            
+            
             
             
             
@@ -1677,9 +2305,13 @@
             
             
             
+            
+            
             <parser enabled="false"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
@@ -1687,7 +2319,11 @@
           
           
           
+          
+          
           <scannerInfoProvider id="specsFile">
+            
+            
             
             
             
@@ -1697,17 +2333,25 @@
             
             
             
+            
+            
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -1717,7 +2361,11 @@
           
           
           
+          
+          
           <buildOutputProvider>
+            
+            
             
             
             
@@ -1727,9 +2375,13 @@
             
             
             
+            
+            
             <parser enabled="false"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
@@ -1737,7 +2389,11 @@
           
           
           
+          
+          
           <scannerInfoProvider id="specsFile">
+            
+            
             
             
             
@@ -1747,17 +2403,25 @@
             
             
             
+            
+            
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -1767,7 +2431,11 @@
           
           
           
+          
+          
           <buildOutputProvider>
+            
+            
             
             
             
@@ -1777,12 +2445,18 @@
             
             
             
+            
+            
             <parser enabled="false"/>
             
             
+            
+          
           
           
           </buildOutputProvider>
+          
+          
           
           
           
@@ -1792,7 +2466,11 @@
             
             
             
+            
+            
             <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/specs.c"/>
+            
+            
             
             
             
@@ -1800,14 +2478,20 @@
             <parser enabled="true"/>
             
             
+            
+          
           
           
           </scannerInfoProvider>
           
           
+          
+        
         
         
         </profile>
+        
+        
         
         
         
@@ -1817,7 +2501,11 @@
           
           
           
+          
+          
           <autodiscovery enabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC" problemReportingEnabled="true"/>
+          
+          
           
           
           
@@ -1827,7 +2515,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -1837,12 +2529,18 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -1852,7 +2550,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}"/>
+              
+              
               
               
               
@@ -1860,14 +2562,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -1877,7 +2585,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -1887,12 +2599,18 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -1902,7 +2620,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="make" arguments="-f ${project_name}_scd.mk"/>
+              
+              
               
               
               
@@ -1910,14 +2632,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -1927,7 +2655,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -1937,12 +2669,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -1952,7 +2690,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}"/>
+              
+              
               
               
               
@@ -1960,14 +2702,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -1977,7 +2725,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -1987,12 +2739,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -2002,7 +2760,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="g++" arguments="-E -P -v -dD ${plugin_state_location}/specs.cpp"/>
+              
+              
               
               
               
@@ -2010,14 +2772,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -2027,7 +2795,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -2037,12 +2809,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -2052,7 +2830,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/specs.c"/>
+              
+              
               
               
               
@@ -2060,14 +2842,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -2077,7 +2865,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -2087,9 +2879,13 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
@@ -2097,7 +2893,11 @@
             
             
             
+            
+            
             <scannerInfoProvider id="specsFile">
+              
+              
               
               
               
@@ -2107,17 +2907,25 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -2127,7 +2935,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -2137,9 +2949,13 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
@@ -2147,7 +2963,11 @@
             
             
             
+            
+            
             <scannerInfoProvider id="specsFile">
+              
+              
               
               
               
@@ -2157,17 +2977,25 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -2177,7 +3005,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -2187,12 +3019,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -2202,7 +3040,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/specs.c"/>
+              
+              
               
               
               
@@ -2210,19 +3052,27 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
           
           
+          
+        
         
         
         </scannerConfigBuildInfo>
+        
+        
         
         
         
@@ -2232,7 +3082,11 @@
           
           
           
+          
+          
           <autodiscovery enabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC" problemReportingEnabled="true"/>
+          
+          
           
           
           
@@ -2242,7 +3096,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -2252,12 +3110,18 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -2267,7 +3131,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}"/>
+              
+              
               
               
               
@@ -2275,14 +3143,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -2292,7 +3166,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -2302,12 +3180,18 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -2317,7 +3201,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="make" arguments="-f ${project_name}_scd.mk"/>
+              
+              
               
               
               
@@ -2325,14 +3213,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -2342,7 +3236,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -2352,12 +3250,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -2367,7 +3271,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}"/>
+              
+              
               
               
               
@@ -2375,14 +3283,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -2392,7 +3306,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -2402,12 +3320,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -2417,7 +3341,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="g++" arguments="-E -P -v -dD ${plugin_state_location}/specs.cpp"/>
+              
+              
               
               
               
@@ -2425,14 +3353,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -2442,7 +3376,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -2452,12 +3390,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -2467,7 +3411,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/specs.c"/>
+              
+              
               
               
               
@@ -2475,14 +3423,20 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -2492,7 +3446,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -2502,9 +3460,13 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
@@ -2512,7 +3474,11 @@
             
             
             
+            
+            
             <scannerInfoProvider id="specsFile">
+              
+              
               
               
               
@@ -2522,17 +3488,25 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -2542,7 +3516,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -2552,9 +3530,13 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
@@ -2562,7 +3544,11 @@
             
             
             
+            
+            
             <scannerInfoProvider id="specsFile">
+              
+              
               
               
               
@@ -2572,17 +3558,25 @@
               
               
               
+              
+              
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
+          
+          
           
           
           
@@ -2592,7 +3586,11 @@
             
             
             
+            
+            
             <buildOutputProvider>
+              
+              
               
               
               
@@ -2602,12 +3600,18 @@
               
               
               
+              
+              
               <parser enabled="false"/>
               
               
+              
+            
             
             
             </buildOutputProvider>
+            
+            
             
             
             
@@ -2617,7 +3621,11 @@
               
               
               
+              
+              
               <runAction useDefault="true" command="gcc" arguments="-E -P -v -dD ${plugin_state_location}/specs.c"/>
+              
+              
               
               
               
@@ -2625,21 +3633,29 @@
               <parser enabled="true"/>
               
               
+              
+            
             
             
             </scannerInfoProvider>
             
             
+            
+          
           
           
           </profile>
           
           
+          
+        
         
         
         </scannerConfigBuildInfo>
         
         
+        
+      
       
       
       </storageModule>
@@ -2647,20 +3663,30 @@
       
       
       
+      
+      
       <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+      
       
       
     
       
+      
       <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
       
+      
+    
     
     </cconfiguration>
     
     
+    
+  
   
   
   </storageModule>
+  
+  
   
   
   
@@ -2670,6 +3696,8 @@
   </storageModule>
   
   
+  
+
 
 
 </cproject>
