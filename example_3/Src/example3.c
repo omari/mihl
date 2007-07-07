@@ -163,7 +163,7 @@ int http_data( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
  */
 int main( int argc, char *argv[] ) {
 
-	help( );
+	help( 8080 );
 
     mihl_ctx_t *ctx = mihl_init( NULL, 8080, 8, 
         MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO | MIHL_LOG_INFO_VERBOSE );
@@ -174,8 +174,14 @@ int main( int argc, char *argv[] ) {
     mihl_handle_get( ctx, "/data1", http_data, (void *)0 );
     mihl_handle_get( ctx, "/data2", http_data, (void *)1 );
     mihl_handle_get( ctx, "/data3", http_data, (void *)2 );
-    mihl_handle_file( ctx, "/image.jpg", "../image.jpg", "image/jpeg", 0 );
-    mihl_handle_file( ctx, "/prototype.js", "../prototype.js", "text/javascript", 0 );
+    if ( access( "../image.jpg", R_OK ) == 0 ) {
+    	mihl_handle_file( ctx, "/image.jpg", "../image.jpg", "image/jpeg", 0 );
+        mihl_handle_file( ctx, "/prototype.js", "../prototype.js", "text/javascript", 0 );
+    }
+    else {
+    	mihl_handle_file( ctx, "/image.jpg", "/etc/mihl/examples/3/image.jpg", "image/jpeg", 0 );
+        mihl_handle_file( ctx, "/prototype.js", "/etc/mihl/examples/3/prototype.js", "text/javascript", 0 );
+    }
 
     for (;;) {
         int status = mihl_server( ctx );
