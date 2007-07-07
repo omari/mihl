@@ -63,7 +63,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/example_1/Debug}</value>
+					<value>${workspace_loc:/example_1/Release}</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>
