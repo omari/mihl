@@ -1,7 +1,7 @@
 Summary: Minimal Httpd Library
 Name: mihl
 Version: 0
-Release: 2
+Release: 3
 %define src %{name}
 License: BSD
 Group: HTTP Servers 

@@ -1,7 +1,7 @@
 Summary: Minimal Httpd Library, Examples
 Name: mihl-examples
 Version: 0
-Release: 2
+Release: 3
 %define src %{name}
 License: BSD
 Group: HTTP Servers 

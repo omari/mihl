@@ -94,7 +94,8 @@ static inline void delay( int msec ) {
 /**
  * TBD
  */
-static void help( void ) {
+static void help( int port ) {
+	printf( "Point your browser to: http://localhost:%d\n", port );
     printf( "x : eXit aplication\n" );
     printf( "i : dump Information\n" );
     printf( "v : toggle VERBOSE mode\n" );
