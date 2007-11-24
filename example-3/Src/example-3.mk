@@ -1,7 +1,7 @@
 include ../common.mk
 
-OBJS = example_2.o 
-TARGET = example-2
+OBJS = example_3.o 
+TARGET = example-3
 LIBS = -L ../../mihl/$(CONFIG_NAME) -l mihl
 CFLAGS += -I ../../mihl/Src
 CFLAGS += $(if $(filter 1 YES, $(DEBUG)), -g -O0, -g0 -O2)
