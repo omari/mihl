@@ -3,7 +3,7 @@
 all: $(TARGET)
 
 $(TARGET):	$(OBJS)
-	$(CC) -shared -soname $(TARGET) -o $(TARGET) $(OBJS) $(LDFLAGS)
+	$(LD) -shared -soname $(TARGET) -o $(TARGET) $(OBJS) $(LDFLAGS)
 
 -include $(OBJS:.o=.d)
 

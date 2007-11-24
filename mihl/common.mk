@@ -10,8 +10,6 @@ vpath %.o   ./
 
 CFLAGS = -Wall -std=gnu99 
 CFLAGS += -I ../Src
-CFLAGS += `pkg-config  gtk+-2.0 --cflags`
-LDFLAGS += `pkg-config gtk+-2.0 --libs`
 
 %.d: %.c
 	@set -e; $(CC) -MM $(CFLAGS) $< \
