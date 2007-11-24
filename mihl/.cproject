@@ -6,6 +6,10 @@
 <cconfiguration id="cdt.managedbuild.toolchain.gnu.base.96399223.1078981473">
 <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.toolchain.gnu.base.96399223.1078981473" moduleId="org.eclipse.cdt.core.settings" name="Debug">
 
+<environment append="true" appendContributed="true">
+<variable delimiter=";" name="CONFIG_NAME" operation="append" value="${ConfigName}"/>
+<variable delimiter=";" name="CROSS_COMPILE" operation="append" value=""/>
+</environment>
 
 <externalSettings/>
 <extensions>
@@ -136,6 +140,10 @@
 <cconfiguration id="cdt.managedbuild.toolchain.gnu.base.96399223.1078981473.1977689725">
 <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.toolchain.gnu.base.96399223.1078981473.1977689725" moduleId="org.eclipse.cdt.core.settings" name="Release">
 
+<environment append="true" appendContributed="true">
+<variable delimiter=";" name="CONFIG_NAME" operation="append" value="${ConfigName}"/>
+<variable delimiter=";" name="CROSS_COMPILE" operation="append" value=""/>
+</environment>
 
 <externalSettings/>
 <extensions>
