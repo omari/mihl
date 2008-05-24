@@ -1,0 +1,4 @@
+#Sat May 24 13:02:36 GMT-05:00 2008
+eclipse.preferences.version=1
+environment/project/cdt.managedbuild.toolchain.gnu.base.96399223.1078981473=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<environment append\="true" appendContributed\="true">\n<variable delimiter\=";" name\="CONFIG_NAME" operation\="append" value\="${ConfigName}"/>\n<variable delimiter\=";" name\="CROSS_COMPILE" operation\="append" value\=""/>\n</environment>\n
+environment/project/cdt.managedbuild.toolchain.gnu.base.96399223.1078981473.1977689725=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<environment append\="true" appendContributed\="true">\n<variable delimiter\=";" name\="CONFIG_NAME" operation\="append" value\="${ConfigName}"/>\n<variable delimiter\=";" name\="CROSS_COMPILE" operation\="append" value\=""/>\n</environment>\n
