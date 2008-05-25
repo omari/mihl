@@ -1,0 +1,1629 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="index_files/filelist.xml">
+<link rel=Edit-Time-Data href="index_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Minimal Httpd Library (MIHL)</title>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="place"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="City"/>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Subject>Minmial HTTPD Library</o:Subject>
+  <o:Author>Olivier Singla</o:Author>
+  <o:Keywords>Embedded HTTPD server</o:Keywords>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>OS</o:LastAuthor>
+  <o:Revision>136</o:Revision>
+  <o:TotalTime>5273</o:TotalTime>
+  <o:Created>2006-12-02T23:45:00Z</o:Created>
+  <o:LastSaved>2007-11-25T04:36:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>1384</o:Words>
+  <o:Characters>7895</o:Characters>
+  <o:Lines>65</o:Lines>
+  <o:Paragraphs>18</o:Paragraphs>
+  <o:CharactersWithSpaces>9261</o:CharactersWithSpaces>
+  <o:Version>11.6568</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:Zoom>125</w:Zoom>
+  <w:DisplayBackgroundShape/>
+  <w:ActiveWritingStyle Lang="EN-US" VendorID="64" DLLVersion="131078"
+   NLCheck="1">1</w:ActiveWritingStyle>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]--><!--[if !mso]><object
+ classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object>
+<style>
+st1\:*{behavior:url(#ieooui) }
+</style>
+<![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:windowtext;}
+h1
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:16.0pt;
+	font-family:Arial;
+	color:windowtext;
+	mso-font-kerning:16.0pt;
+	font-weight:bold;}
+h2
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:14.0pt;
+	font-family:Arial;
+	color:#A50021;
+	font-weight:bold;
+	font-style:italic;}
+h3
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:13.0pt;
+	font-family:Arial;
+	color:windowtext;
+	font-weight:bold;}
+h4
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:4;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	color:windowtext;
+	font-weight:bold;}
+h5
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:5;
+	font-size:13.0pt;
+	font-family:"Times New Roman";
+	color:windowtext;
+	font-weight:bold;
+	font-style:italic;}
+h6
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:6;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	color:windowtext;
+	font-weight:bold;}
+p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:7;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:windowtext;}
+p.MsoHeading9, li.MsoHeading9, div.MsoHeading9
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:9;
+	font-size:11.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:windowtext;}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:right 431.5pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:windowtext;}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:12.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:windowtext;}
+p.MsoBodyText2, li.MsoBodyText2, div.MsoBodyText2
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:windowtext;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+pre
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	background:#EEEEEE;
+	border:none;
+	mso-border-alt:solid #DDDDDD .5pt;
+	padding:0cm;
+	mso-padding-alt:9.0pt 18.0pt 9.0pt 18.0pt;
+	font-size:7.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	color:windowtext;}
+p.normalweb1, li.normalweb1, div.normalweb1
+	{mso-style-name:normalweb1;
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+p.normal1, li.normal1, div.normal1
+	{mso-style-name:normal1;
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+p.StyleHeading3, li.StyleHeading3, div.StyleHeading3
+	{mso-style-name:"Style Heading 3";
+	mso-style-update:auto;
+	mso-style-parent:"Heading 3";
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:13.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:#A50021;
+	font-weight:bold;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:36.0pt;
+	mso-footer-margin:36.0pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:490871373;
+	mso-list-type:hybrid;
+	mso-list-template-ids:314082644 67698703 67698689 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	margin-left:72.0pt;
+	text-indent:-18.0pt;}
+@list l0:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	margin-left:108.0pt;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+@list l0:level3
+	{mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level4
+	{mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1
+	{mso-list-id:2129884669;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1779838052 67698689 67698689 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	margin-left:72.0pt;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+@list l1:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	margin-left:108.0pt;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+@list l1:level3
+	{mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level4
+	{mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+table.MsoTable3DFx3
+	{mso-style-name:"Table 3D effects 3";
+	mso-tstyle-rowband-size:1;
+	mso-tstyle-colband-size:1;
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+table.MsoTable3DFx3FirstRow
+	{mso-style-name:"Table 3D effects 3";
+	mso-table-condition:first-row;
+	mso-tstyle-diagonal-down:0cm none windowtext;
+	mso-tstyle-diagonal-up:0cm none windowtext;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTable3DFx3FirstCol
+	{mso-style-name:"Table 3D effects 3";
+	mso-table-condition:first-column;
+	mso-tstyle-border-top:0cm none windowtext;
+	mso-tstyle-border-bottom:0cm none windowtext;
+	mso-tstyle-border-right:.75pt solid gray;
+	mso-tstyle-diagonal-down:0cm none windowtext;
+	mso-tstyle-diagonal-up:0cm none windowtext;}
+table.MsoTable3DFx3LastCol
+	{mso-style-name:"Table 3D effects 3";
+	mso-table-condition:last-column;
+	mso-tstyle-border-right:.75pt solid white;
+	mso-tstyle-diagonal-down:0cm none windowtext;
+	mso-tstyle-diagonal-up:0cm none windowtext;}
+table.MsoTable3DFx3OddColumn
+	{mso-style-name:"Table 3D effects 3";
+	mso-table-condition:odd-column;
+	mso-tstyle-shading:white;
+	mso-tstyle-pattern:solid silver;
+	color:windowtext;}
+table.MsoTable3DFx3EvenColumn
+	{mso-style-name:"Table 3D effects 3";
+	mso-table-condition:even-column;
+	mso-tstyle-shading:white;
+	mso-tstyle-pattern:gray-50 silver;
+	color:windowtext;}
+table.MsoTable3DFx3OddRow
+	{mso-style-name:"Table 3D effects 3";
+	mso-table-condition:odd-row;
+	mso-tstyle-border-top:.75pt solid gray;
+	mso-tstyle-border-bottom:.75pt solid white;
+	mso-tstyle-diagonal-down:0cm none windowtext;
+	mso-tstyle-diagonal-up:0cm none windowtext;}
+table.MsoTable3DFx3SWCell
+	{mso-style-name:"Table 3D effects 3";
+	mso-table-condition:sw-cell;
+	mso-tstyle-diagonal-down:0cm none windowtext;
+	mso-tstyle-diagonal-up:0cm none windowtext;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableWeb2
+	{mso-style-name:"Table Web 2";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-cellspacing:2.0pt;
+	border:inset 1.0pt;
+	mso-border-alt:inset windowtext .75pt;
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-border-insideh:.75pt inset windowtext;
+	mso-border-insidev:.75pt inset windowtext;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+table.MsoTableWeb2FirstRow
+	{mso-style-name:"Table Web 2";
+	mso-table-condition:first-row;
+	mso-tstyle-diagonal-down:0cm none windowtext;
+	mso-tstyle-diagonal-up:0cm none windowtext;
+	color:windowtext;}
+table.MsoTableGrid
+	{mso-style-name:"Table Grid";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	border:solid windowtext 1.0pt;
+	mso-border-alt:solid windowtext .5pt;
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-border-insideh:.5pt solid windowtext;
+	mso-border-insidev:.5pt solid windowtext;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]-->
+<meta name=verify-v1 content="cPKUcq28AfkLGC6d9uuyb2UcvGy3YVEOzWcdapIsLHM=">
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="154626">
+  <o:colormru v:ext="edit" colors="#e9e9e9,#f0e9e9,#ccc"/>
+  <o:colormenu v:ext="edit" fillcolor="#ccc"/>
+ </o:shapedefaults></xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body bgcolor="#CCCCCC" lang=EN-US link=blue vlink=purple style='tab-interval:
+36.0pt'>
+
+<div class=Section1>
+
+<h1 align=center style='text-align:center'><span style='color:red'>MIHL:
+Minimal <span class=SpellE>Httpd</span> Library<o:p></o:p></span></h1>
+
+<p class=MsoNormal align=center style='text-align:center'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal align=center style='text-align:center;line-height:150%'><!--[if gte vml 1]><v:shapetype
+ id="_x0000_t75" coordsize="21600,21600" o:spt="75" o:preferrelative="t"
+ path="m@4@5l@4@11@9@11@9@5xe" filled="f" stroked="f">
+ <v:stroke joinstyle="miter"/>
+ <v:formulas>
+  <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+  <v:f eqn="sum @0 1 0"/>
+  <v:f eqn="sum 0 0 @1"/>
+  <v:f eqn="prod @2 1 2"/>
+  <v:f eqn="prod @3 21600 pixelWidth"/>
+  <v:f eqn="prod @3 21600 pixelHeight"/>
+  <v:f eqn="sum @0 0 1"/>
+  <v:f eqn="prod @6 1 2"/>
+  <v:f eqn="prod @7 21600 pixelWidth"/>
+  <v:f eqn="sum @8 21600 0"/>
+  <v:f eqn="prod @7 21600 pixelHeight"/>
+  <v:f eqn="sum @10 21600 0"/>
+ </v:formulas>
+ <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+ <o:lock v:ext="edit" aspectratio="t"/>
+</v:shapetype><v:shape id="_x0000_i1025" type="#_x0000_t75" style='width:99pt;
+ height:15pt'>
+ <v:imagedata src="index_files/image001.gif" o:title="image003"/>
+</v:shape><![endif]--><![if !vml]><img width=132 height=20
+src="index_files/image004.gif" border=0 v:shapes="_x0000_i1025"><![endif]></p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td style='padding:0cm 5.4pt 0cm 5.4pt'>
+  <p align=center style='text-align:center'><!--[if gte vml 1]><v:shape id="_x0000_i1026"
+   type="#_x0000_t75" alt="" style='width:52.5pt;height:54pt'>
+   <v:imagedata src="index_files/image009.jpg" o:title=""/>
+  </v:shape><![endif]--><![if !vml]><img width=70 height=72
+  src="index_files/image009.jpg" v:shapes="_x0000_i1026"><![endif]></p>
+  </td>
+  <td style='padding:0cm 5.4pt 0cm 5.4pt'>
+  <p align=center style='text-align:center'>Currently, still under development.<br>
+  This is <span class=GramE>then <span style='mso-spacerun:yes'> </span>highly</span>
+  <b style='mso-bidi-font-weight:normal'><span style='color:red;text-transform:
+  uppercase'>experimental</span></b>, <br>
+  not stable,<br>
+  and provided only as reference.</p>
+  </td>
+  <td style='padding:0cm 5.4pt 0cm 5.4pt'>
+  <p align=center style='text-align:center'><!--[if gte vml 1]><v:shape id="_x0000_i1027"
+   type="#_x0000_t75" alt="" style='width:66.75pt;height:46.5pt'>
+   <v:imagedata src="index_files/image005.gif" o:title=""/>
+  </v:shape><![endif]--><![if !vml]><img width=89 height=62
+  src="index_files/image005.gif" v:shapes="_x0000_i1027"><![endif]></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal align=center style='margin-top:6.0pt;margin-right:0cm;
+margin-bottom:6.0pt;margin-left:0cm;text-align:center'><!--[if gte vml 1]><v:shape
+ id="_x0000_i1028" type="#_x0000_t75" style='width:99pt;height:15pt'>
+ <v:imagedata src="index_files/image001.gif" o:title="image003"/>
+</v:shape><![endif]--><![if !vml]><img width=132 height=20
+src="index_files/image004.gif" border=0 v:shapes="_x0000_i1028"><![endif]></p>
+
+<p class=MsoNormal align=center style='text-align:center'><a
+name="_Toc126320238"></a><a name="_Toc126314673"><span style='mso-bookmark:
+_Toc126320238'></span></a><a href="#_Introduction"><span style='mso-bookmark:
+_Toc126314673'><span style='mso-bookmark:_Toc126320238'>Introduction</span></span><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></a><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span><a
+href="#_Prerequisites"><span style='mso-bookmark:_Toc126314673'><span
+style='mso-bookmark:_Toc126320238'>A Simple Example</span></span><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></a><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span><a
+href="#_Boards_supported"><span style='mso-bookmark:_Toc126314673'><span
+style='mso-bookmark:_Toc126320238'>Programming Model</span></span><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></a><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span><a
+href="#_Documentation"><span style='mso-bookmark:_Toc126314673'><span
+style='mso-bookmark:_Toc126320238'>Documentation</span></span><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></a><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span><a
+href="#_API_Description_1"><span style='mso-bookmark:_Toc126314673'><span
+style='mso-bookmark:_Toc126320238'>API Description</span></span><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></a><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span><a
+href="#_Examples_1"><span style='mso-bookmark:_Toc126314673'><span
+style='mso-bookmark:_Toc126320238'>Examples</span></span><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></a><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span><a
+href="#_Eclipse_Based_code"><span style='mso-bookmark:_Toc126314673'><span
+style='mso-bookmark:_Toc126320238'>Eclipse Based code</span></span><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></a><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span><a
+href="#_Licensing"><span style='mso-bookmark:_Toc126314673'><span
+style='mso-bookmark:_Toc126320238'>Licensing</span></span><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></a><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span><a
+href="#_Download_1"><span style='mso-bookmark:_Toc126314673'><span
+style='mso-bookmark:_Toc126320238'>Download</span></span><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></a><span
+style='mso-bookmark:_Toc126314673'><span style='mso-bookmark:_Toc126320238'></span></span></p>
+
+<span style='mso-bookmark:_Toc126320238'></span><span style='mso-bookmark:_Toc126314673'></span>
+
+<p class=MsoNormal align=center style='text-align:center'><!--[if gte vml 1]><v:shape
+ id="_x0000_i1029" type="#_x0000_t75" style='width:99pt;height:15pt'>
+ <v:imagedata src="index_files/image001.gif" o:title="image003"/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=132 height=20
+src="index_files/image004.gif" v:shapes="_x0000_i1029"><![endif]></p>
+
+<h2><a name="_Introduction"></a>Introduction</h2>
+
+<p class=MsoNormal style='margin-left:18.0pt'>MIHL is a C library that helps to
+implement an HTTP embedded server. It is designed to be small and to provide
+only a minimal set of functionalities. Typically, MIHL can be used in an
+embedded device where a Web-based interface is useful (configuration, status,
+etc.). MIHL C library can be compiled for both Linux (x86, PowerPC, ARM) and
+XP. MIHDL does not use threads, but rather use non blocking sockets I/O.</p>
+
+<h2><a name="_Toc126320239"></a><a name="_Toc126314674"></a><a
+name="_Prerequisites"></a><a name="_A_Simple_Example"></a><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'>A
+Simple Example</span></span></h2>
+
+<p class=MsoNormal style='margin-left:18.0pt'><span style='mso-bookmark:_Toc126320239'><span
+style='mso-bookmark:_Toc126314674'>This very simple example should help to have
+a good high-level overview of a minimal HTTP server built using this library.</span></span></p>
+
+<div style='mso-element:para-border-div;border:solid #DDDDDD 1.0pt;mso-border-alt:
+solid #DDDDDD .5pt;padding:9.0pt 18.0pt 9.0pt 18.0pt;background:#EEEEEE'><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'>#include &lt;<span class=SpellE>stdio.h</span>&gt;<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'>#include &lt;<span class=SpellE>stdlib.h</span>&gt;<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'>#include &lt;<span class=SpellE>time.h</span>&gt;<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><o:p>&nbsp;</o:p></span></span></span></pre><pre style='text-indent:18.0pt;
+mso-outline-level:4;background:#EEEEEE'><span style='mso-bookmark:_Toc126320239'><span
+style='mso-bookmark:_Toc126314674'><span style='font-size:8.0pt;mso-bidi-font-size:
+9.0pt;color:black;mso-bidi-font-weight:bold'>#include &quot;<span class=SpellE>mihl.h</span>&quot;<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><o:p>&nbsp;</o:p></span></span></span></pre><pre style='text-indent:18.0pt;
+mso-outline-level:4;background:#EEEEEE'><span style='mso-bookmark:_Toc126320239'><span
+style='mso-bookmark:_Toc126314674'><span class=SpellE><span class=GramE><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'>int</span></span></span></span></span><span style='mso-bookmark:_Toc126320239'><span
+style='mso-bookmark:_Toc126314674'><span style='font-size:8.0pt;mso-bidi-font-size:
+9.0pt;color:black;mso-bidi-font-weight:bold'> <span class=SpellE>http_root</span>( <span
+class=SpellE>mhil_cnx_t</span> *<span class=SpellE>cnx</span>, char const *tag, char const *host, void *<span
+class=SpellE>param</span> ) {<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>add</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, &quot;&lt;html&gt;&quot; );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>add</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, &quot;&lt;body&gt;&quot; );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>add</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, &quot;This is a test HTML page for MIHL.&lt;<span
+class=SpellE>br</span>&gt;&quot; );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>add</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, &quot;&lt;<span
+class=SpellE>br</span>&gt;Here is a JPEG Image:&lt;<span class=SpellE>br</span>&gt;&quot; );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>add</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, &quot;&lt;<span
+class=SpellE>img</span> style='width: 70px; height: 72px;' alt='' <span
+class=SpellE>src</span>='<span class=SpellE>image.jpg</span>'&gt;&lt;<span
+class=SpellE>br</span>&gt;&lt;<span class=SpellE>br</span>&gt;&quot; );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>add</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, &quot;&lt;a <span
+class=SpellE>href</span>='nextpage.html'&gt;Next Page&lt;a&gt;&quot; );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>add</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, &quot;&lt;/body&gt;&quot; );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>add</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, &quot;&lt;/html&gt;&quot; );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>send</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, NULL,<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>        </span>&quot;Content-type: text/html\r\n<span
+class=GramE>&quot; )</span>;<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=GramE>return</span> 0;<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'>}<o:p></o:p></span></span></span></pre><pre style='text-indent:18.0pt;
+mso-outline-level:4;background:#EEEEEE'><span style='mso-bookmark:_Toc126320239'><span
+style='mso-bookmark:_Toc126314674'><span style='font-size:8.0pt;mso-bidi-font-size:
+9.0pt;color:black;mso-bidi-font-weight:bold'><o:p>&nbsp;</o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+class=SpellE><span class=GramE><span style='font-size:8.0pt;mso-bidi-font-size:
+9.0pt;color:black;mso-bidi-font-weight:bold'>int</span></span></span></span></span><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'> <span class=SpellE>http_nextpage</span>( <span class=SpellE>mihl_cnx_t</span> *<span
+class=SpellE>cnx</span>, char const *tag, char const *host, void *<span
+class=SpellE>param</span> ) {<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>add</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, &quot;&lt;html&gt;&quot; );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>add</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, &quot;&lt;body&gt;&quot; );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>add</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, &quot;This is another page...&lt;<span
+class=SpellE>br</span>&gt;&quot; );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>add</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, &quot;&lt;a <span
+class=SpellE>href</span>=''&gt;Previous Page&lt;a&gt;&quot; );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>add</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, &quot;&lt;/body&gt;&quot; );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>add</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>, &quot;&lt;/html&gt;&quot; );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_<span
+class=GramE>send</span></span><span class=GramE>(</span> <span class=SpellE>cnx</span>,<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>        </span>&quot;Content-type: text/html\r\n<span
+class=GramE>&quot; )</span>;<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=GramE>return</span> 0;<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'>}<o:p></o:p></span></span></span></pre><pre style='text-indent:18.0pt;
+mso-outline-level:4;background:#EEEEEE'><span style='mso-bookmark:_Toc126320239'><span
+style='mso-bookmark:_Toc126314674'><span style='font-size:8.0pt;mso-bidi-font-size:
+9.0pt;color:black;mso-bidi-font-weight:bold'><o:p>&nbsp;</o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+class=SpellE><span class=GramE><span style='font-size:8.0pt;mso-bidi-font-size:
+9.0pt;color:black;mso-bidi-font-weight:bold'>int</span></span></span></span></span><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'> main( <span class=SpellE>int</span> <span class=SpellE>argc</span>, char *<span
+class=SpellE>argv</span>[] ) {<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_ctx_t</span> *<span
+class=SpellE>ctx</span> = <span class=SpellE>mihl_<span class=GramE>init</span></span><span
+class=GramE>(</span> NULL, 8080, 8, <o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>        </span>MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO | MIHL_LOG_INFO_<span
+class=GramE>VERBOSE )</span>;<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><o:p>&nbsp;</o:p></span></span></span></pre><pre style='text-indent:18.0pt;
+mso-outline-level:4;background:#EEEEEE'><span style='mso-bookmark:_Toc126320239'><span
+style='mso-bookmark:_Toc126314674'><span style='font-size:8.0pt;mso-bidi-font-size:
+9.0pt;color:black;mso-bidi-font-weight:bold'><span style='mso-spacerun:yes'>    </span><span
+class=SpellE>mihl_handle_<span class=GramE>get</span></span><span class=GramE>(</span> <span
+class=SpellE>ctx</span>, &quot;/&quot;, <span class=SpellE>http_root</span>, NULL );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_handle_<span
+class=GramE>file</span></span><span class=GramE>(</span> <span class=SpellE>ctx</span>, &quot;/<span
+class=SpellE>image.jpg</span>&quot;, &quot;<span class=SpellE>image.jpg</span>&quot;, &quot;image/jpeg&quot;, 0 );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=SpellE>mihl_handle_<span
+class=GramE>get</span></span><span class=GramE>(</span> <span class=SpellE>ctx</span>, &quot;/nextpage.html&quot;, <span
+class=SpellE>http_nextpage</span>, NULL );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><o:p>&nbsp;</o:p></span></span></span></pre><pre style='text-indent:18.0pt;
+mso-outline-level:4;background:#EEEEEE'><span style='mso-bookmark:_Toc126320239'><span
+style='mso-bookmark:_Toc126314674'><span style='font-size:8.0pt;mso-bidi-font-size:
+9.0pt;color:black;mso-bidi-font-weight:bold'><span style='mso-spacerun:yes'>    </span><span
+class=GramE>for</span> (;;) {<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>        </span><span class=SpellE><span
+class=GramE>int</span></span> status = <span class=SpellE>mihl_server</span>( <span
+class=SpellE>ctx</span> );<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>        </span><span class=GramE>if</span> ( status == -2 )<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>            </span><span class=GramE>break</span>;<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span>}<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'><span style='mso-spacerun:yes'>    </span><span class=GramE>return</span> 0;<o:p></o:p></span></span></span></pre><pre
+style='text-indent:18.0pt;mso-outline-level:4;background:#EEEEEE'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><span
+style='font-size:8.0pt;mso-bidi-font-size:9.0pt;color:black;mso-bidi-font-weight:
+bold'>}<o:p></o:p></span></span></span></pre></div>
+
+<h2 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'><a
+name="_Boards_supported"></a><a name="_The_5_Steps"></a><a
+name="_Programming_Model"></a>Programming Model</span></span></h2>
+
+<p class=MsoNormal style='margin-left:18.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'>MIHL
+uses non-blocking Socket and a single-thread model. You have to call a function
+(</span></span><a href="http://mihl.sourceforge.net/mihl/Doc/html/"
+target="_blank"><span style='mso-bookmark:_Toc126320239'><span
+style='mso-bookmark:_Toc126314674'><span class=SpellE>mihl_server</span></span></span><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'></span></span></a><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'>)
+on a regular interval, in order to manage new connections, existent connections
+and timed out connections. You install C handler functions to build pages for
+specifics URL (such as &#8220;/&#8221;, &#8220;/mypage.html&#8221; and so
+forth). </span></span></p>
+
+<p class=MsoNormal style='margin-top:4.5pt;margin-right:0cm;margin-bottom:0cm;
+margin-left:18.0pt;margin-bottom:.0001pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='mso-bookmark:_Toc126320239'><span style='mso-bookmark:_Toc126314674'>Only
+a C API to the library is currently provided. The library can be build only for
+Linux, there is no plan to support Window$ platforms.</span></span></p>
+
+<span style='mso-bookmark:_Toc126314674'></span><span style='mso-bookmark:_Toc126320239'></span>
+
+<h2 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><a
+name="_API_Description"></a><a name="_Documentation"></a>Documentation</h2>
+
+<p class=MsoNormal style='margin-left:36.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=SpellE>Doxygen</span> generated documentation for the library is <a
+href="http://mihl.sourceforge.net/mihl/Doc/html/">here</a>.</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Please
+note that only about 25% is done so far, the documentation is still a work in
+progress.</p>
+
+<h2 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><a
+name="_API_Description_1"></a>API Description</h2>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+ style='margin-left:17.3pt;border-collapse:collapse;mso-padding-alt:3.0pt 3.0pt 3.0pt 3.0pt'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=108 style='width:81.0pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;background:#B3B3B3;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoHeading9 style='margin-right:3.3pt'><b style='mso-bidi-font-weight:
+  normal'>Function<o:p></o:p></b></p>
+  </td>
+  <td style='border:solid windowtext 1.0pt;border-left:none;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;mso-border-right-alt:
+  solid windowtext .5pt;background:#B3B3B3;padding:0cm 5.4pt 0cm 5.4pt'>
+  <h5 style='margin-right:-2.75pt'><span style='font-size:11.0pt;font-family:
+  Arial;font-style:normal;mso-bidi-font-style:italic'>Prototype<o:p></o:p></span></h5>
+  </td>
+  <td style='border:solid windowtext 1.0pt;border-left:none;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;mso-border-right-alt:
+  solid windowtext .5pt;background:#B3B3B3;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoHeading7><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;font-family:Arial'>Description<o:p></o:p></span></b></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=108 style='width:81.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:3.3pt'><span style='font-size:9.0pt'><a
+  href="http://mihl.sourceforge.net/mihl/Doc/html/"><span class=SpellE>mihl_init</span></a></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:-2.75pt'><span class=SpellE><span
+  style='font-size:9.0pt'>mihl_ctx_t</span></span><span style='font-size:9.0pt'>
+  *<span class=SpellE>mihl_init</span>( char const *<span class=SpellE>bind_addr</span>,
+  <span class=SpellE>int</span> port, <span class=SpellE>int</span> <span
+  class=SpellE>maxnb_cnx</span>, unsigned <span class=SpellE>log_level</span> )</span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt'>Library initializations:
+  start waiting for HTTP connections.</span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=108 style='width:81.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:3.3pt'><span style='font-size:9.0pt'><a
+  href="http://mihl.sourceforge.net/mihl/Doc/html/" target="_blank"><span
+  class=SpellE>mihl_end</span></a></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:-2.75pt'><span class=SpellE><span
+  style='font-size:9.0pt'>int</span></span><span style='font-size:9.0pt'> <span
+  class=SpellE>mihl_end</span>( <span class=SpellE>mihl_ctx_t</span> *<span
+  class=SpellE>ctx</span> )</span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt'>End the server, close all
+  connections and release all resources.</span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=108 style='width:81.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:3.3pt'><span style='font-size:9.0pt'><a
+  href="http://mihl.sourceforge.net/mihl/Doc/html/" target="_blank"><span
+  class=SpellE>mihl_server</span></a></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:-2.75pt'><span class=SpellE><span
+  style='font-size:9.0pt'>int</span></span><span style='font-size:9.0pt'> <span
+  class=SpellE>mihl_server</span>( <span class=SpellE>mihl_ctx_t</span> *<span
+  class=SpellE>ctx</span> )</span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt'>Manage new connections,
+  existent connections, <br>
+  and connections timeout.</span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=108 style='width:81.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:3.3pt'><a
+  name="_Boards_supported_and_1"></a><a name="_Libraries"></a><a
+  name="_Libraries/Utilities"></a><a name="_Examples"></a><span
+  style='font-size:9.0pt'><a href="http://mihl.sourceforge.net/mihl/Doc/html/"
+  target="_blank"><span class=SpellE>mihl_info</span></a><o:p></o:p></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:-2.75pt'><span class=SpellE><span
+  style='font-size:9.0pt'>int</span></span><span style='font-size:9.0pt'> <span
+  class=SpellE>mihl_info</span>( <span class=SpellE>mihl_ctx_t</span> *<span
+  class=SpellE>ctx</span> , <span class=SpellE>int</span> <span class=SpellE>maxnb_cnxinfos</span>,
+  <span class=SpellE>mihl_cnxinfo_t</span> *<span class=SpellE>infos</span> )<o:p></o:p></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt'>Return information about
+  existent connections.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=108 style='width:81.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:3.3pt'><span style='font-size:9.0pt'><a
+  href="http://mihl.sourceforge.net/mihl/Doc/html/" target="_blank"><span
+  class=SpellE>mihl_add</span></a><o:p></o:p></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:-2.75pt'><span class=SpellE><span
+  style='font-size:9.0pt'>int</span></span><span style='font-size:9.0pt'> <span
+  class=SpellE>mihl_add</span>( <span class=SpellE>mihl_cnx_t</span> *<span
+  class=SpellE>cnx</span>, char const *<span class=SpellE>fmt</span>, ... )<o:p></o:p></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt'>Build HTML page for a given
+  HTTP URL.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width=108 style='width:81.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:3.3pt'><span style='font-size:9.0pt'><a
+  href="http://mihl.sourceforge.net/mihl/Doc/html/"><span class=SpellE>mihl_send</span></a><o:p></o:p></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:-2.75pt'><span class=SpellE><span
+  style='font-size:9.0pt'>int</span></span><span style='font-size:9.0pt'> <span
+  class=SpellE>mihl_send</span>( <span class=SpellE>mihl_cnx_t</span> *<span
+  class=SpellE>cnx</span>, char const *<span class=SpellE>fmt_header</span>,
+  ... )<o:p></o:p></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt'>Send an HTML page build with
+  calls to <span class=SpellE>mihl_add</span>.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7'>
+  <td width=108 style='width:81.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:3.3pt'><span style='font-size:9.0pt'><a
+  href="http://mihl.sourceforge.net/mihl/Doc/html/" target="_blank"><span
+  class=SpellE>mihl_handle_file</span> </a><span
+  style='mso-spacerun:yes'> </span><o:p></o:p></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:-2.75pt'><span class=SpellE><span
+  style='font-size:9.0pt'>int</span></span><span style='font-size:9.0pt'> <span
+  class=SpellE>mihl_handle_file</span>(<span class=SpellE>mihl_ctx_t</span> *<span
+  class=SpellE>ctx</span>,<br>
+  <span style='mso-spacerun:yes'>    </span>char const *tag, char const
+  *filename, <br>
+  <span style='mso-spacerun:yes'>    </span>char const *<span class=SpellE>content_type</span>,
+  <span class=SpellE>int</span> <span class=SpellE>close_connection</span> )<o:p></o:p></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt'>Install a file handler
+  function (GET).<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:8'>
+  <td width=108 style='width:81.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:3.3pt'><span style='font-size:9.0pt'><a
+  href="http://mihl.sourceforge.net/mihl/Doc/html/" target="_blank"><span
+  class=SpellE>mihl_handle_get</span></a><o:p></o:p></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:-2.75pt'><span class=SpellE><span
+  style='font-size:9.0pt'>int</span></span><span style='font-size:9.0pt'> <span
+  class=SpellE>mihl_handle_get</span>(<span class=SpellE>mihl_ctx_t</span> *<span
+  class=SpellE>ctx</span> ,<br>
+  <span style='mso-spacerun:yes'>    </span>char const *tag, <span
+  class=SpellE>mihl_pf_handle_get_t</span> *pf, void *<span class=SpellE>param</span>
+  )<o:p></o:p></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt'>Install a GET handler
+  function.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:9;mso-yfti-lastrow:yes'>
+  <td width=108 style='width:81.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:3.3pt'><span style='font-size:9.0pt'><a
+  href="http://mihl.sourceforge.net/mihl/Doc/html/" target="_blank"><span
+  class=SpellE>mihl_handle_post</span><span style='mso-spacerun:yes'>  </span></a><span
+  style='mso-spacerun:yes'> </span><o:p></o:p></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-right:-2.75pt'><span class=SpellE><span
+  style='font-size:9.0pt'>int</span></span><span style='font-size:9.0pt'> <span
+  class=SpellE>mihl_handle_post</span>(<span class=SpellE>mihl_ctx_t</span> *<span
+  class=SpellE>ctx</span>, <br>
+  <span style='mso-spacerun:yes'>    </span>char const *tag, <span
+  class=SpellE>mihl_pf_handle_post_t</span> *pf, void *<span class=SpellE>param</span>
+  )<o:p></o:p></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt'>Install a POST handler
+  function.<o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<h2 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><a
+name="_Examples_1"></a>Examples</h2>
+
+<p class=MsoNormal style='margin-left:18.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Several
+examples (C code) are provided to demonstrate and to test the use of the
+library:</p>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+ style='margin-left:17.3pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=84 style='width:63.0pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;background:#B3B3B3;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoHeading9 style='margin-top:12.0pt;margin-right:3.3pt;margin-bottom:
+  3.0pt;margin-left:3.9pt'><b style='mso-bidi-font-weight:normal'>Code<o:p></o:p></b></p>
+  </td>
+  <td style='border:solid windowtext 1.0pt;border-left:none;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;mso-border-right-alt:
+  solid windowtext .5pt;background:#B3B3B3;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoHeading7 style='margin-left:7.6pt'><b style='mso-bidi-font-weight:
+  normal'><span style='font-size:11.0pt;font-family:Arial'>Description<o:p></o:p></span></b></p>
+  </td>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;background:#B3B3B3;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoHeading7 style='margin-left:7.6pt'><b style='mso-bidi-font-weight:
+  normal'><span style='font-size:11.0pt;font-family:Arial'>Screenshots<o:p></o:p></span></b></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=84 style='width:63.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='margin-top:0cm;margin-right:3.3pt;
+  margin-bottom:0cm;margin-left:3.9pt;margin-bottom:.0001pt;text-align:center'><span
+  style='font-size:9.0pt'><a
+  href="http://mihl.sourceforge.net/example_1/Doc/html/" target="_blank">example1.c</a></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-left:7.6pt'><span style='font-size:9.0pt'>Simple
+  use of GET. <br>
+  Display a page with a JPEG image and a link to a 2<sup>nd</sup> page. The 2<sup>nd</sup>
+  page contains a link to the 1<sup>st</sup> page.<br>
+  A custom handler is installed to handle non existent pages.<br>
+  Demonstrate also how to deal with a simple Basic Authentication.</span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:7.6pt'><span style='font-size:9.0pt'><a
+  href="http://mihl.sourceforge.net/screenshots_example1.html" target="_blank">screenshot</a><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=84 style='width:63.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='margin-top:0cm;margin-right:3.3pt;
+  margin-bottom:0cm;margin-left:3.9pt;margin-bottom:.0001pt;text-align:center'><span
+  style='font-size:9.0pt'><a
+  href="http://mihl.sourceforge.net/example_2/Doc/html/" target="_blank">example2.c</a></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-left:7.6pt'><span style='font-size:9.0pt'>Demonstrate
+  how to use GET/POST.</span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:7.6pt'><span style='font-size:9.0pt'><a
+  href="http://mihl.sourceforge.net/screenshots_example2.html" target="_blank">screenshot</a><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3;mso-yfti-lastrow:yes'>
+  <td width=84 style='width:63.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='margin-top:0cm;margin-right:3.3pt;
+  margin-bottom:0cm;margin-left:3.9pt;margin-bottom:.0001pt;text-align:center'><span
+  style='font-size:9.0pt'><a
+  href="http://mihl.sourceforge.net/example_3/Doc/html/" target="_blank">example3.c</a></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-left:7.6pt'><span style='font-size:9.0pt'>Demonstrate
+  the use of <st1:place w:st="on"><st1:City w:st="on">Ajax</st1:City></st1:place>
+  (using the excellent <span class=SpellE>prototype.js</span>)<span
+  class=GramE>..</span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:7.6pt'><span style='font-size:9.0pt'><a
+  href="http://mihl.sourceforge.net/screenshots_example3.html" target="_blank">screenshot</a><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<h2 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><a
+name="_How_to_build"></a><a name="_Download"></a><a name="_Eclipse_Based_code"></a>Eclipse
+Based code<span style='mso-bidi-font-size:20.0pt'><o:p></o:p></span></h2>
+
+<p class=MsoNormal style='margin-left:36.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>All
+the code for this project is developed using Eclipse/CDT (Eclipse 3.3 + CDT
+4.0), and should be preferably compiled using this IDE. <br>
+This said, you can also <span class=GramE>download<span
+style='mso-spacerun:yes'>  </span>the</span> project with SVN and compile it
+using the Makefiles (the Eclipses projects are all Makefile based).</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>The
+easiest way to proceed is to use the SVN <span class=SpellE>plugin</span>
+within Eclipse: <a href="http://subclipse.tigris.org/"><span class=SpellE>subclipse</span></a>.</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>You
+can then follow these easy steps to check-out the code from Eclipse:</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Select
+a workspace where you want to put the <span class=SpellE>messip</span>
+projects:</p>
+
+<p class=MsoNormal style='margin-left:108.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><a
+href="http://mihl.sourceforge.net/images/screen-shot1.jpg" target="_blank"><span
+style='text-decoration:none;text-underline:none'><!--[if gte vml 1]><v:shape
+ id="_x0000_i1030" type="#_x0000_t75" style='width:108.75pt;height:65.25pt'>
+ <v:imagedata src="index_files/image003.jpg" o:title="small-screen-shot1"/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=145 height=87
+src="index_files/image007.jpg" v:shapes="_x0000_i1030"><![endif]></span></a></p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Select
+then the perspective &#8216;SVN Repository Exploring&#8217;:</p>
+
+<p class=MsoNormal style='margin-left:108.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><a
+href="http://mihl.sourceforge.net/images/screen-shot2.jpg" target="_blank"><span
+style='text-decoration:none;text-underline:none'><!--[if gte vml 1]><v:shape
+ id="_x0000_i1031" type="#_x0000_t75" style='width:108.75pt;height:134.25pt'>
+ <v:imagedata src="index_files/image010.jpg" o:title="small-screen-shot2"/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=145 height=179
+src="index_files/image008.jpg" v:shapes="_x0000_i1031"><![endif]></span></a></p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Right-click
+in the pane &#8216;SVN Repository&#8217; and select &#8216;New / Repository
+Location&#8217;:</p>
+
+<p class=MsoNormal style='margin-left:108.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><a
+href="http://mihl.sourceforge.net/images/screen-shot3.jpg" target="_blank"><span
+style='text-decoration:none;text-underline:none'><!--[if gte vml 1]><v:shape
+ id="_x0000_i1032" type="#_x0000_t75" style='width:108.75pt;height:80.25pt'>
+ <v:imagedata src="index_files/image002.jpg" o:title="small-screen-shot3"/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=145 height=107
+src="index_files/image011.jpg" v:shapes="_x0000_i1032"><![endif]></span></a></p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Enter
+then the SVN repository<br>
+<a href="https://mihl.svn.sourceforge.net/svnroot/mihl">https://mihl.svn.sourceforge.net/svnroot/mihl</a></p>
+
+<p class=MsoNormal style='margin-left:108.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><a
+href="http://mihl.sourceforge.net/images/screen-shot4.jpg" target="_blank"><span
+style='color:windowtext;text-decoration:none;text-underline:none'><!--[if gte vml 1]><v:shape
+ id="_x0000_i1033" type="#_x0000_t75" style='width:108.75pt;height:89.25pt'>
+ <v:imagedata src="index_files/image012.jpg" o:title="small-screen-shot4"/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=145 height=119
+src="index_files/image016.jpg" v:shapes="_x0000_i1033"><![endif]></span></a></p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Expand
+the SVN repository to see all projects, select them and start the Check Out
+operation:</p>
+
+<p class=MsoNormal style='margin-left:108.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><a
+href="http://mihl.sourceforge.net/images/screen-shot5.jpg" target="_blank"><span
+style='color:windowtext;text-decoration:none;text-underline:none'><!--[if gte vml 1]><v:shape
+ id="_x0000_i1034" type="#_x0000_t75" style='width:108.75pt;height:80.25pt'>
+ <v:imagedata src="index_files/image014.jpg" o:title="small-screen-shot5"/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=145 height=107
+src="index_files/image017.jpg" v:shapes="_x0000_i1034"><![endif]></span></a></p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Finish
+the checkout operation:</p>
+
+<p class=MsoNormal style='margin-left:108.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><a
+href="http://mihl.sourceforge.net/images/screen-shot6.jpg" target="_blank"><span
+style='color:windowtext;text-decoration:none;text-underline:none'><!--[if gte vml 1]><v:shape
+ id="_x0000_i1035" type="#_x0000_t75" style='width:108.75pt;height:89.25pt'>
+ <v:imagedata src="index_files/image021.jpg" o:title="small-screen-shot6"/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=145 height=119
+src="index_files/image018.jpg" v:shapes="_x0000_i1035"><![endif]></span></a></p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Once
+done, switch the Perspective view to C/C++ Perspective.</p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Please
+note the following regarding the code:</p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo4;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>This is C code, not C++ code. Actually, the code
+is gnu99 (iso99 + gnu extensions).</p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo4;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>If you want to build the documentation
+(generated using <span class=SpellE>Doxygen</span>), you&#8217;ll need to have <span
+class=SpellE>doxygen</span> and <span class=SpellE>graphviz</span> installed. I
+suggest installing <span class=SpellE>doxywizard</span> as well, but you can
+use <a href="http://home.gna.org/eclox/" target="_blank"><span class=SpellE>eclox</span></a>
+as well.</p>
+
+<h2 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><a
+name="_Licensing_1"></a><a name="_Licensing"></a>Licensing</h2>
+
+<p class=MsoNormal style='margin-left:18.0pt;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>This
+project is released under the BSD license: see <a
+href="http://www.opensource.org/licenses/bsd-license.html">here</a> for
+details.</p>
+
+<h2 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><a
+name="_Download_1"></a>Download</h2>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:36.0pt;margin-bottom:
+3.0pt;margin-left:18.0pt;tab-stops:91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Developed
+and tested using Fedora 7.</p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='margin-left:17.3pt;background:#FBDAA5;border-collapse:collapse;
+ border:none;mso-border-alt:solid windowtext .75pt;mso-padding-alt:0cm 0cm 0cm 0cm;
+ mso-border-insideh:.75pt solid windowtext;mso-border-insidev:.75pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .75pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:0cm;margin-right:36.0pt;margin-bottom:
+  0cm;margin-left:18.0pt;margin-bottom:.0001pt'>Full source code</p>
+  </td>
+  <td style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:
+  solid windowtext .75pt;mso-border-alt:solid windowtext .75pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:0cm;margin-right:36.0pt;margin-bottom:
+  0cm;margin-left:18.0pt;margin-bottom:.0001pt'><span class=SpellE><span
+  style='font-size:9.0pt;font-family:"Courier New"'>svn</span></span><span
+  style='font-size:9.0pt;font-family:"Courier New"'> co
+  https://mihl.svn.sourceforge.net/svnroot/mihl<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td style='border:solid windowtext 1.0pt;border-top:none;mso-border-top-alt:
+  solid windowtext .75pt;mso-border-alt:solid windowtext .75pt;padding:0cm 5.4pt 0cm 5.4pt;
+  border-color:-moz-use-text-color windowtext windowtext'>
+  <p class=MsoNormal style='margin-top:0cm;margin-right:36.0pt;margin-bottom:
+  0cm;margin-left:18.0pt;margin-bottom:.0001pt'>Anonymous SVN access </p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .75pt;
+  mso-border-left-alt:solid windowtext .75pt;mso-border-alt:solid windowtext .75pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:0cm;margin-right:36.0pt;margin-bottom:
+  0cm;margin-left:18.0pt;margin-bottom:.0001pt'><span style='font-size:9.0pt;
+  font-family:"Courier New"'><a
+  href="http://mihl.svn.sourceforge.net/viewvc/mihl/" target="_blank">Browse
+  SVN repository</a><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;mso-yfti-lastrow:yes'>
+  <td style='border:solid windowtext 1.0pt;border-top:none;mso-border-top-alt:
+  solid windowtext .75pt;mso-border-alt:solid windowtext .75pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:0cm;margin-right:36.0pt;margin-bottom:
+  0cm;margin-left:18.0pt;margin-bottom:.0001pt'>Project Statistics</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .75pt;
+  mso-border-left-alt:solid windowtext .75pt;mso-border-alt:solid windowtext .75pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:0cm;margin-right:36.0pt;margin-bottom:
+  0cm;margin-left:18.0pt;margin-bottom:.0001pt'><span style='font-size:9.0pt;
+  font-family:"Courier New"'><a
+  href="https://sourceforge.net/project/stats/?group_id=183313&amp;ugn=mihl"
+  target="_blank">Usage Statistics For <span class=SpellE>mihl</span></a><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><a
+name="_History"></a><o:p>&nbsp;</o:p></p>
+
+<div align=center>
+
+<table class=MsoTableGrid border=0 cellspacing=0 cellpadding=0
+ style='margin-left:-.4pt;border-collapse:collapse;mso-yfti-tbllook:480;
+ mso-padding-alt:0cm 5.4pt 0cm 5.4pt'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td valign=top style='padding:0cm 5.4pt 0cm 5.4pt'>
+  <h2 align=center style='text-align:center;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><!--[if gte vml 1]><v:shape
+   id="_x0000_i1036" type="#_x0000_t75" alt="" style='width:351pt;height:16.5pt'>
+   <v:imagedata src="index_files/image001.gif" o:title=""/>
+  </v:shape><![endif]--><![if !vml]><img border=0 width=468 height=22
+  src="index_files/image001.gif" v:shapes="_x0000_i1036"><![endif]></h2>
+  <div align=center>
+  <table class=MsoTableWeb2 border=1 cellspacing=3 cellpadding=0
+   style='mso-cellspacing:2.0pt;border:inset 1.0pt;mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+   mso-border-insideh:.75pt inset windowtext;mso-border-insidev:.75pt inset windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td style='border:outset 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+    <p align=center style='text-align:center'><a
+    href="http://olivier.singla.googlepages.com/index.html"><span
+    style='text-decoration:none;text-underline:none'><!--[if gte vml 1]><v:shape
+     id="_x0000_i1037" type="#_x0000_t75" alt="" style='width:54pt;height:30pt'>
+     <v:imagedata src="index_files/image006.jpg" o:href="http://atilo.sourceforge.net/index_files/image006.jpg"/>
+    </v:shape><![endif]--><![if !vml]><img border=0 width=72 height=40
+    src="index_files/image006.jpg" v:shapes="_x0000_i1037"><![endif]></span></a><span
+    class=MsoHyperlink><o:p></o:p></span></p>
+    <p align=center style='text-align:center'><span class=MsoHyperlink><a
+    href="mailto:lo_gafet@users.sourceforge.net">Olivier <span class=SpellE>Singla</span></a></span></p>
+    </td>
+    <td style='border:outset 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+    <p align=center style='text-align:center'><i>Pages created</i>: <br>
+    <b>Dec 2006</b></p>
+    </td>
+    <td style='border:outset 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+    <p class=MsoNormal align=center style='text-align:center'><i>Pages last
+    revised</i>: <br>
+    <b>November 24<sup>th</sup> 2007</b><span style='color:black'><o:p></o:p></span></p>
+    </td>
+   </tr>
+  </table>
+  </div>
+  <p align=center style='margin-top:0cm;margin-right:0cm;margin-bottom:3.0pt;
+  margin-left:0cm;text-align:center;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><!--[if gte vml 1]><v:shape
+   id="_x0000_i1038" type="#_x0000_t75" style='width:351pt;height:16.5pt'>
+   <v:imagedata src="index_files/image001.gif" o:title="image001"/>
+  </v:shape><![endif]--><![if !vml]><img border=0 width=468 height=22
+  src="index_files/image001.gif" v:shapes="_x0000_i1038"><![endif]></p>
+  <p align=center style='margin-top:0cm;margin-right:0cm;margin-bottom:3.0pt;
+  margin-left:0cm;text-align:center;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><a
+  href="http://sourceforge.net"><span style='text-decoration:none;text-underline:
+  none'><img border=0 width=125 height=37 id="_x0000_i1040"
+  src="http://sflogo.sourceforge.net/sflogo.php?group_id=183313&amp;type=2"
+  alt="SourceForge.net Logo"></span></a></p>
+  <p align=center style='margin-top:0cm;margin-right:0cm;margin-bottom:3.0pt;
+  margin-left:0cm;text-align:center;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><!--[if gte vml 1]><v:shape
+   id="_x0000_i1039" type="#_x0000_t75" style='width:351pt;height:16.5pt'>
+   <v:imagedata src="index_files/image001.gif" o:title="image001"/>
+  </v:shape><![endif]--><![if !vml]><img border=0 width=468 height=22
+  src="index_files/image001.gif" v:shapes="_x0000_i1039"><![endif]></p>
+  <p class=MsoNormal><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+</div>
+
+</body>
+
+</html>

@@ -1,6 +1,9 @@
 /**
  * @file mihl.c
  *
+ * @mainpage MIHL
+ * 
+ * \htmlinclude index.html
  **/
 
 #define _GNU_SOURCE
