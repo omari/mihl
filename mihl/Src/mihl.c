@@ -3,20 +3,6 @@
  *
  **/
 
-/**
- * @mainpage MIHL: Minimal Httpd Library
- * 
- * HTTP embedded server library \n
- * Copyright (C) 2006-2007  Olivier Singla \n
- * http://mihl.sourceforge.net/ \n\n
- *
- * MIHL is a C library that helps to implement an HTTP embedded server. It is designed to be small and to provide only a 
- * minimal set of functionalities. Typically, MIHL can be used in an embedded device where a Web-based interface is useful 
- * (configuration, status, etc.). MIHL C library can be compiled for both Linux (x86, PowerPC, ARM) and XP. 
- * MIHDL does not use threads, but rather use non blocking sockets I/O.
- * 
- **/
-
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
