@@ -38,7 +38,7 @@
  *   - -1 if an error occured
  *   - or Index into the table of the connexions
  */
-static int add_new_connexion( mihl_ctx_t *ctx, SOCKET sockfd, struct sockaddr_in *client_addr ) {
+static int add_new_connexion( mihl_ctx_t *ctx, int sockfd, struct sockaddr_in *client_addr ) {
 
     // Find a new slot to store the new active connexion
     if ( ctx->nb_connexions == ctx->maxnb_cnx ) {
@@ -376,7 +376,7 @@ static int manage_new_connexions( mihl_ctx_t *ctx, time_t now ) {
     for (;;) {
 	    socklen_t client_addr_len = sizeof( struct sockaddr_in );
 	    struct sockaddr_in client_addr;
-	    SOCKET sockfd_accept = accept( ctx->sockfd,
+	    int sockfd_accept = accept( ctx->sockfd,
 	       (struct sockaddr *)&client_addr, &client_addr_len );
 
 	    if ( sockfd_accept == -1 ) {
@@ -524,7 +524,7 @@ static int manage_existent_connexions( mihl_ctx_t *ctx, time_t now ) {
     if ( ctx->nb_connexions == 0 )
         return 0;
 
-    SOCKET last_sockfd = -1;
+    int last_sockfd = -1;
 	fd_set ready;
 	FD_ZERO( &ready );
     for ( int ncnx = 0; ncnx < ctx->maxnb_cnx; ncnx++ ) {

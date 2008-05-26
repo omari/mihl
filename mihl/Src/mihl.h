@@ -23,8 +23,6 @@
 #include <netdb.h>
 #include <stdint.h>
 
-typedef int SOCKET;
-
 typedef struct mihl_ctx mihl_ctx_t;
 
 typedef struct mihl_cnx mihl_cnx_t;

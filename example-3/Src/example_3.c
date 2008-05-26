@@ -144,7 +144,7 @@ int http_root( mihl_cnx_t *cnx, char const *tag, char const *host, void *param )
  * @return 0
  */
 int http_data( mihl_cnx_t *cnx, char const *tag, char const *host, void *param ) {
-    int index = (int)param;
+    int index = *(int *)param;
     static int cpts[3] = { 0, 0, 0 };
     mihl_add( cnx, "cpt=%d", cpts[index]++ );
     mihl_send( cnx, NULL,
@@ -171,9 +171,15 @@ int main( int argc, char *argv[] ) {
     	return -1;
 
     mihl_handle_get( ctx, "/", http_root, NULL );
-    mihl_handle_get( ctx, "/data1", http_data, (void *)0 );
-    mihl_handle_get( ctx, "/data2", http_data, (void *)1 );
-    mihl_handle_get( ctx, "/data3", http_data, (void *)2 );
+    int *data0 = (int *)malloc(sizeof(int));
+    *data0 = 0;
+    mihl_handle_get( ctx, "/data1", http_data, data0 );
+    int *data1 = (int *)malloc(sizeof(int));
+    *data1 = 1;
+    mihl_handle_get( ctx, "/data2", http_data, data1 );
+    int *data2 = (int *)malloc(sizeof(int));
+    *data2 = 2;
+    mihl_handle_get( ctx, "/data3", http_data, data2 );
     if ( access( "../image.jpg", R_OK ) == 0 ) {
     	mihl_handle_file( ctx, "/image.jpg", "../image.jpg", "image/jpeg", 0 );
         mihl_handle_file( ctx, "/prototype.js", "../prototype.js", "text/javascript", 0 );

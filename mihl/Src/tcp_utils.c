@@ -44,7 +44,7 @@
  * 	- X
  * 	- or -1 if an error occurred (errno is then set).
  */
-int tcp_read( SOCKET sockfd, char *buffer, int maxlen ) {
+int tcp_read( int sockfd, char *buffer, int maxlen ) {
     maxlen--;
 	int dcount;
     int index = 0;
@@ -101,7 +101,7 @@ int tcp_read( SOCKET sockfd, char *buffer, int maxlen ) {
  * 	- X
  * 	- or -1 if an error occurred (errno is then set).
  */
-int tcp_write( SOCKET sockfd, const char *buff, int buff_len ) {
+int tcp_write( int sockfd, const char *buff, int buff_len ) {
 
 	int cnt = 0;
 	errno = 0;

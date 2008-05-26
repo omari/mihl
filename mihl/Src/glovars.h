@@ -46,7 +46,7 @@ struct mihl_ctx {
     int port;                   ///< HTTP TCP port (80, 8080, etc.)
     int maxnb_cnx;              ///< Max umer of allowed connections
     mihl_log_level_t log_level; ///< MIHL_LOG_ERROR, etc.
-    SOCKET sockfd;              ///< TBD
+    int sockfd;              ///< TBD
     int read_buffer_maxlen;     ///< TBD
     char *read_buffer;          ///< TBD
     int nb_connexions;          ///< Number of current connexions
@@ -58,7 +58,7 @@ struct mihl_ctx {
 struct mihl_cnx {
     mihl_ctx_t *ctx;                ///< Mihsl context pointer
     int active;                     ///< Is this connexion active ?
-    SOCKET sockfd;                  ///< Socked (as returned by accept)
+    int sockfd;                  ///< Socked (as returned by accept)
     mihl_cnxinfo_t info;            ///< Exporteable information
     int keep_alive;                 ///< 'Keep-Alive:'
     int is_keep_alive;              ///< 'Connection:'
