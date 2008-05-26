@@ -1,7 +1,7 @@
 /**
  * @file mihl.c
  *
- * @mainpage MIHL
+ * @mainpage MIHL: Minimal Httpd Library
  * 
  * \htmlinclude index.html
  **/
