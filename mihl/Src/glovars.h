@@ -22,8 +22,6 @@
 
 #define Sleep(X) sleep(X/1000)
 
-#define closesocket close
-
 #define O_BINARY 0
 
 #define STRNCPY( DST, SRC, LEN ) \

@@ -256,8 +256,8 @@ int main( int argc, char *argv[] ) {
 	
     help( 8080 );
 
-    mihl_ctx_t *ctx = mihl_init( NULL, 8080, 8, 
-        MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO | MIHL_LOG_INFO_VERBOSE );
+    mihl_ctx_t *ctx = mihl_init( NULL, 8080, 1, 
+        MIHL_LOG_DEBUG | MIHL_LOG_ERROR | MIHL_LOG_WARNING | MIHL_LOG_INFO | MIHL_LOG_INFO_VERBOSE );
     if ( !ctx )
     	return -1;
 
